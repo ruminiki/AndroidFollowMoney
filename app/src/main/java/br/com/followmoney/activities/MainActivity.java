@@ -14,7 +14,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import br.com.followmoney.followmoney.R;
+import br.com.followmoney.activities.creditCards.CreditCardListActivity;
+import br.com.followmoney.activities.finalities.FinalityListActivity;
+import br.com.followmoney.R;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -86,8 +88,9 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.finality) {
             Intent intent = new Intent(this, FinalityListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_gallery) {
-
+        } else if (id == R.id.credit_card) {
+            Intent intent = new Intent(this, CreditCardListActivity.class);
+            startActivity(intent);
         } else if (id == R.id.nav_slideshow) {
 
         } else if (id == R.id.nav_manage) {

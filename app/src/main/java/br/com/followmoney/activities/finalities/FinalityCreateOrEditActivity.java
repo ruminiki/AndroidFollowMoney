@@ -1,4 +1,4 @@
-package br.com.followmoney.activities;
+package br.com.followmoney.activities.finalities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -15,7 +15,7 @@ import br.com.followmoney.dao.remote.finalities.GetFinality;
 import br.com.followmoney.dao.remote.finalities.PostFinality;
 import br.com.followmoney.dao.remote.finalities.PutFinality;
 import br.com.followmoney.domain.Finality;
-import br.com.followmoney.followmoney.R;
+import br.com.followmoney.R;
 
 public class FinalityCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -42,11 +42,11 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
         if (finalidadeID > 0) {
             new GetFinality(new GetFinality.OnLoadListener() {
                 @Override
-                public void onLoaded(Finality finalityList) {
+                public void onLoaded(Finality finality) {
                     saveButton.setVisibility(View.VISIBLE);
-                    deleteButton.setVisibility(View.GONE);
+                    deleteButton.setVisibility(View.VISIBLE);
 
-                    descricaoEditText.setText(finalityList.getDescricao());
+                    descricaoEditText.setText(finality.getDescricao());
                     descricaoEditText.setEnabled(true);
                     descricaoEditText.setFocusableInTouchMode(true);
                     descricaoEditText.setClickable(true);

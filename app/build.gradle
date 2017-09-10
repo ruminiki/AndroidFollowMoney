@@ -17,6 +17,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
 }
 
 dependencies {
@@ -32,3 +33,4 @@ dependencies {
     testCompile 'junit:junit:4.12'
     provided 'com.google.android.wearable:wearable:1.0.0'
 }
+

@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">FollowMoney</string>
     <string name="title_activity_main2">Follow Money App</string>
-    <string name="hello_world">Hello World!</string>
 
     <string name="action_settings">Settings</string>
     <string name="Add_New">Add New</string>
@@ -9,14 +8,22 @@
     <string name="delete">Delete</string>
     <string name="save">Save</string>
 
-    <string name="descricao">Descrição:</string>
-
-    <string name="deleteFinalidade">Confirm finalidade deletion.</string>
+    <!-- generic-->
+    <string name="descricao">Descrição</string>
     <string name="yes">Confirm</string>
     <string name="no">Cancel</string>
     <string name="title_activity_activity_edit">CreateOrEditActivity</string>
     <string name="title_activity_main">MainActivity</string>
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <!-- finalidade -->
+    <string name="deleteFinalidade">Confirm finalidade deletion.</string>
+
+
+    <!-- credit card-->
+    <string name="limit">Limite</string>
+    <string name="date_closing_invoice">Data Fechamento Fatura</string>
+    <string name="date_maturity_invoice">Data Vencimento Fatura</string>
+
 </resources>

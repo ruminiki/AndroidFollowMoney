@@ -1,4 +1,4 @@
-package br.com.followmoney.activities;
+package br.com.followmoney.activities.finalities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import java.util.List;
 
 import br.com.followmoney.dao.remote.finalities.GetFinalities;
 import br.com.followmoney.domain.Finality;
-import br.com.followmoney.followmoney.R;
+import br.com.followmoney.R;
 
 public class FinalityListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
@@ -34,7 +34,7 @@ public class FinalityListActivity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finality_list);
 
-        listView = (ListView) findViewById(R.id.listViewFinalidade);
+        listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
         Button button = (Button) findViewById(R.id.addNew);
@@ -58,7 +58,7 @@ public class FinalityListActivity extends AppCompatActivity implements AdapterVi
                     mapList.add(map);
                 }
 
-                ListAdapter adapter = new SimpleAdapter(FinalityListActivity.this, mapList, R.layout.finality_info,
+                ListAdapter adapter = new SimpleAdapter(FinalityListActivity.this, mapList, R.layout.finality_list_renderer,
                         new String[] { KEY_DESCRIPTION },
                         new int[] { R.id.description});
 

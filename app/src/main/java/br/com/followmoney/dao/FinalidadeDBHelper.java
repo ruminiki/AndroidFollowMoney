@@ -11,7 +11,7 @@ import java.util.List;
 import br.com.followmoney.domain.Finality;
 
 import static android.R.attr.id;
-import static br.com.followmoney.followmoney.R.string.descricao;
+import static br.com.followmoney.R.string.descricao;
 
 ;
 

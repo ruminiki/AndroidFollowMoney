@@ -1,4 +1,4 @@
-package br.com.followmoney.dao.remote.finalities;
+package br.com.followmoney.dao.remote.creditCards;
 
 import android.content.Context;
 
@@ -6,36 +6,40 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
-import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
 
+import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+
+import java.util.Arrays;
+import java.util.List;
 
 import br.com.followmoney.dao.remote.ApplicationController;
-import br.com.followmoney.domain.Finality;
+import br.com.followmoney.domain.CreditCard;
 
-public class DeleteFinality {
+public class GetCreditCards {
 
-    public OnLoadListener onLoadlistener;
-    public Context context;
+    private OnLoadListener onLoadlistener;
+    private Context context;
 
-    public DeleteFinality(OnLoadListener onLoadlistener, Context context) {
+    public GetCreditCards(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
         this.context = context;
     }
 
-    public void execute(Integer id) {
-        final Gson gson = new Gson();
-        final String URL = "http://192.168.1.10/followMoneyRest/finalities/"+id;
+    public void execute(Integer user) {
 
-        JsonObjectRequest req = new JsonObjectRequest(Request.Method.DELETE, URL, new JSONObject(),
-                new Response.Listener<JSONObject>() {
+        String URL = "http://192.168.1.10/followMoneyRest/creditCards/user/"+user;
+        final Gson gson = new Gson();
+        // pass second argument as "null" for GET requests
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONArray>() {
                     @Override
-                    public void onResponse(JSONObject response) {
+                    public void onResponse(JSONArray response) {
                         try {
                             VolleyLog.v("Response:%n %s", response.toString(4));
-                            onLoadlistener.onLoaded(gson.fromJson(response.toString(4), Finality.class));
+                            onLoadlistener.onLoaded( Arrays.asList(gson.fromJson(response.toString(4),CreditCard[].class)) );
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -54,7 +58,7 @@ public class DeleteFinality {
     }
 
     public interface OnLoadListener {
-        void onLoaded(Finality finality);
+        void onLoaded(List<CreditCard> creditCards);
         void onError(String error);
     }
 

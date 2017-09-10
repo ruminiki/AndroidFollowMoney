@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="br.com.followmoney.followmoney">
+    package="br.com.followmoney">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
@@ -16,6 +15,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <uses-library
+            android:name="com.google.android.wearable"
+            android:required="false" />
+
+        <!--========MAIN ACTIVITY========-->
         <activity android:name="br.com.followmoney.activities.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar">
@@ -24,8 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!--========FINALIDADE========-->
         <activity
-            android:name="br.com.followmoney.activities.FinalityListActivity"
+            android:name="br.com.followmoney.activities.finalities.FinalityListActivity"
             android:parentActivityName="br.com.followmoney.activities.MainActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
@@ -33,20 +40,37 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.followmoney.activities.MainActivity" />
         </activity>
-
-        <uses-library
-            android:name="com.google.android.wearable"
-            android:required="false" />
-
         <activity
-            android:name="br.com.followmoney.activities.FinalityCreateOrEditActivity"
-            android:parentActivityName="br.com.followmoney.activities.FinalityListActivity">
+            android:name="br.com.followmoney.activities.finalities.FinalityCreateOrEditActivity"
+            android:parentActivityName="br.com.followmoney.activities.finalities.FinalityListActivity">
 
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.followmoney.activities.FinalityListActivity" />
+                android:value="br.com.followmoney.activities.finalities.FinalityListActivity" />
         </activity>
+
+        <!--========CARTAO DE CREDITO========-->
+        <activity
+            android:name="br.com.followmoney.activities.creditCards.CreditCardListActivity"
+            android:parentActivityName="br.com.followmoney.activities.MainActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.followmoney.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="br.com.followmoney.activities.creditCards.CreditCardCreateOrEditActivity"
+            android:parentActivityName="br.com.followmoney.activities.creditCards.CreditCardListActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.followmoney.activities.creditCards.CreditCardListActivity" />
+        </activity>
+
+        <!--========...========-->
     </application>
 
 </manifest>
