@@ -8,7 +8,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import br.com.followmoney.dao.remote.finalities.DeleteFinality;
@@ -22,8 +21,7 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
 
     EditText descricaoEditText;
     Button saveButton;
-    LinearLayout buttonLayout;
-    Button editButton, deleteButton;
+    Button deleteButton;
 
     int finalidadeID;
 
@@ -38,23 +36,20 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
-        editButton = (Button) findViewById(R.id.editButton);
-        editButton.setOnClickListener(this);
-
         deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
         if (finalidadeID > 0) {
-            saveButton.setVisibility(View.GONE);
-            editButton.setVisibility(View.VISIBLE);
-            deleteButton.setVisibility(View.VISIBLE);
-
             new GetFinality(new GetFinality.OnLoadListener() {
                 @Override
                 public void onLoaded(Finality finalityList) {
+                    saveButton.setVisibility(View.VISIBLE);
+                    deleteButton.setVisibility(View.GONE);
+
                     descricaoEditText.setText(finalityList.getDescricao());
-                    descricaoEditText.setFocusable(false);
-                    descricaoEditText.setClickable(false);
+                    descricaoEditText.setEnabled(true);
+                    descricaoEditText.setFocusableInTouchMode(true);
+                    descricaoEditText.setClickable(true);
                 }
 
                 @Override
@@ -63,6 +58,9 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
                 }
             }, this).execute(finalidadeID);
 
+        }else{
+            saveButton.setVisibility(View.VISIBLE);
+            deleteButton.setVisibility(View.GONE);
         }
     }
 
@@ -107,16 +105,6 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
         switch (view.getId()) {
             case R.id.saveButton:
                 persist();
-                return;
-            case R.id.editButton:
-                saveButton.setVisibility(View.VISIBLE);
-                editButton.setVisibility(View.GONE);
-                deleteButton.setVisibility(View.GONE);
-
-                descricaoEditText.setEnabled(true);
-                descricaoEditText.setFocusableInTouchMode(true);
-                descricaoEditText.setClickable(true);
-
                 return;
             case R.id.deleteButton:
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
