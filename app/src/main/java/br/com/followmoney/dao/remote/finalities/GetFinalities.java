@@ -1,56 +1,65 @@
 package br.com.followmoney.dao.remote.finalities;
 
-import android.os.AsyncTask;
+import android.content.Context;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.followmoney.dao.remote.HttpHandler;
+import br.com.followmoney.dao.remote.ApplicationController;
 import br.com.followmoney.domain.Finality;
 
-public class ListFinalities extends AsyncTask<String, Void, List<Finality>> {
+public class GetFinalities {
 
-    CallBack listener;
+    private OnLoadListener onLoadlistener;
+    private Context context;
 
-    public ListFinalities(CallBack listener) {
-        this.listener = listener;
+    public GetFinalities(OnLoadListener onLoadlistener, Context context) {
+        this.onLoadlistener = onLoadlistener;
+        this.context = context;
     }
 
-    @Override
-    protected List<Finality> doInBackground(String... params) {
+    public void execute(Integer user) {
 
-        try {
+        String URL = "http://192.168.1.10/followMoneyRest/finalities/user/"+user;
+        final Gson gson = new Gson();
+        // pass second argument as "null" for GET requests
+        JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            VolleyLog.v("Response:%n %s", response.toString(4));
+                            onLoadlistener.onLoaded( Arrays.asList(gson.fromJson(response.toString(4),Finality[].class)) );
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.e("Error: ", error.getMessage());
+                onLoadlistener.onError(error.getMessage());
+            }
+        });
 
-            String url = "http://localhost/followMoneyRest/finalities/user/3";
+        // add the request object to the queue to be executed
+        ApplicationController.getInstance(context).addToRequestQueue(req);
 
-            String response = HttpHandler.makeServiceCall(url);
-            Gson gson = new Gson();
-
-            List<Finality> list = Arrays.asList(gson.fromJson(response,Finality[].class));
-
-            return list;
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
     }
 
-    @Override
-    protected void onPostExecute(List<Finality> response) {
-        System.out.println("Response: "+response);
-        if (response != null) {
-            listener.onLoaded(response);
-        } else {
-            listener.onError();
-        }
-    }
-
-    public interface CallBack {
-        void onLoaded(List<Finality> finalityList);
-        void onError();
+    public interface OnLoadListener {
+        void onLoaded(List<Finality> finalities);
+        void onError(String error);
     }
 
 }

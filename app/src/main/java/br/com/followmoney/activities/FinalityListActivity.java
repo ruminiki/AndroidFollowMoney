@@ -15,17 +15,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import br.com.followmoney.dao.remote.FinalityAsyncHttpTask;
+import br.com.followmoney.dao.remote.finalities.GetFinalities;
 import br.com.followmoney.domain.Finality;
 import br.com.followmoney.followmoney.R;
 
-public class FinalityListActivity extends AppCompatActivity implements FinalityAsyncHttpTask.Callback, AdapterView.OnItemClickListener{
+public class FinalityListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
     public final static String KEY_EXTRA_CONTACT_ID = "KEY_EXTRA_CONTACT_ID";
 
     private ListView listView;
 
     private List<HashMap<String, String>> mapList = new ArrayList<>();
+    private static final String KEY_ID            = "id";
     private static final String KEY_DESCRIPTION   = "description";
 
     @Override
@@ -46,68 +47,39 @@ public class FinalityListActivity extends AppCompatActivity implements FinalityA
             }
         });
 
-        new FinalityAsyncHttpTask(this).execute();
+        new GetFinalities(new GetFinalities.OnLoadListener() {
+            @Override
+            public void onLoaded(List<Finality> finalities) {
+                for (Finality finality : finalities) {
+                    HashMap<String, String> map = new HashMap<>();
+                    map.put(KEY_ID, String.valueOf(finality.getId()));
+                    map.put(KEY_DESCRIPTION, finality.getDescricao());
 
-        /*FinalidadeDBHelper dbHelper = new FinalidadeDBHelper(this);
+                    mapList.add(map);
+                }
 
-        final List<Finality> list = dbHelper.getAll();
+                ListAdapter adapter = new SimpleAdapter(FinalityListActivity.this, mapList, R.layout.finality_info,
+                        new String[] { KEY_DESCRIPTION },
+                        new int[] { R.id.description});
 
-        String [] columns = new String[] {
-                FinalidadeDBHelper.COLUMN_ID,
-                FinalidadeDBHelper.COLUMN_DESCRIPTION
-        };
-
-       int [] widgets = new int[] {
-                R.id.finalidadeID,
-                R.id.finalidadeDescricao
-        };
-
-        SimpleCursorAdapter cursorAdapter = new SimpleCursorAdapter(this, R.layout.finality_info, cursor, columns, widgets, 0);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                listView.setAdapter(adapter);
+            }
 
             @Override
-            public void onItemClick(AdapterView listView, View view, int position, long id) {
-                Cursor itemCursor = (Cursor) FinalityListActivity.this.listView.getItemAtPosition(position);
-                int finalidadeID = itemCursor.getInt(itemCursor.getColumnIndex(FinalidadeDBHelper.COLUMN_ID));
-                Intent intent = new Intent(getApplicationContext(), FinalityCreateOrEditActivity.class);
-                intent.putExtra(KEY_EXTRA_CONTACT_ID, finalidadeID);
-                startActivity(intent);
+            public void onError(String error) {
+                System.out.println(error);
+                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
             }
-        });*/
+        }, this).execute(3);
 
     }
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Toast.makeText(this, mapList.get(i).get(KEY_DESCRIPTION),Toast.LENGTH_LONG).show();
-    }
-
-    private void loadListView() {
-
-        ListAdapter adapter = new SimpleAdapter(FinalityListActivity.this, mapList, R.layout.finality_info,
-                new String[] { KEY_DESCRIPTION },
-                new int[] { R.id.description});
-
-        listView.setAdapter(adapter);
-
-    }
-
-    @Override
-    public void onLoaded(List<Finality> finalityList) {
-        for (Finality finality : finalityList) {
-            HashMap<String, String> map = new HashMap<>();
-
-            map.put(KEY_DESCRIPTION, finality.getDescription());
-
-            mapList.add(map);
-        }
-
-        loadListView();
-    }
-
-    @Override
-    public void onError() {
-        Toast.makeText(this, "Error !", Toast.LENGTH_SHORT).show();
+        int id = Integer.parseInt(mapList.get(i).get(KEY_ID));
+        Intent intent = new Intent(getApplicationContext(), FinalityCreateOrEditActivity.class);
+        intent.putExtra(KEY_EXTRA_CONTACT_ID, id);
+        startActivity(intent);
     }
 
 }

@@ -7,7 +7,8 @@ package br.com.followmoney.domain;
 public class Finality {
 
     private Integer id;
-    private String  description;
+    private String  descricao;
+    private Integer usuario;
 
     public Finality(int id) {
         setId(id);
@@ -25,16 +26,20 @@ public class Finality {
         this.id = id;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDescricao() {
+        return descricao;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
     }
+
+    public Integer getUsuario() { return usuario; }
+
+    public void setUsuario(Integer usuario) { this.usuario = usuario; }
 
     @Override
     public String toString() {
-        return id + " - " + description;
+        return id + " - " + descricao;
     }
 }

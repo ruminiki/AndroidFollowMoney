@@ -11,15 +11,16 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
-import br.com.followmoney.dao.FinalidadeDBHelper;
+import br.com.followmoney.dao.remote.finalities.DeleteFinality;
+import br.com.followmoney.dao.remote.finalities.GetFinality;
+import br.com.followmoney.dao.remote.finalities.PostFinality;
+import br.com.followmoney.dao.remote.finalities.PutFinality;
 import br.com.followmoney.domain.Finality;
 import br.com.followmoney.followmoney.R;
 
 public class FinalityCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
-    private FinalidadeDBHelper dbHelper ;
     EditText descricaoEditText;
-
     Button saveButton;
     LinearLayout buttonLayout;
     Button editButton, deleteButton;
@@ -37,51 +38,67 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
-        buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
-
         editButton = (Button) findViewById(R.id.editButton);
         editButton.setOnClickListener(this);
 
         deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
-        dbHelper = new FinalidadeDBHelper(this);
-
         if (finalidadeID > 0) {
             saveButton.setVisibility(View.GONE);
-            buttonLayout.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.VISIBLE);
+            deleteButton.setVisibility(View.VISIBLE);
 
-            Finality f = dbHelper.get(new Finality(finalidadeID));
+            new GetFinality(new GetFinality.OnLoadListener() {
+                @Override
+                public void onLoaded(Finality finalityList) {
+                    descricaoEditText.setText(finalityList.getDescricao());
+                    descricaoEditText.setFocusable(false);
+                    descricaoEditText.setClickable(false);
+                }
 
-            descricaoEditText.setText(f.getDescription());
-            descricaoEditText.setFocusable(false);
-            descricaoEditText.setClickable(false);
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
+                }
+            }, this).execute(finalidadeID);
+
         }
     }
 
     public void persist() {
         if(finalidadeID > 0) {
-            try{
-                dbHelper.update(getViewDataFields());
-                Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }catch (Exception e){
-                Toast.makeText(getApplicationContext(), "Update Failed", Toast.LENGTH_SHORT).show();
-            }
+            new PutFinality(new PutFinality.OnLoadListener() {
+                @Override
+                public void onLoaded(Finality finality) {
+                    Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getApplicationContext(), "Update Failed", Toast.LENGTH_SHORT).show();
+                }
+            }, this).execute(getValueDataFieldsInView());
+
         }
         else {
-            try{
-                dbHelper.insert(getViewDataFields());
-                Toast.makeText(getApplicationContext(), "Object Inserted", Toast.LENGTH_SHORT).show();
-            }catch (Exception e){
-                Toast.makeText(getApplicationContext(), "Could not Insert object", Toast.LENGTH_SHORT).show();
-            }
+            new PostFinality(new PostFinality.OnLoadListener() {
+                @Override
+                public void onLoaded(Finality finality) {
+                    Toast.makeText(getApplicationContext(), "Object Inserted", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
 
-            Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            startActivity(intent);
+                @Override
+                public void onError(String error) {
+                    Toast.makeText(getApplicationContext(), "Could not Insert object", Toast.LENGTH_SHORT).show();
+                }
+            }, this).execute(getValueDataFieldsInView());
         }
     }
 
@@ -93,7 +110,9 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
                 return;
             case R.id.editButton:
                 saveButton.setVisibility(View.VISIBLE);
-                buttonLayout.setVisibility(View.GONE);
+                editButton.setVisibility(View.GONE);
+                deleteButton.setVisibility(View.GONE);
+
                 descricaoEditText.setEnabled(true);
                 descricaoEditText.setFocusableInTouchMode(true);
                 descricaoEditText.setClickable(true);
@@ -104,11 +123,7 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
                 builder.setMessage(R.string.delete)
                         .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
-                                dbHelper.delete(new Finality(finalidadeID));
-                                Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                startActivity(intent);
+                                confirmDelete();
                             }
                         })
                         .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
@@ -123,9 +138,30 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
         }
     }
 
-    private Finality getViewDataFields(){
+    private void confirmDelete(){
+        new DeleteFinality(new DeleteFinality.OnLoadListener() {
+            @Override
+            public void onLoaded(Finality finality) {
+                Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(String error) {
+                System.out.println(error);
+                Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(finalidadeID);
+    }
+
+    private Finality getValueDataFieldsInView(){
         Finality f = new Finality();
-        f.setDescription(descricaoEditText.getText().toString());
+        f.setId(finalidadeID);
+        f.setDescricao(descricaoEditText.getText().toString());
+        f.setUsuario(3);
         return f;
     }
+
 }

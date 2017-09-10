@@ -48,7 +48,7 @@ public class FinalidadeDBHelper extends AbstractGenericDao<Finality> {
     public void insert(Finality finality) {
         SQLiteDatabase db = getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COLUMN_DESCRIPTION, finality.getDescription());
+        contentValues.put(COLUMN_DESCRIPTION, finality.getDescricao());
         db.insert(TABLE_NAME, null, contentValues);
     }
 
@@ -79,7 +79,7 @@ public class FinalidadeDBHelper extends AbstractGenericDao<Finality> {
 
         Finality f = new Finality();
         f.setId(res.getInt(res.getColumnIndex(COLUMN_ID)));
-        f.setDescription(res.getString(res.getColumnIndex(COLUMN_DESCRIPTION)));
+        f.setDescricao(res.getString(res.getColumnIndex(COLUMN_DESCRIPTION)));
 
         if (!res.isClosed()) { res.close(); }
 
@@ -97,7 +97,7 @@ public class FinalidadeDBHelper extends AbstractGenericDao<Finality> {
             while (res.moveToNext()) {
                 Finality f = new Finality();
                 f.setId(res.getInt(res.getColumnIndex(COLUMN_ID)));
-                f.setDescription(res.getString(res.getColumnIndex(COLUMN_DESCRIPTION)));
+                f.setDescricao(res.getString(res.getColumnIndex(COLUMN_DESCRIPTION)));
                 result.add(f);
             }
         } finally {
