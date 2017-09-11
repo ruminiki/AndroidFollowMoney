@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="br.com.followmoney.activities.creditCards.CreditCardCreateOrEditActivity">
+    tools:context="br.com.followmoney.activities.bankAccounts.BankAccountCreateOrEditActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,35 +42,15 @@
         </EditText>
 
         <TextView
-            android:id="@+id/textViewLimite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/limiteEditText"
+            android:layout_alignBottom="@+id/numeroEditText"
             android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/limiteEditText"
-            android:text="@string/limit" />
+            android:layout_toRightOf="@+id/numeroEditText"
+            android:text="@string/number" />
 
         <EditText
-            android:id="@+id/limiteEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:inputType="numberDecimal">
-        </EditText>
-
-        <TextView
-            android:id="@+id/textViewDataFechamentoFatura"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/dataFechamentoFaturaEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/dataFechamentoFaturaEditText"
-            android:text="@string/date_closing_invoice" />
-
-        <EditText
-            android:id="@+id/dataFechamentoFaturaEditText"
+            android:id="@+id/numeroEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -80,16 +60,15 @@
         </EditText>
 
         <TextView
-            android:id="@+id/textViewDataVencimentoFaturaEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/dataVencimentoFaturaEditText"
+            android:layout_alignBottom="@+id/digitoEditText"
             android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/dataVencimentoFaturaEditText"
-            android:text="@string/date_maturity_invoice" />
+            android:layout_toRightOf="@+id/digitoEditText"
+            android:text="@string/digit" />
 
         <EditText
-            android:id="@+id/dataVencimentoFaturaEditText"
+            android:id="@+id/digitoEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -98,6 +77,21 @@
             android:inputType="number">
         </EditText>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/situacaoSpinner"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/situacaoSpinner"
+            android:text="@string/status" />
+
+        <Spinner
+            android:id="@+id/situacaoSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:entries="@array/status_option"/>
 
     </LinearLayout>
 

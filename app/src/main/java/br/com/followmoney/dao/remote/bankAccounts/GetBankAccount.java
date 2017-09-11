@@ -1,4 +1,4 @@
-package br.com.followmoney.dao.remote.creditCards;
+package br.com.followmoney.dao.remote.bankAccounts;
 
 import android.content.Context;
 
@@ -13,14 +13,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.followmoney.dao.remote.ApplicationController;
-import br.com.followmoney.domain.CreditCard;
+import br.com.followmoney.domain.BankAccount;
 
-public class GetCreditCard {
+public class GetBankAccount {
 
     public OnLoadListener onLoadlistener;
     public Context context;
 
-    public GetCreditCard(OnLoadListener onLoadlistener, Context context) {
+    public GetBankAccount(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
         this.context = context;
     }
@@ -29,7 +29,7 @@ public class GetCreditCard {
 
         try {
 
-            String URL = "http://192.168.1.10/followMoneyRest/creditCards/"+id;
+            String URL = "http://192.168.1.10/followMoneyRest/bankAccounts/"+id;
             final Gson gson = new Gson();
             // pass second argument as "null" for GET requests
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,
@@ -38,7 +38,7 @@ public class GetCreditCard {
                         public void onResponse(JSONObject response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                CreditCard f = gson.fromJson(response.toString(4),CreditCard.class);
+                                BankAccount f = gson.fromJson(response.toString(4),BankAccount.class);
                                 onLoadlistener.onLoaded(f);
                             } catch (JSONException e) {
                                 e.printStackTrace();
@@ -62,7 +62,7 @@ public class GetCreditCard {
     }
 
     public interface OnLoadListener {
-        void onLoaded(CreditCard creditCard);
+        void onLoaded(BankAccount bankAccount);
         void onError(String error);
     }
 

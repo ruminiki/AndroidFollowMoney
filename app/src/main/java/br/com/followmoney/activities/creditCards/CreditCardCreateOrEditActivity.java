@@ -144,7 +144,7 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
     private void confirmDelete(){
         new DeleteCreditCard(new DeleteCreditCard.OnLoadListener() {
             @Override
-            public void onLoaded(CreditCard creditCard) {
+            public void onLoaded(String response) {
                 Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(getApplicationContext(), CreditCardListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

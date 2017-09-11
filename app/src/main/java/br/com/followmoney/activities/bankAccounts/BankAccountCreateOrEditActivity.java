@@ -1,4 +1,4 @@
-package br.com.followmoney.activities.finalities;
+package br.com.followmoney.activities.bankAccounts;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -6,57 +6,75 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
-import br.com.followmoney.dao.remote.finalities.DeleteFinality;
-import br.com.followmoney.dao.remote.finalities.GetFinality;
-import br.com.followmoney.dao.remote.finalities.PostFinality;
-import br.com.followmoney.dao.remote.finalities.PutFinality;
-import br.com.followmoney.domain.Finality;
 import br.com.followmoney.R;
+import br.com.followmoney.dao.remote.bankAccounts.GetBankAccount;
+import br.com.followmoney.dao.remote.bankAccounts.PostBankAccount;
+import br.com.followmoney.dao.remote.bankAccounts.PutBankAccount;
+import br.com.followmoney.dao.remote.creditCards.DeleteCreditCard;
+import br.com.followmoney.domain.BankAccount;
 
-public class FinalityCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
+public class BankAccountCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText descricaoEditText;
-    Button saveButton;
-    Button deleteButton;
+    EditText descricaoEditText, numeroEditText, digitoEditText;
+    Spinner situacaoSpinner;
+    Button saveButton, deleteButton;
 
-    int finalidadeID;
+    int bankAccountID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finality_create_or_edit);
+        setContentView(R.layout.activity_bank_account_create_or_edit);
 
-        finalidadeID = getIntent().getIntExtra(FinalityListActivity.KEY_EXTRA_CONTACT_ID, 0);
-        descricaoEditText = (EditText) findViewById(R.id.editTextDescricao);
+        //====BIND TEXT FIELDS====//
+        bankAccountID     = getIntent().getIntExtra(BankAccountListActivity.KEY_EXTRA_BANK_ACCOUNT_ID, 0);
+        descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
+        numeroEditText    = (EditText) findViewById(R.id.numeroEditText);
+        situacaoSpinner   = (Spinner)  findViewById(R.id.situacaoSpinner);
+        digitoEditText    = (EditText) findViewById(R.id.digitoEditText);
 
+        //====BIND BUTTONS====//
         saveButton = (Button) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
         deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
-        if (finalidadeID > 0) {
-            new GetFinality(new GetFinality.OnLoadListener() {
+        if (bankAccountID > 0) {
+            new GetBankAccount(new GetBankAccount.OnLoadListener() {
                 @Override
-                public void onLoaded(Finality finality) {
+                public void onLoaded(BankAccount bankAccount) {
                     saveButton.setVisibility(View.VISIBLE);
                     deleteButton.setVisibility(View.VISIBLE);
 
-                    descricaoEditText.setText(finality.getDescricao());
+                    descricaoEditText.setText(bankAccount.getDescricao());
                     descricaoEditText.setEnabled(true);
-                    descricaoEditText.setFocusableInTouchMode(true);
                     descricaoEditText.setClickable(true);
+
+                    numeroEditText.setText(String.valueOf(bankAccount.getNumero()));
+                    numeroEditText.setEnabled(true);
+                    numeroEditText.setClickable(true);
+
+                    situacaoSpinner.setSelection( ((ArrayAdapter) situacaoSpinner.getAdapter()).getPosition(bankAccount.getSituacao()));
+                    situacaoSpinner.setEnabled(true);
+                    situacaoSpinner.setClickable(true);
+
+                    digitoEditText.setText(String.valueOf(bankAccount.getDigito()));
+                    digitoEditText.setEnabled(true);
+                    digitoEditText.setClickable(true);
                 }
 
                 @Override
                 public void onError(String error) {
                     Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
                 }
-            }, this).execute(finalidadeID);
+            }, this).execute(bankAccountID);
 
         }else{
             saveButton.setVisibility(View.VISIBLE);
@@ -65,12 +83,12 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
     }
 
     public void persist() {
-        if(finalidadeID > 0) {
-            new PutFinality(new PutFinality.OnLoadListener() {
+        if(bankAccountID > 0) {
+            new PutBankAccount(new PutBankAccount.OnLoadListener() {
                 @Override
-                public void onLoaded(Finality finality) {
+                public void onLoaded(BankAccount bankAccount) {
                     Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
@@ -83,11 +101,11 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
 
         }
         else {
-            new PostFinality(new PostFinality.OnLoadListener() {
+            new PostBankAccount(new PostBankAccount.OnLoadListener() {
                 @Override
-                public void onLoaded(Finality finality) {
+                public void onLoaded(BankAccount bankAccount) {
                     Toast.makeText(getApplicationContext(), "Object Inserted", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
@@ -127,11 +145,11 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
     }
 
     private void confirmDelete(){
-        new DeleteFinality(new DeleteFinality.OnLoadListener() {
+        new DeleteCreditCard(new DeleteCreditCard.OnLoadListener() {
             @Override
             public void onLoaded(String response) {
                 Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), FinalityListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -141,15 +159,18 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
                 System.out.println(error);
                 Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(finalidadeID);
+        }, this).execute(bankAccountID);
     }
 
-    private Finality getValueDataFieldsInView(){
-        Finality f = new Finality();
-        f.setId(finalidadeID);
-        f.setDescricao(descricaoEditText.getText().toString());
-        f.setUsuario(3);
-        return f;
+    private BankAccount getValueDataFieldsInView(){
+        BankAccount b = new BankAccount();
+        b.setId(bankAccountID);
+        b.setDescricao(descricaoEditText.getText().toString());
+        b.setNumero(numeroEditText.getText().toString());
+        b.setDigito(Integer.parseInt(digitoEditText.getText().toString()));
+        b.setSituacao(situacaoSpinner.getSelectedItem().toString());
+        b.setUsuario(3);
+        return b;
     }
 
 }

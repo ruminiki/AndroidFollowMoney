@@ -18,37 +18,37 @@
         android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"/>
+
+        <android.support.v4.widget.Space
+            android:layout_width="5dp"
+            android:layout_height="wrap_content"/>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"
-            android:text="@string/limit"/>
+            android:text="@string/number"/>
         
         <android.support.v4.widget.Space
             android:layout_width="5dp"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:id="@+id/limit"
+            android:id="@+id/number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"/>
 
         <android.support.v4.widget.Space
-            android:layout_width="10dp"
+            android:layout_width="3dp"
             android:layout_height="wrap_content"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="14dp"
-            android:text="@string/date_closing_invoice"/>
-
-        <android.support.v4.widget.Space
-            android:layout_width="5dp"
-            android:layout_height="wrap_content"/>
-
-        <TextView
-            android:id="@+id/closing_date"
+            android:id="@+id/digit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="14dp"/>

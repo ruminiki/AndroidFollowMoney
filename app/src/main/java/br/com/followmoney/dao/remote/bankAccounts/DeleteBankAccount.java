@@ -1,4 +1,4 @@
-package br.com.followmoney.dao.remote.finalities;
+package br.com.followmoney.dao.remote.bankAccounts;
 
 import android.content.Context;
 
@@ -10,18 +10,18 @@ import com.android.volley.toolbox.StringRequest;
 
 import br.com.followmoney.dao.remote.ApplicationController;
 
-public class DeleteFinality {
+public class DeleteBankAccount {
 
     public OnLoadListener onLoadlistener;
     public Context context;
 
-    public DeleteFinality(OnLoadListener onLoadlistener, Context context) {
+    public DeleteBankAccount(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
         this.context = context;
     }
 
     public void execute(Integer id) {
-        final String URL = "http://192.168.1.10/followMoneyRest/finalities/"+id;
+        final String URL = "http://192.168.1.10/followMoneyRest/bankAccounts/"+id;
 
         StringRequest req = new StringRequest(Request.Method.DELETE, URL,
                 new Response.Listener<String>()

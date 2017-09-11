@@ -61,7 +61,7 @@ public class PutCreditCard {
     }
 
     public interface OnLoadListener {
-        void onLoaded(CreditCard CreditCard);
+        void onLoaded(CreditCard creditCard);
         void onError(String error);
     }
 

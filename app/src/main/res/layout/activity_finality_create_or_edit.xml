@@ -33,9 +33,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:inputType="textCapCharacters"
             android:layout_marginTop="5dp"
-            android:ems="10"
-            android:inputType="text">
+            android:ems="10">
 
             <requestFocus />
         </EditText>

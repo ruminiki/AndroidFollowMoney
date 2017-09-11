@@ -1,4 +1,4 @@
-package br.com.followmoney.dao.remote.creditCards;
+package br.com.followmoney.dao.remote.bankAccounts;
 
 import android.content.Context;
 
@@ -13,33 +13,33 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import br.com.followmoney.dao.remote.ApplicationController;
-import br.com.followmoney.domain.CreditCard;
+import br.com.followmoney.domain.BankAccount;
 
-public class GetCreditCard {
+public class PutBankAccount {
 
     public OnLoadListener onLoadlistener;
     public Context context;
 
-    public GetCreditCard(OnLoadListener onLoadlistener, Context context) {
+    public PutBankAccount(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
         this.context = context;
     }
 
-    public void execute(Integer id) {
-
+    public void execute(BankAccount bankAccount) {
         try {
-
-            String URL = "http://192.168.1.10/followMoneyRest/creditCards/"+id;
             final Gson gson = new Gson();
-            // pass second argument as "null" for GET requests
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,
+            String CreditCardJson = gson.toJson(bankAccount);
+            System.out.println(CreditCardJson);
+
+            final String URL = "http://192.168.1.10/followMoneyRest/bankAccounts/"+bankAccount.getId();
+            // Post params to be sent to the server
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(CreditCardJson),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                CreditCard f = gson.fromJson(response.toString(4),CreditCard.class);
-                                onLoadlistener.onLoaded(f);
+                                onLoadlistener.onLoaded(gson.fromJson(response.toString(4), BankAccount.class));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -48,21 +48,20 @@ public class GetCreditCard {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
-                    onLoadlistener.onError(error.getMessage());
                 }
             });
 
             // add the request object to the queue to be executed
             ApplicationController.getInstance(context).addToRequestQueue(req);
 
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     public interface OnLoadListener {
-        void onLoaded(CreditCard creditCard);
+        void onLoaded(BankAccount bankAccount);
         void onError(String error);
     }
 

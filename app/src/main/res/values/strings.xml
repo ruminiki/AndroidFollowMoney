@@ -9,7 +9,7 @@
     <string name="save">Save</string>
 
     <!-- generic-->
-    <string name="descricao">Descrição</string>
+    <string name="descricao">Description</string>
     <string name="yes">Confirm</string>
     <string name="no">Cancel</string>
     <string name="title_activity_activity_edit">CreateOrEditActivity</string>
@@ -18,12 +18,21 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- finalidade -->
-    <string name="deleteFinalidade">Confirm finalidade deletion.</string>
+    <string name="deleteFinalidade">Confirm deletion.</string>
 
 
     <!-- credit card-->
-    <string name="limit">Limite</string>
-    <string name="date_closing_invoice">Data Fechamento Fatura</string>
-    <string name="date_maturity_invoice">Data Vencimento Fatura</string>
+    <string name="limit">Limit</string>
+    <string name="date_closing_invoice">Closing invoice date</string>
+    <string name="date_maturity_invoice">Maturity invoice date</string>
 
+
+    <!-- bank account -->
+    <string name="status">Status</string>
+    <string name="number">Number</string>
+    <string name="digit">Digit</string>
+    <string-array name="status_option">
+        <item>OPEN</item>
+        <item>CLOSED</item>
+    </string-array>
 </resources>
