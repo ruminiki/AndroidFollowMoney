@@ -35,4 +35,14 @@
         <item>OPEN</item>
         <item>CLOSED</item>
     </string-array>
+
+    <!-- movement -->
+    <string name="debit">Debit</string>
+    <string name="credit">Credit</string>
+    <string name="operation">Operation</string>
+    <string name="date_emission">Emission</string>
+    <string name="date_maturity">Maturity</string>
+
+
+
 </resources>

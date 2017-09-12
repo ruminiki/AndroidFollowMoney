@@ -18,6 +18,7 @@ import br.com.followmoney.R;
 import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
+import br.com.followmoney.activities.movements.MovementListActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -95,12 +96,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.bank_account) {
             Intent intent = new Intent(this, BankAccountListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.movements) {
+            Intent intent = new Intent(this, MovementListActivity.class);
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

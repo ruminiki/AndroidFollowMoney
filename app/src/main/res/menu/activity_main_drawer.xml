@@ -14,22 +14,18 @@
             android:id="@+id/bank_account"
             android:icon="@drawable/ic_menu_slideshow"
             android:title="Bank Account" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Movements">
         <menu>
             <item
-                android:id="@+id/nav_share"
+                android:id="@+id/movements"
                 android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+                android:title="Movements" />
             <item
-                android:id="@+id/nav_send"
+                android:id="@+id/invoices"
                 android:icon="@drawable/ic_menu_send"
-                android:title="Send" />
+                android:title="Faturas" />
         </menu>
     </item>
 
