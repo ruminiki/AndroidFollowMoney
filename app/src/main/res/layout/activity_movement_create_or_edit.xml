@@ -49,7 +49,7 @@
             android:text="@string/operation" />
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
             <RadioButton android:id="@+id/creditoRadio"
@@ -66,10 +66,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:orientation="horizontal"
-            android:paddingTop="@dimen/activity_vertical_margin">
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="150dp"
@@ -89,10 +86,10 @@
                     android:id="@+id/emissaoEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="5dp"
-                    android:inputType="date">
-                </EditText>
+                    android:layout_alignParentLeft="true"
+                    android:inputType="date"/>
+
+
             </LinearLayout>
 
             <LinearLayout
@@ -113,12 +110,51 @@
                     android:id="@+id/vencimentoEditText"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="5dp"
-                    android:inputType="date">
-                </EditText>
+                    android:layout_alignParentLeft="true"
+                    android:inputType="date"/>
+
             </LinearLayout>
         </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/finalidadeSpinner"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/finalidadeSpinner"
+            android:text="@string/finality" />
+        <Spinner
+            android:id="@+id/finalidadeSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/contaBancariaSpinner"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/contaBancariaSpinner"
+            android:text="@string/bank_account" />
+        <Spinner
+            android:id="@+id/contaBancariaSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/cartaoCreditoSpinner"
+            android:layout_alignParentLeft="true"
+            android:layout_toRightOf="@+id/cartaoCreditoSpinner"
+            android:text="@string/credit_card" />
+        <Spinner
+            android:id="@+id/cartaoCreditoSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"/>
+
     </LinearLayout>
 
     <LinearLayout

@@ -42,7 +42,8 @@
     <string name="operation">Operation</string>
     <string name="date_emission">Emission</string>
     <string name="date_maturity">Maturity</string>
-
-
+    <string name="finality">Finality</string>
+    <string name="bank_account">Bank Account</string>
+    <string name="credit_card">Credit Card</string>
 
 </resources>

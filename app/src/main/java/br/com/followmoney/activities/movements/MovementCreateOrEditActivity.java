@@ -6,22 +6,35 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.util.List;
+
 import br.com.followmoney.R;
+import br.com.followmoney.components.EditTextDatePicker;
+import br.com.followmoney.dao.remote.bankAccounts.GetBankAccounts;
+import br.com.followmoney.dao.remote.creditCards.GetCreditCards;
 import br.com.followmoney.dao.remote.finalities.DeleteFinality;
+import br.com.followmoney.dao.remote.finalities.GetFinalities;
 import br.com.followmoney.dao.remote.movements.GetMovement;
 import br.com.followmoney.dao.remote.movements.PostMovement;
 import br.com.followmoney.dao.remote.movements.PutMovement;
+import br.com.followmoney.domain.BankAccount;
+import br.com.followmoney.domain.CreditCard;
+import br.com.followmoney.domain.Finality;
 import br.com.followmoney.domain.Movement;
+import br.com.followmoney.util.DateUtil;
 
 public class MovementCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText descricaoEditText, emissaoEditText, vencimentoEditText;
     RadioButton creditoRadio, debitoRadio;
+    Spinner contaBancariaSpinner, finalidadeSpinner, formaPagamentoSpinner, cartaoCreditoSpinner;
     Button saveButton, deleteButton;
 
     int movimentoID;
@@ -34,7 +47,11 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
         movimentoID = getIntent().getIntExtra(MovementListActivity.KEY_EXTRA_MOVEMENT_ID, 0);
         descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
         emissaoEditText = (EditText) findViewById(R.id.emissaoEditText);
+        new EditTextDatePicker(this, emissaoEditText);
+
         vencimentoEditText = (EditText) findViewById(R.id.vencimentoEditText);
+        new EditTextDatePicker(this, vencimentoEditText);
+
         creditoRadio = (RadioButton) findViewById(R.id.creditoRadio);
         debitoRadio = (RadioButton) findViewById(R.id.debitoRadio);
 
@@ -43,6 +60,15 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
 
         deleteButton = (Button) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
+
+        finalidadeSpinner = (Spinner) findViewById(R.id.finalidadeSpinner);
+        populateFinalidadeSpinner();
+
+        contaBancariaSpinner = (Spinner) findViewById(R.id.contaBancariaSpinner);
+        populateContaBancariaSpinner();
+
+        cartaoCreditoSpinner = (Spinner) findViewById(R.id.cartaoCreditoSpinner);
+        populateCartaoCreditoSpinner();
 
         if (movimentoID > 0) {
             new GetMovement(new GetMovement.OnLoadListener() {
@@ -56,16 +82,14 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
                     descricaoEditText.setFocusableInTouchMode(true);
                     descricaoEditText.setClickable(true);
 
-                    emissaoEditText.setText(movement.getEmissao());
-                    emissaoEditText.setEnabled(true);
+                    emissaoEditText.setText(DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
                     emissaoEditText.setClickable(true);
 
-                    vencimentoEditText.setText(movement.getVencimento());
-                    vencimentoEditText.setEnabled(true);
+                    vencimentoEditText.setText(DateUtil.format(movement.getVencimento(), "yyyyMMdd", "dd/MM/yyyy"));
                     vencimentoEditText.setClickable(true);
 
-                    creditoRadio.setSelected(movement.getOperacao().equals(Movement.CREDIT));
-                    debitoRadio.setSelected(movement.getOperacao().equals(Movement.DEBIT));
+                    creditoRadio.setChecked(movement.getOperacao().equals(Movement.CREDIT));
+                    debitoRadio.setChecked(movement.getOperacao().equals(Movement.DEBIT));
                 }
 
                 @Override
@@ -77,8 +101,70 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
         }else{
             saveButton.setVisibility(View.VISIBLE);
             deleteButton.setVisibility(View.GONE);
+            debitoRadio.setChecked(true);
         }
     }
+
+    ///=====START: POPULATE FINALIDADE SPINNER======//
+    private void populateFinalidadeSpinner(){
+        new GetFinalities(new GetFinalities.OnLoadListener() {
+            @Override
+            public void onLoaded(List<Finality> finalities) {
+                populateFinalidadeSpinner(finalities);
+            }
+            @Override
+            public void onError(String error) {
+                System.out.println(error);
+                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(3);
+    }
+
+    private void populateFinalidadeSpinner(List<Finality> finalities){
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner, finalities);
+        finalidadeSpinner.setAdapter(adapter);
+    }
+
+    ///=====START: POPULATE CONTA BANCARIA SPINNER======//
+    private void populateContaBancariaSpinner(){
+        new GetBankAccounts(new GetBankAccounts.OnLoadListener() {
+            @Override
+            public void onLoaded(List<BankAccount> bankAccounts) {
+                populateContaBancariaSpinner(bankAccounts);
+            }
+            @Override
+            public void onError(String error) {
+                System.out.println(error);
+                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(3);
+    }
+
+    private void populateContaBancariaSpinner(List<BankAccount> bankAccounts){
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner, bankAccounts);
+        contaBancariaSpinner.setAdapter(adapter);
+    }
+
+    ///=====START: POPULATE CARTAO CREDITO SPINNER======//
+    private void populateCartaoCreditoSpinner(){
+        new GetCreditCards(new GetCreditCards.OnLoadListener() {
+            @Override
+            public void onLoaded(List<CreditCard> creditCards) {
+                populateCartaoCreditoSpinner(creditCards);
+            }
+            @Override
+            public void onError(String error) {
+                System.out.println(error);
+                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(3);
+    }
+
+    private void populateCartaoCreditoSpinner(List<CreditCard> creditCards){
+        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner, creditCards);
+        cartaoCreditoSpinner.setAdapter(adapter);
+    }
+    ///=====END: POPULATE CARTAO CREDITO SPINNER======//
 
     public void persist() {
         if(movimentoID > 0) {
@@ -164,9 +250,9 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
         Movement m = new Movement();
         m.setId(movimentoID);
         m.setDescricao(descricaoEditText.getText().toString());
-        m.setEmissao(emissaoEditText.getText().toString());
-        m.setVencimento(vencimentoEditText.getText().toString());
-        m.setOperacao(creditoRadio.isSelected() ? Movement.CREDIT : Movement.DEBIT);
+        m.setEmissao(DateUtil.format(emissaoEditText.getText().toString(), "dd/MM/yyyy", "yyyyMMdd"));
+        m.setVencimento(DateUtil.format(vencimentoEditText.getText().toString(), "dd/MM/yyyy", "yyyyMMdd"));
+        m.setOperacao(creditoRadio.isChecked() ? Movement.CREDIT : Movement.DEBIT);
         m.setUsuario(3);
         return m;
     }

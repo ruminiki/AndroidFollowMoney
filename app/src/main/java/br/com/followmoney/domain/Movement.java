@@ -1,5 +1,7 @@
 package br.com.followmoney.domain;
 
+import java.util.Calendar;
+
 /**
  * Created by ruminiki on 08/09/2017.
  */
@@ -138,6 +140,26 @@ public class Movement{
     @Override
     public String toString() {
         return id + " - " + descricao;
+    }
+
+    public Calendar getEmissionDate(){
+        Calendar c = Calendar.getInstance();
+
+        c.set(Calendar.YEAR, Integer.parseInt(getEmissao().substring(1, 4)));
+        c.set(Calendar.MONTH, Integer.parseInt(getEmissao().substring(5, 6)));
+        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getEmissao().substring(7, 8)));
+        return c;
+
+    }
+
+    public Calendar getMaturityDate(){
+        Calendar c = Calendar.getInstance();
+
+        c.set(Calendar.YEAR, Integer.parseInt(getVencimento().substring(1, 4)));
+        c.set(Calendar.MONTH, Integer.parseInt(getVencimento().substring(5, 6)));
+        c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getVencimento().substring(7, 8)));
+        return c;
+
     }
 
    /* @Override

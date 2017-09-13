@@ -31,7 +31,7 @@ public class PutMovement {
             String CreditCardJson = gson.toJson(movement);
             System.out.println(CreditCardJson);
 
-            final String URL = "http://192.168.1.10/followMoneyRest/bankAccounts/"+movement.getId();
+            final String URL = "http://192.168.1.10/followMoneyRest/movements/"+movement.getId();
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(CreditCardJson),
                     new Response.Listener<JSONObject>() {

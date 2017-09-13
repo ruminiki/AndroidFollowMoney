@@ -18,6 +18,7 @@ import java.util.List;
 import br.com.followmoney.R;
 import br.com.followmoney.dao.remote.movements.GetMovements;
 import br.com.followmoney.domain.Movement;
+import br.com.followmoney.util.DateUtil;
 
 public class MovementListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
@@ -29,6 +30,9 @@ public class MovementListActivity extends AppCompatActivity implements AdapterVi
     private static final String KEY_ID            = "id";
     private static final String KEY_DESCRIPTION   = "description";
     private static final String KEY_FINALITY      = "finality";
+    private static final String KEY_BANK_ACCOUNT  = "bankAccount";
+    private static final String KEY_EMISSION      = "emission";
+    private static final String KEY_MATURITY      = "maturity";
     private static final String KEY_VALUE         = "value";
 
     @Override
@@ -56,15 +60,26 @@ public class MovementListActivity extends AppCompatActivity implements AdapterVi
                     HashMap<String, String> map = new HashMap<>();
                     map.put(KEY_ID, String.valueOf(movement.getId()));
                     map.put(KEY_DESCRIPTION, movement.getDescricao());
-                    map.put(KEY_FINALITY, movement.getFinalidade().getDescricao());
+                    map.put(KEY_FINALITY, "Finalidade: " + movement.getFinalidade().getDescricao());
+
+                    if ( movement.getContaBancaria() != null && movement.getContaBancaria().getDescricao() != null ){
+                        map.put(KEY_BANK_ACCOUNT, "Conta Bancária: " + movement.getContaBancaria().getDescricao());
+                    }else{
+                        if ( movement.getCartaoCredito() != null && movement.getCartaoCredito().getDescricao() != null ){
+                            map.put(KEY_BANK_ACCOUNT, "Cartão Crédito: " + movement.getCartaoCredito().getDescricao());
+                        }
+                    }
+
+                    map.put(KEY_EMISSION, "Emiss: " + DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
+                    map.put(KEY_MATURITY, "Vencto: " + DateUtil.format(movement.getVencimento(), "yyyyMMdd", "dd/MM/yyyy"));
                     map.put(KEY_VALUE, "R$ " + String.valueOf(movement.getValor()));
 
                     mapList.add(map);
                 }
 
                 ListAdapter adapter = new SimpleAdapter(MovementListActivity.this, mapList, R.layout.movement_list_renderer,
-                        new String[] { KEY_DESCRIPTION, KEY_FINALITY, KEY_VALUE },
-                        new int[] { R.id.description, R.id.finality, R.id.value});
+                        new String[] { KEY_DESCRIPTION, KEY_FINALITY, KEY_VALUE, KEY_BANK_ACCOUNT, KEY_EMISSION, KEY_MATURITY },
+                        new int[] { R.id.description, R.id.finality, R.id.value, R.id.bank_account, R.id.emission, R.id.maturity});
 
                 listView.setAdapter(adapter);
             }
