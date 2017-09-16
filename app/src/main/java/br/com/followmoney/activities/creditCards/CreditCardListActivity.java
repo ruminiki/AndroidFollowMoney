@@ -2,10 +2,10 @@ package br.com.followmoney.activities.creditCards;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -17,6 +17,7 @@ import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.SelectableActivity;
+import br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListActivity;
 import br.com.followmoney.dao.remote.creditCards.GetCreditCards;
 import br.com.followmoney.domain.CreditCard;
 
@@ -41,8 +42,8 @@ public class CreditCardListActivity extends AppCompatActivity implements Selecta
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        ImageButton button = (ImageButton) findViewById(R.id.addNew);
-        button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(CreditCardListActivity.this, CreditCardCreateOrEditActivity.class);
@@ -76,8 +77,15 @@ public class CreditCardListActivity extends AppCompatActivity implements Selecta
                 System.out.println(error);
                 Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(3);
+        }, this).execute(3);//@TODO precisa pegar o id do usuario logado
 
+    }
+
+    public void showCreditCardInvoiceMovements(View view){
+        //@TODO precisa pegar o id do cartão de crédito pelo clique no botao da fatura
+        Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceListActivity.class);
+        intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, 0);
+        startActivity(intent);
     }
 
     @Override

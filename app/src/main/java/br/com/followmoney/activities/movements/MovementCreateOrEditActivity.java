@@ -174,7 +174,7 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
     ///=====SELECT FINALIDADE======//
     private void openFinalidadeFormToSelect(){
         Intent intent = new Intent(this, FinalityListActivity.class);
-        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra("ParentActivityName", this.getClass());
         intent.putExtra(FinalityListActivity.KEY_MODE, FinalityListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_FINALIDADE_RETURN);
     }
@@ -182,7 +182,7 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
     ///=====SELECT FORMA PAGAMENTO ======//
     private void openFormaPagamentoFormToSelect(){
         Intent intent = new Intent(this, PaymentFormListActivity.class);
-        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra("ParentActivityName", this.getClass());
         intent.putExtra(PaymentFormListActivity.KEY_MODE, PaymentFormListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_FORMA_PAGAMENTO_RETURN);
     }
@@ -190,7 +190,7 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
     ///=====START: POPULATE CONTA BANCARIA SPINNER======//
     private void openContaBancariaFormToSelect(){
         Intent intent = new Intent(this, BankAccountListActivity.class);
-        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra("ParentActivityName", this.getClass());
         intent.putExtra(BankAccountListActivity.KEY_MODE, BankAccountListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_CONTA_BANCARIA_RETURN);
     }
@@ -198,7 +198,7 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
     ///=====SELECT CARTAO CREDITO======//
     private void openCartaoCreditoFormToSelect(){
         Intent intent = new Intent(this, CreditCardListActivity.class);
-        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra("ParentActivityName", this.getClass());
         intent.putExtra(CreditCardListActivity.KEY_MODE, CreditCardListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_CARTAO_CREDITO_RETURN);
     }

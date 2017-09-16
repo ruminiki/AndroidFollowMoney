@@ -2,10 +2,10 @@ package br.com.followmoney.activities.bankAccounts;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -42,8 +42,8 @@ public class BankAccountListActivity extends AppCompatActivity implements Select
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        ImageButton button = (ImageButton) findViewById(R.id.addNew);
-        button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BankAccountListActivity.this, BankAccountCreateOrEditActivity.class);

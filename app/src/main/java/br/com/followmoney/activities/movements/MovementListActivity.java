@@ -2,10 +2,12 @@ package br.com.followmoney.activities.movements;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -40,18 +42,31 @@ public class MovementListActivity extends AppCompatActivity implements AdapterVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movement_list);
 
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setOnItemClickListener(this);
-
-        ImageButton button = (ImageButton) findViewById(R.id.addNew);
-        button.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        fabAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MovementListActivity.this, MovementCreateOrEditActivity.class);
+                Intent intent = new Intent(getApplicationContext(), MovementCreateOrEditActivity.class);
                 intent.putExtra(KEY_EXTRA_MOVEMENT_ID, 0);
                 startActivity(intent);
             }
         });
+
+        FloatingActionButton fabSearch = (FloatingActionButton) findViewById(R.id.fabSearch);
+        fabSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START);
+                }else{
+                    drawer.openDrawer(GravityCompat.START);
+                }
+            }
+        });
+
+        listView = (ListView) findViewById(R.id.listView);
+        listView.setOnItemClickListener(this);
 
         new GetMovements(new GetMovements.OnLoadListener() {
             @Override
@@ -89,7 +104,7 @@ public class MovementListActivity extends AppCompatActivity implements AdapterVi
                 System.out.println(error);
                 Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(3, "201708");
+        }, this).execute(3, "201708");//@TODO precisa pegar o mês selecionado na search panel
 
     }
 

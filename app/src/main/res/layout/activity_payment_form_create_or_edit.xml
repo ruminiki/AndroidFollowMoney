@@ -40,7 +40,7 @@
                 android:layout_alignParentRight="true"
                 android:textAllCaps="true"
                 android:layout_marginTop="5dp"
-                android:ems="10"
+                android:textSize="@dimen/font_size"
                 android:inputType="textCapCharacters">
 
                 <requestFocus />
@@ -62,7 +62,7 @@
                 android:textAllCaps="true"
                 android:maxLength="3"
                 android:layout_marginTop="5dp"
-                android:ems="10"
+                android:textSize="@dimen/font_size"
                 android:inputType="textCapCharacters"/>
         </LinearLayout>
     </ScrollView>

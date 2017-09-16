@@ -17,7 +17,6 @@ import br.com.followmoney.R;
 import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
-import br.com.followmoney.activities.movements.MovementCreateOrEditActivity;
 import br.com.followmoney.activities.movements.MovementListActivity;
 import br.com.followmoney.activities.paymentForms.PaymentFormListActivity;
 
@@ -35,7 +34,8 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                openCreateMovement();
+                Intent intent = new Intent(getApplicationContext(), MovementListActivity.class);
+                startActivity(intent);
                 /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();*/
             }
@@ -109,12 +109,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    private void openCreateMovement(){
-        Intent intent = new Intent(this, MovementCreateOrEditActivity.class);
-        intent.putExtra("ParentClassSource", "br.com.followmoney.activities.MainActivity");
-        startActivity(intent);
     }
 
 }

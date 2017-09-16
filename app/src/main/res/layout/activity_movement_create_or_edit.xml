@@ -6,22 +6,22 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="br.com.followmoney.activities.movements.MovementCreateOrEditActivity">
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
+        style="@android:style/Widget.Material.ScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="450dp"
+        android:clipToPadding="false"
+        android:fillViewport="false"
         android:orientation="vertical"
-        android:id="@+id/scrollView">
+        android:scrollbarStyle="insideInset">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
             android:orientation="vertical">
 
             <TextView
@@ -37,10 +37,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:textAllCaps="true"
                 android:layout_marginTop="5dp"
-                android:ems="10"
-                android:inputType="textCapCharacters">
+                android:inputType="textCapCharacters"
+                android:textAllCaps="true"
+                android:textSize="@dimen/font_size">
 
                 <requestFocus />
             </EditText>
@@ -67,17 +67,19 @@
                     android:id="@+id/toggleButtonCredito"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="@string/credit"
+                    android:onClick="setOperacaoCredito"
                     android:textOff="@string/credit"
-                    android:onClick="setOperacaoCredito"/>
+                    android:textOn="@string/credit"
+                    android:textSize="@dimen/font_size" />
 
                 <ToggleButton
                     android:id="@+id/toggleButtonDebito"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="@string/debit"
+                    android:onClick="setOperacaoDebito"
                     android:textOff="@string/debit"
-                    android:onClick="setOperacaoDebito"/>
+                    android:textOn="@string/debit"
+                    android:textSize="@dimen/font_size" />
             </LinearLayout>
 
             <LinearLayout
@@ -92,6 +94,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="0dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -105,7 +108,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:textSize="@dimen/font_size" />
 
 
                 </LinearLayout>
@@ -116,6 +120,7 @@
                     android:layout_centerHorizontal="true"
                     android:layout_marginLeft="0dp"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -129,7 +134,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_alignParentLeft="true"
-                        android:inputType="date"/>
+                        android:inputType="date"
+                        android:textSize="@dimen/font_size" />
 
                 </LinearLayout>
             </LinearLayout>
@@ -148,16 +154,19 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="0dp"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/finalidadeEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="false"/>
+                    android:clickable="false"
+                    android:textSize="@dimen/font_size" />
+
                 <ImageButton
                     android:id="@+id/finalidadeSelectButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_search"/>
+                    android:src="@android:drawable/ic_menu_search" />
             </LinearLayout>
 
             <TextView
@@ -167,22 +176,26 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toRightOf="@+id/formaPagamentoEditText"
                 android:text="@string/payment_form" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="0dp"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/formaPagamentoEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="false"/>
+                    android:clickable="false"
+                    android:textSize="@dimen/font_size" />
+
                 <ImageButton
                     android:id="@+id/formaPagamentoSelectButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_search"/>
+                    android:src="@android:drawable/ic_menu_search" />
             </LinearLayout>
 
             <TextView
@@ -192,22 +205,26 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toRightOf="@+id/contaBancariaEditText"
                 android:text="@string/bank_account" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="0dp"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/contaBancariaEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="false"/>
+                    android:clickable="false"
+                    android:textSize="@dimen/font_size" />
+
                 <ImageButton
                     android:id="@+id/contaBancariaSelectButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_search"/>
+                    android:src="@android:drawable/ic_menu_search" />
             </LinearLayout>
 
             <TextView
@@ -217,22 +234,26 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toRightOf="@+id/cartaoCreditoEditText"
                 android:text="@string/credit_card" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="0dp"
                 android:orientation="horizontal">
+
                 <EditText
                     android:id="@+id/cartaoCreditoEditText"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:clickable="false"/>
+                    android:clickable="false"
+                    android:textSize="@dimen/font_size" />
+
                 <ImageButton
                     android:id="@+id/cartaoCreditoSelectButton"
                     android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:src="@android:drawable/ic_menu_search"/>
+                    android:src="@android:drawable/ic_menu_search" />
             </LinearLayout>
 
             <TextView
@@ -247,11 +268,8 @@
                 android:id="@+id/valorEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="5dp"
-                android:ems="10"
-                android:inputType="numberDecimal">
-            </EditText>
+                android:inputType="numberDecimal"
+                android:textSize="@dimen/font_size"/>
         </LinearLayout>
 
     </ScrollView>
@@ -261,7 +279,9 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:paddingBottom="5dp"
+        android:paddingBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
         android:background="@color/primary_material_light"
         android:gravity="right"
         android:orientation="horizontal">

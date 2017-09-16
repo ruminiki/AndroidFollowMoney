@@ -35,9 +35,8 @@
             android:layout_alignParentRight="true"
             android:textAllCaps="true"
             android:layout_marginTop="5dp"
-            android:ems="10"
+            android:textSize="@dimen/font_size"
             android:inputType="textCapCharacters">
-
             <requestFocus />
         </EditText>
 
