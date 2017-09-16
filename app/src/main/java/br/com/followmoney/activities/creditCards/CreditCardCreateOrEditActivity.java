@@ -6,8 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import br.com.followmoney.R;
@@ -20,7 +20,7 @@ import br.com.followmoney.domain.CreditCard;
 public class CreditCardCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText descricaoEditText, limiteEditText, dataFechamentoFaturaEditText, dataVencimentoFaturaEditText;
-    Button saveButton, deleteButton;
+    ImageButton saveButton, deleteButton;
 
     int creditCardID;
 
@@ -37,10 +37,10 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
         dataVencimentoFaturaEditText = (EditText) findViewById(R.id.dataVencimentoFaturaEditText);
 
         //====BIND BUTTONS====//
-        saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton = (ImageButton) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
-        deleteButton = (Button) findViewById(R.id.deleteButton);
+        deleteButton = (ImageButton) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
         if (creditCardID > 0) {

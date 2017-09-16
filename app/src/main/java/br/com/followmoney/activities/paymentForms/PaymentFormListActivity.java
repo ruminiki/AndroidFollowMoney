@@ -1,4 +1,4 @@
-package br.com.followmoney.activities.finalities;
+package br.com.followmoney.activities.paymentForms;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,12 +16,12 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.followmoney.R;
-import br.com.followmoney.dao.remote.finalities.GetFinalities;
-import br.com.followmoney.domain.Finality;
+import br.com.followmoney.dao.remote.paymentForms.GetPaymentForms;
+import br.com.followmoney.domain.PaymentForm;
 
-public class FinalityListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class PaymentFormListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
-    public final static String KEY_EXTRA_CONTACT_ID = "KEY_EXTRA_CONTACT_ID";
+    public final static String KEY_EXTRA_PAYMENT_FORM_ID = "KEY_EXTRA_PAYMENT_FORM_ID";
 
     private ListView listView;
 
@@ -32,7 +32,7 @@ public class FinalityListActivity extends AppCompatActivity implements AdapterVi
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_finality_list);
+        setContentView(R.layout.activity_payment_form_list);
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
@@ -41,24 +41,24 @@ public class FinalityListActivity extends AppCompatActivity implements AdapterVi
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(FinalityListActivity.this, FinalityCreateOrEditActivity.class);
-                intent.putExtra(KEY_EXTRA_CONTACT_ID, 0);
+                Intent intent = new Intent(PaymentFormListActivity.this, PaymentFormCreateOrEditActivity.class);
+                intent.putExtra(KEY_EXTRA_PAYMENT_FORM_ID, 0);
                 startActivity(intent);
             }
         });
 
-        new GetFinalities(new GetFinalities.OnLoadListener() {
+        new GetPaymentForms(new GetPaymentForms.OnLoadListener() {
             @Override
-            public void onLoaded(List<Finality> finalities) {
-                for (Finality finality : finalities) {
+            public void onLoaded(List<PaymentForm> paymentForms) {
+                for (PaymentForm paymentForm : paymentForms) {
                     HashMap<String, String> map = new HashMap<>();
-                    map.put(KEY_ID, String.valueOf(finality.getId()));
-                    map.put(KEY_DESCRIPTION, finality.getDescricao());
+                    map.put(KEY_ID, String.valueOf(paymentForm.getId()));
+                    map.put(KEY_DESCRIPTION, paymentForm.getDescricao());
 
                     mapList.add(map);
                 }
 
-                ListAdapter adapter = new SimpleAdapter(FinalityListActivity.this, mapList, R.layout.finality_list_renderer,
+                ListAdapter adapter = new SimpleAdapter(PaymentFormListActivity.this, mapList, R.layout.payment_form_list_renderer,
                         new String[] { KEY_DESCRIPTION },
                         new int[] { R.id.description});
 
@@ -77,8 +77,8 @@ public class FinalityListActivity extends AppCompatActivity implements AdapterVi
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         int id = Integer.parseInt(mapList.get(i).get(KEY_ID));
-        Intent intent = new Intent(getApplicationContext(), FinalityCreateOrEditActivity.class);
-        intent.putExtra(KEY_EXTRA_CONTACT_ID, id);
+        Intent intent = new Intent(getApplicationContext(), PaymentFormCreateOrEditActivity.class);
+        intent.putExtra(KEY_EXTRA_PAYMENT_FORM_ID, id);
         startActivity(intent);
     }
 

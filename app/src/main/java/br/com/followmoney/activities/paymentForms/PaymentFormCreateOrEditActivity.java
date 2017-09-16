@@ -1,4 +1,4 @@
-package br.com.followmoney.activities.bankAccounts;
+package br.com.followmoney.activities.paymentForms;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -6,75 +6,61 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import br.com.followmoney.R;
-import br.com.followmoney.dao.remote.bankAccounts.GetBankAccount;
-import br.com.followmoney.dao.remote.bankAccounts.PostBankAccount;
-import br.com.followmoney.dao.remote.bankAccounts.PutBankAccount;
-import br.com.followmoney.dao.remote.creditCards.DeleteCreditCard;
-import br.com.followmoney.domain.BankAccount;
+import br.com.followmoney.dao.remote.paymentForms.DeletePaymentForm;
+import br.com.followmoney.dao.remote.paymentForms.GetPaymentForm;
+import br.com.followmoney.dao.remote.paymentForms.PostPaymentForm;
+import br.com.followmoney.dao.remote.paymentForms.PutPaymentForm;
+import br.com.followmoney.domain.PaymentForm;
 
-public class BankAccountCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
+public class PaymentFormCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText descricaoEditText, numeroEditText, digitoEditText;
-    Spinner situacaoSpinner;
+    EditText editTextDescricao, editTextSigla;
     ImageButton saveButton, deleteButton;
 
-    int bankAccountID;
+    int formaPagamentoID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_bank_account_create_or_edit);
+        setContentView(R.layout.activity_payment_form_create_or_edit);
 
-        //====BIND TEXT FIELDS====//
-        bankAccountID     = getIntent().getIntExtra(BankAccountListActivity.KEY_EXTRA_BANK_ACCOUNT_ID, 0);
-        descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
-        numeroEditText    = (EditText) findViewById(R.id.numeroEditText);
-        situacaoSpinner   = (Spinner)  findViewById(R.id.situacaoSpinner);
-        digitoEditText    = (EditText) findViewById(R.id.digitoEditText);
+        formaPagamentoID = getIntent().getIntExtra(PaymentFormListActivity.KEY_EXTRA_PAYMENT_FORM_ID, 0);
+        editTextDescricao = (EditText) findViewById(R.id.editTextDescricao);
+        editTextSigla = (EditText) findViewById(R.id.editTextSigla);
 
-        //====BIND BUTTONS====//
         saveButton = (ImageButton) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
         deleteButton = (ImageButton) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
-        if (bankAccountID > 0) {
-            new GetBankAccount(new GetBankAccount.OnLoadListener() {
+        if (formaPagamentoID > 0) {
+            new GetPaymentForm(new GetPaymentForm.OnLoadListener() {
                 @Override
-                public void onLoaded(BankAccount bankAccount) {
+                public void onLoaded(PaymentForm paymentForm) {
                     saveButton.setVisibility(View.VISIBLE);
                     deleteButton.setVisibility(View.VISIBLE);
 
-                    descricaoEditText.setText(bankAccount.getDescricao());
-                    descricaoEditText.setEnabled(true);
-                    descricaoEditText.setClickable(true);
+                    editTextDescricao.setText(paymentForm.getDescricao());
+                    editTextDescricao.setEnabled(true);
+                    editTextDescricao.setFocusableInTouchMode(true);
+                    editTextDescricao.setClickable(true);
 
-                    numeroEditText.setText(String.valueOf(bankAccount.getNumero()));
-                    numeroEditText.setEnabled(true);
-                    numeroEditText.setClickable(true);
-
-                    situacaoSpinner.setSelection( ((ArrayAdapter) situacaoSpinner.getAdapter()).getPosition(bankAccount.getSituacao()));
-                    situacaoSpinner.setEnabled(true);
-                    situacaoSpinner.setClickable(true);
-
-                    digitoEditText.setText(String.valueOf(bankAccount.getDigito()));
-                    digitoEditText.setEnabled(true);
-                    digitoEditText.setClickable(true);
+                    editTextSigla.setText(paymentForm.getSigla());
+                    editTextSigla.setEnabled(true);
+                    editTextSigla.setClickable(true);
                 }
 
                 @Override
                 public void onError(String error) {
                     Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
                 }
-            }, this).execute(bankAccountID);
+            }, this).execute(formaPagamentoID);
 
         }else{
             saveButton.setVisibility(View.VISIBLE);
@@ -83,12 +69,12 @@ public class BankAccountCreateOrEditActivity extends AppCompatActivity implement
     }
 
     public void persist() {
-        if(bankAccountID > 0) {
-            new PutBankAccount(new PutBankAccount.OnLoadListener() {
+        if(formaPagamentoID > 0) {
+            new PutPaymentForm(new PutPaymentForm.OnLoadListener() {
                 @Override
-                public void onLoaded(BankAccount bankAccount) {
+                public void onLoaded(PaymentForm paymentForm) {
                     Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), PaymentFormListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
@@ -101,11 +87,11 @@ public class BankAccountCreateOrEditActivity extends AppCompatActivity implement
 
         }
         else {
-            new PostBankAccount(new PostBankAccount.OnLoadListener() {
+            new PostPaymentForm(new PostPaymentForm.OnLoadListener() {
                 @Override
-                public void onLoaded(BankAccount bankAccount) {
+                public void onLoaded(PaymentForm paymentForm) {
                     Toast.makeText(getApplicationContext(), "Object Inserted", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), PaymentFormListActivity.class);
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(intent);
                 }
@@ -145,11 +131,11 @@ public class BankAccountCreateOrEditActivity extends AppCompatActivity implement
     }
 
     private void confirmDelete(){
-        new DeleteCreditCard(new DeleteCreditCard.OnLoadListener() {
+        new DeletePaymentForm(new DeletePaymentForm.OnLoadListener() {
             @Override
             public void onLoaded(String response) {
                 Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
+                Intent intent = new Intent(getApplicationContext(), PaymentFormListActivity.class);
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
             }
@@ -159,18 +145,16 @@ public class BankAccountCreateOrEditActivity extends AppCompatActivity implement
                 System.out.println(error);
                 Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(bankAccountID);
+        }, this).execute(formaPagamentoID);
     }
 
-    private BankAccount getValueDataFieldsInView(){
-        BankAccount b = new BankAccount();
-        b.setId(bankAccountID);
-        b.setDescricao(descricaoEditText.getText().toString());
-        b.setNumero(numeroEditText.getText().toString());
-        b.setDigito(Integer.parseInt(digitoEditText.getText().toString()));
-        b.setSituacao(situacaoSpinner.getSelectedItem().toString());
-        b.setUsuario(3);
-        return b;
+    private PaymentForm getValueDataFieldsInView(){
+        PaymentForm f = new PaymentForm();
+        f.setId(formaPagamentoID);
+        f.setDescricao(editTextDescricao.getText().toString());
+        f.setSigla(editTextSigla.getText().toString());
+        f.setUsuario(3);
+        return f;
     }
 
 }

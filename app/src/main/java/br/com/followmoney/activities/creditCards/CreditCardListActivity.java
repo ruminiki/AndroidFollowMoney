@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -39,7 +39,7 @@ public class CreditCardListActivity extends AppCompatActivity implements Adapter
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        Button button = (Button) findViewById(R.id.addNew);
+        ImageButton button = (ImageButton) findViewById(R.id.addNew);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

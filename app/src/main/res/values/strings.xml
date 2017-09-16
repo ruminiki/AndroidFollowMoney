@@ -3,47 +3,51 @@
     <string name="title_activity_main2">Follow Money App</string>
 
     <string name="action_settings">Settings</string>
-    <string name="Add_New">Add New</string>
-    <string name="edit">Edit</string>
-    <string name="delete">Delete</string>
-    <string name="save">Save</string>
+    <string name="Add_New">Novo</string>
+    <string name="edit">Editar</string>
+    <string name="delete">Excluir</string>
+    <string name="save">Salvar</string>
 
     <!-- generic-->
-    <string name="descricao">Description</string>
-    <string name="yes">Confirm</string>
-    <string name="no">Cancel</string>
+    <string name="descricao">Descrição</string>
+    <string name="yes">Confirmar</string>
+    <string name="no">Cancelar</string>
     <string name="title_activity_activity_edit">CreateOrEditActivity</string>
-    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_main">Follow Money Mob</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <!-- finalidade -->
-    <string name="deleteFinalidade">Confirm deletion.</string>
+    <string name="deleteFinalidade">Confirme a exclusão.</string>
 
 
     <!-- credit card-->
-    <string name="limit">Limit</string>
-    <string name="date_closing_invoice">Closing invoice date</string>
-    <string name="date_maturity_invoice">Maturity invoice date</string>
+    <string name="limit">Limite</string>
+    <string name="date_closing_invoice">Data de Fechamento Fatura</string>
+    <string name="date_maturity_invoice">Data Vencimento Fatura</string>
 
 
     <!-- bank account -->
-    <string name="status">Status</string>
-    <string name="number">Number</string>
-    <string name="digit">Digit</string>
+    <string name="status">Situação</string>
+    <string name="number">Número</string>
+    <string name="digit">Dígito</string>
     <string-array name="status_option">
-        <item>OPEN</item>
-        <item>CLOSED</item>
+        <item>ATIVO</item>
+        <item>INATIVA</item>
     </string-array>
 
     <!-- movement -->
-    <string name="debit">Debit</string>
-    <string name="credit">Credit</string>
-    <string name="operation">Operation</string>
-    <string name="date_emission">Emission</string>
-    <string name="date_maturity">Maturity</string>
-    <string name="finality">Finality</string>
-    <string name="bank_account">Bank Account</string>
-    <string name="credit_card">Credit Card</string>
+    <string name="debit">Débito</string>
+    <string name="credit">Crédito</string>
+    <string name="operation">Operação</string>
+    <string name="date_emission">Emissão</string>
+    <string name="date_maturity">Vencimento</string>
+    <string name="finality">Finalidade</string>
+    <string name="bank_account">Conta Bancária</string>
+    <string name="credit_card">Cartão de Crédito</string>
+    <string name="value">Valor</string>
 
+    <!-- payment Form -->
+    <string name="initials">Sigla</string>
+    <string name="payment_form">Forma de Pagamento</string>
 </resources>

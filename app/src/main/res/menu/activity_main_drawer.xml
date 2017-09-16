@@ -4,27 +4,32 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/finality"
-            android:icon="@drawable/ic_menu_send"
-            android:title="Finality" />
+            android:icon="@android:drawable/ic_menu_mylocation"
+            android:title="Finalidade" />
         <item
             android:id="@+id/credit_card"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Credit Card" />
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Cartão de Crédito" />
         <item
             android:id="@+id/bank_account"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Bank Account" />
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Conta Bancária" />
+
+        <item
+            android:id="@+id/payment_form"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Forma de Pagamento" />
     </group>
 
     <item android:title="Movements">
         <menu>
             <item
                 android:id="@+id/movements"
-                android:icon="@drawable/ic_menu_share"
+                android:icon="@android:drawable/ic_menu_add"
                 android:title="Movements" />
             <item
                 android:id="@+id/invoices"
-                android:icon="@drawable/ic_menu_send"
+                android:icon="@android:drawable/ic_menu_sort_by_size"
                 android:title="Faturas" />
         </menu>
     </item>

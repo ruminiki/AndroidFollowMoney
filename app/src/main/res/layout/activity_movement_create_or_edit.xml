@@ -9,187 +9,231 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="br.com.followmoney.activities.movements.MovementCreateOrEditActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_centerHorizontal="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="@dimen/activity_vertical_margin"
         android:orientation="vertical"
-        android:paddingTop="@dimen/activity_vertical_margin">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/descricaoEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/descricaoEditText"
-            android:text="@string/descricao" />
-
-        <EditText
-            android:id="@+id/descricaoEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:textAllCaps="true"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:inputType="textCapCharacters">
-
-            <requestFocus />
-        </EditText>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/operacaoEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/operacaoEditText"
-            android:text="@string/operation" />
-
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <RadioButton android:id="@+id/creditoRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/credit"/>
-            <RadioButton android:id="@+id/debitoRadio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/debit"/>
-        </RadioGroup>
+        android:id="@+id/scrollView">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignParentBottom="false"
             android:layout_centerHorizontal="true"
-            android:orientation="horizontal">
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/descricaoEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/descricaoEditText"
+                android:text="@string/descricao" />
+
+            <EditText
+                android:id="@+id/descricaoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:textAllCaps="true"
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="textCapCharacters">
+
+                <requestFocus />
+            </EditText>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/operacaoEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/operacaoEditText"
+                android:text="@string/operation" />
+
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_alignParentBottom="false"
                 android:layout_centerHorizontal="true"
                 android:layout_marginLeft="0dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
+                android:layout_marginTop="@dimen/activity_vertical_margin"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/toggleButtonCredito"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/emissaoEditText"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toRightOf="@+id/emissaoEditText"
-                    android:text="@string/date_emission" />
+                    android:textOn="@string/debit"
+                    android:textOff="@string/debit"
+                    android:onClick="setOperacaoCredito"/>
 
-                <EditText
-                    android:id="@+id/emissaoEditText"
-                    android:layout_width="match_parent"
+                <ToggleButton
+                    android:id="@+id/toggleButtonDebito"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:inputType="date"/>
-
-
+                    android:textOn="@string/credit"
+                    android:textOff="@string/credit"
+                    android:onClick="setOperacaoDebito"/>
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="150dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="0dp"
-                android:orientation="vertical">
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/vencimentoEditText"
-                    android:layout_alignParentLeft="true"
-                    android:layout_toRightOf="@+id/vencimentoEditText"
-                    android:text="@string/date_maturity" />
+                android:orientation="horizontal">
 
-                <EditText
-                    android:id="@+id/vencimentoEditText"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:layout_width="150dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:inputType="date"/>
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="0dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/emissaoEditText"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toRightOf="@+id/emissaoEditText"
+                        android:text="@string/date_emission" />
 
+                    <EditText
+                        android:id="@+id/emissaoEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:inputType="date"/>
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="0dp"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignBottom="@+id/vencimentoEditText"
+                        android:layout_alignParentLeft="true"
+                        android:layout_toRightOf="@+id/vencimentoEditText"
+                        android:text="@string/date_maturity" />
+
+                    <EditText
+                        android:id="@+id/vencimentoEditText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:inputType="date"/>
+
+                </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/finalidadeSpinner"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/finalidadeSpinner"
+                android:text="@string/finality" />
+            <Spinner
+                android:id="@+id/finalidadeSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/formaPagamentoSpinner"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/formaPagamentoSpinner"
+                android:text="@string/payment_form" />
+            <Spinner
+                android:id="@+id/formaPagamentoSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/contaBancariaSpinner"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/contaBancariaSpinner"
+                android:text="@string/bank_account" />
+            <Spinner
+                android:id="@+id/contaBancariaSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/cartaoCreditoSpinner"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/cartaoCreditoSpinner"
+                android:text="@string/credit_card" />
+            <Spinner
+                android:id="@+id/cartaoCreditoSpinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+
         </LinearLayout>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/finalidadeSpinner"
+            android:layout_alignBottom="@+id/valorEditText"
             android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/finalidadeSpinner"
-            android:text="@string/finality" />
-        <Spinner
-            android:id="@+id/finalidadeSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
+            android:layout_toRightOf="@+id/valorEditText"
+            android:text="@string/value" />
 
-        <TextView
+        <EditText
+            android:id="@+id/valorEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/contaBancariaSpinner"
-            android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/contaBancariaSpinner"
-            android:text="@string/bank_account" />
-        <Spinner
-            android:id="@+id/contaBancariaSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:inputType="numberDecimal">
+        </EditText>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/cartaoCreditoSpinner"
-            android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/cartaoCreditoSpinner"
-            android:text="@string/credit_card" />
-        <Spinner
-            android:id="@+id/cartaoCreditoSpinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"/>
-
-    </LinearLayout>
+    </ScrollView>
 
     <LinearLayout
-        android:id="@+id/buttonLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:layout_margin="@dimen/activity_vertical_margin"
-        android:padding="@dimen/activity_vertical_margin"
+        android:layout_centerHorizontal="true"
+        android:background="@color/primary_material_light"
+        android:gravity="right"
         android:orientation="horizontal">
 
-        <Button
+        <ImageButton
             android:id="@+id/saveButton"
-            android:layout_weight="1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:padding="@dimen/activity_vertical_margin"
-            android:text="@string/save"
             android:onClick="run"
-            android:visibility="gone"/>
-
-        <Button
-            android:id="@+id/deleteButton"
-            android:layout_weight="1"
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:layout_margin="@dimen/activity_vertical_margin"
-            android:padding="@dimen/activity_vertical_margin"
-            android:text="@string/delete" />
+            android:src="@android:drawable/ic_menu_save"/>
+
+        <ImageButton
+            android:id="@+id/deleteButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_delete"/>
 
     </LinearLayout>
 

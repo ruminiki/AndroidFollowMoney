@@ -90,6 +90,26 @@
                 android:value="br.com.followmoney.activities.bankAccounts.BankAccountListActivity" />
         </activity>
 
+        <!--========FORMA PAGAMENTO========-->
+        <activity
+            android:name="br.com.followmoney.activities.paymentForms.PaymentFormListActivity"
+            android:parentActivityName="br.com.followmoney.activities.MainActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.followmoney.activities.MainActivity" />
+        </activity>
+        <activity
+            android:name="br.com.followmoney.activities.paymentForms.PaymentFormCreateOrEditActivity"
+            android:parentActivityName="br.com.followmoney.activities.paymentForms.PaymentFormListActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.followmoney.activities.paymentForms.PaymentFormListActivity" />
+        </activity>
+
         <!--========MOVIMENTO========-->
         <activity
             android:name="br.com.followmoney.activities.movements.MovementListActivity"

@@ -6,22 +6,21 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
+import br.com.followmoney.R;
 import br.com.followmoney.dao.remote.finalities.DeleteFinality;
 import br.com.followmoney.dao.remote.finalities.GetFinality;
 import br.com.followmoney.dao.remote.finalities.PostFinality;
 import br.com.followmoney.dao.remote.finalities.PutFinality;
 import br.com.followmoney.domain.Finality;
-import br.com.followmoney.R;
 
 public class FinalityCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
     EditText descricaoEditText;
-    Button saveButton;
-    Button deleteButton;
+    ImageButton saveButton, deleteButton;
 
     int finalidadeID;
 
@@ -33,10 +32,10 @@ public class FinalityCreateOrEditActivity extends AppCompatActivity implements V
         finalidadeID = getIntent().getIntExtra(FinalityListActivity.KEY_EXTRA_CONTACT_ID, 0);
         descricaoEditText = (EditText) findViewById(R.id.editTextDescricao);
 
-        saveButton = (Button) findViewById(R.id.saveButton);
+        saveButton = (ImageButton) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(this);
 
-        deleteButton = (Button) findViewById(R.id.deleteButton);
+        deleteButton = (ImageButton) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
 
         if (finalidadeID > 0) {
