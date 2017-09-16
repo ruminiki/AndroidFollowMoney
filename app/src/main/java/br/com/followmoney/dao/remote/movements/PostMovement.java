@@ -28,12 +28,12 @@ public class PostMovement {
     public void execute(Movement movement) {
         try {
             final Gson gson = new Gson();
-            String creditCardJson = gson.toJson(movement);
-            System.out.println(creditCardJson);
+            String objectJson = gson.toJson(movement);
+            System.out.println(objectJson);
 
-            final String URL = "http://192.168.1.10/followMoneyRest/movements/";
+            final String URL = "http://192.168.1.13/followMoneyRest/movements/";
             // Post params to be sent to the server
-            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(creditCardJson),
+            JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(objectJson),
                     new Response.Listener<JSONObject>() {
                         @Override
                         public void onResponse(JSONObject response) {

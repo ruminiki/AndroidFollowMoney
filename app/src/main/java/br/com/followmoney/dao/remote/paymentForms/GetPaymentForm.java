@@ -29,7 +29,7 @@ public class GetPaymentForm {
 
         try {
 
-            String URL = "http://192.168.1.10/followMoneyRest/paymentForms/"+id;
+            String URL = "http://192.168.1.13/followMoneyRest/paymentForms/"+id;
             final Gson gson = new Gson();
             // pass second argument as "null" for GET requests
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,

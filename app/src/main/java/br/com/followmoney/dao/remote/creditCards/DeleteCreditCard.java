@@ -21,7 +21,7 @@ public class DeleteCreditCard {
     }
 
     public void execute(Integer id) {
-        final String URL = "http://192.168.1.10/followMoneyRest/creditCards/"+id;
+        final String URL = "http://192.168.1.13/followMoneyRest/creditCards/"+id;
 
         StringRequest req = new StringRequest(Request.Method.DELETE, URL,
                 new Response.Listener<String>()

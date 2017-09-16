@@ -30,25 +30,6 @@ public class Movement{
     public Movement() {
     }
 
-    public Movement(int id, String descricao, String emissao,
-                    String vencimento, String operacao,
-                    String finalidade, String contaBancaria,
-                    String cartaoCredito) {
-
-        setId(id);
-        setDescricao(descricao);
-        setEmissao(emissao);
-        setVencimento(vencimento);
-        setOperacao(operacao);
-        if ( !finalidade.isEmpty() && Integer.parseInt(finalidade) > 0)
-            setFinalidade(new Finality(Integer.parseInt(finalidade)));
-        if ( !contaBancaria.isEmpty() && Integer.parseInt(contaBancaria) > 0)
-            setContaBancaria(new BankAccount(Integer.parseInt(contaBancaria)));
-        if ( !cartaoCredito.isEmpty() && Integer.parseInt(cartaoCredito) > 0)
-            setCartaoCredito(new CreditCard(Integer.parseInt(cartaoCredito)));
-    }
-
-
     public Integer getId() {
         return id;
     }
@@ -137,6 +118,14 @@ public class Movement{
         this.usuario = usuario;
     }
 
+    public PaymentForm getFormaPagamento() {
+        return formaPagamento;
+    }
+
+    public void setFormaPagamento(PaymentForm formaPagamento) {
+        this.formaPagamento = formaPagamento;
+    }
+
     @Override
     public String toString() {
         return id + " - " + descricao;
@@ -162,18 +151,4 @@ public class Movement{
 
     }
 
-   /* @Override
-    public Movement deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
-        JsonObject jobject = json.getAsJsonObject();
-
-        return new Movement(
-                jobject.get("id").getAsInt(),
-                jobject.get("descricao").getAsString(),
-                jobject.get("emissao").getAsString(),
-                jobject.get("vencimento").getAsString(),
-                jobject.get("operacao").getAsString(),
-                jobject.get("finalidade").getAsString(),
-                jobject.get("contaBancaria").getAsString(),
-                jobject.get("cartaoCredito").getAsString());
-    }*/
 }

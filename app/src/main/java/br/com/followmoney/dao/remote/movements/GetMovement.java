@@ -29,7 +29,7 @@ public class GetMovement {
 
         try {
 
-            String URL = "http://192.168.1.10/followMoneyRest/movements/"+id;
+            String URL = "http://192.168.1.13/followMoneyRest/movements/"+id;
             final Gson gson = new Gson();
             // pass second argument as "null" for GET requests
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,

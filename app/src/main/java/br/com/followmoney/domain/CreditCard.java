@@ -21,6 +21,11 @@ public class CreditCard {
 
     }
 
+    public CreditCard(int id, String descricao) {
+        setId(id);
+        setDescricao(descricao);
+    }
+
     public Integer getId() {
         return id;
     }

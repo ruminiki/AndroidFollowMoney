@@ -21,6 +21,11 @@ public class BankAccount {
 
     }
 
+    public BankAccount(int id, String descricao) {
+        setId(id);
+        setDescricao(descricao);
+    }
+
     public Integer getId() {
         return id;
     }

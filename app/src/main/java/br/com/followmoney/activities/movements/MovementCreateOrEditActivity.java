@@ -6,25 +6,21 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 import android.widget.ToggleButton;
 
-import java.util.List;
-
 import br.com.followmoney.R;
+import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
+import br.com.followmoney.activities.creditCards.CreditCardListActivity;
+import br.com.followmoney.activities.finalities.FinalityListActivity;
+import br.com.followmoney.activities.paymentForms.PaymentFormListActivity;
 import br.com.followmoney.components.EditTextDatePicker;
-import br.com.followmoney.dao.remote.bankAccounts.GetBankAccounts;
-import br.com.followmoney.dao.remote.creditCards.GetCreditCards;
 import br.com.followmoney.dao.remote.finalities.DeleteFinality;
-import br.com.followmoney.dao.remote.finalities.GetFinalities;
 import br.com.followmoney.dao.remote.movements.GetMovement;
 import br.com.followmoney.dao.remote.movements.PostMovement;
 import br.com.followmoney.dao.remote.movements.PutMovement;
-import br.com.followmoney.dao.remote.paymentForms.GetPaymentForms;
 import br.com.followmoney.domain.BankAccount;
 import br.com.followmoney.domain.CreditCard;
 import br.com.followmoney.domain.Finality;
@@ -34,12 +30,22 @@ import br.com.followmoney.util.DateUtil;
 
 public class MovementCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
-    EditText descricaoEditText, emissaoEditText, vencimentoEditText, valorEditText;
+    private static final int KEY_SELECT_FORMA_PAGAMENTO_RETURN = 0;
+    private static final int KEY_SELECT_FINALIDADE_RETURN      = 1;
+    private static final int KEY_SELECT_CARTAO_CREDITO_RETURN  = 2;
+    private static final int KEY_SELECT_CONTA_BANCARIA_RETURN  = 3;
+
+    EditText descricaoEditText, emissaoEditText, vencimentoEditText, valorEditText,
+             finalidadeEditText, cartaoCreditoEditText, formaPagamentoEditText, contaBancariaEditText;
     ToggleButton toggleButtonCredito, toggleButtonDebito;
-    Spinner contaBancariaSpinner, finalidadeSpinner, formaPagamentoSpinner, cartaoCreditoSpinner;
-    ImageButton saveButton, deleteButton;
+    ImageButton saveButton, deleteButton, finalidadeSelectButton, formaPagamentoSelectButton, contaBancariaSelectButton, cartaoCreditoSelectButton;
 
     int movimentoID;
+
+    private Finality finalidade;
+    private PaymentForm formaPagamento;
+    private CreditCard cartaoCredito;
+    private BankAccount contaBancaria;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,23 +78,49 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
             }
         });
 
+        finalidadeEditText = (EditText) findViewById(R.id.finalidadeEditText);
+        finalidadeSelectButton = (ImageButton) findViewById(R.id.finalidadeSelectButton);
+        finalidadeSelectButton.setOnClickListener(new ToggleButton.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openFinalidadeFormToSelect();
+            }
+        });
+
+        formaPagamentoEditText = (EditText) findViewById(R.id.formaPagamentoEditText);
+        formaPagamentoSelectButton = (ImageButton) findViewById(R.id.formaPagamentoSelectButton);
+        formaPagamentoSelectButton.setOnClickListener(new ToggleButton.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openFormaPagamentoFormToSelect();
+            }
+        });
+
+        contaBancariaEditText = (EditText) findViewById(R.id.contaBancariaEditText);
+        contaBancariaSelectButton = (ImageButton) findViewById(R.id.contaBancariaSelectButton);
+        contaBancariaSelectButton.setOnClickListener(new ToggleButton.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openContaBancariaFormToSelect();
+            }
+        });
+
+        cartaoCreditoEditText = (EditText) findViewById(R.id.cartaoCreditoEditText);
+        cartaoCreditoSelectButton = (ImageButton) findViewById(R.id.cartaoCreditoSelectButton);
+        cartaoCreditoSelectButton.setOnClickListener(new ToggleButton.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openCartaoCreditoFormToSelect();
+            }
+        });
+
+        valorEditText = (EditText) findViewById(R.id.valorEditText);
+
         saveButton = (ImageButton) findViewById( R.id.saveButton);
         saveButton.setOnClickListener(this);
 
         deleteButton = (ImageButton) findViewById(R.id.deleteButton);
         deleteButton.setOnClickListener(this);
-
-        finalidadeSpinner = (Spinner) findViewById(R.id.finalidadeSpinner);
-        populateFinalidadeSpinner();
-
-        formaPagamentoSpinner = (Spinner) findViewById(R.id.formaPagamentoSpinner);
-        populateFormaPagamentoSpinner();
-
-        contaBancariaSpinner = (Spinner) findViewById(R.id.contaBancariaSpinner);
-        populateContaBancariaSpinner();
-
-        cartaoCreditoSpinner = (Spinner) findViewById(R.id.cartaoCreditoSpinner);
-        populateCartaoCreditoSpinner();
 
         if (movimentoID > 0) {
             new GetMovement(new GetMovement.OnLoadListener() {
@@ -99,7 +131,6 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
 
                     descricaoEditText.setText(movement.getDescricao());
                     descricaoEditText.setEnabled(true);
-                    descricaoEditText.setFocusableInTouchMode(true);
                     descricaoEditText.setClickable(true);
 
                     emissaoEditText.setText(DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
@@ -110,6 +141,18 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
 
                     toggleButtonCredito.setChecked(movement.getOperacao().equals(Movement.CREDIT));
                     toggleButtonDebito.setChecked(movement.getOperacao().equals(Movement.DEBIT));
+
+                    finalidade = movement.getFinalidade();
+                    finalidadeEditText.setText(finalidade != null ? finalidade.getDescricao() : "");
+
+                    formaPagamento = movement.getFormaPagamento();
+                    formaPagamentoEditText.setText(formaPagamento != null ? formaPagamento.getDescricao() : "");
+
+                    contaBancaria = movement.getContaBancaria();
+                    contaBancariaEditText.setText(contaBancaria != null ? contaBancaria.getDescricao() : "");
+
+                    cartaoCredito = movement.getCartaoCredito();
+                    cartaoCreditoEditText.setText(cartaoCredito != null ? cartaoCredito.getDescricao() : "");
 
                     valorEditText.setText(String.valueOf(movement.getValor()));
 
@@ -128,86 +171,105 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
         }
     }
 
-    ///=====START: POPULATE FINALIDADE SPINNER======//
-    private void populateFinalidadeSpinner(){
-        new GetFinalities(new GetFinalities.OnLoadListener() {
-            @Override
-            public void onLoaded(List<Finality> finalities) {
-                populateFinalidadeSpinner(finalities);
-            }
-            @Override
-            public void onError(String error) {
-                System.out.println(error);
-                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(3);
+    ///=====SELECT FINALIDADE======//
+    private void openFinalidadeFormToSelect(){
+        Intent intent = new Intent(this, FinalityListActivity.class);
+        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra(FinalityListActivity.KEY_MODE, FinalityListActivity.OPEN_TO_SELECT_MODE);
+        startActivityForResult(intent, KEY_SELECT_FINALIDADE_RETURN);
     }
 
-    private void populateFinalidadeSpinner(List<Finality> finalities){
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner, finalities);
-        finalidadeSpinner.setAdapter(adapter);
-    }
-
-    ///=====START: POPULATE FORMA PAGAMENTO SPINNER======//
-    private void populateFormaPagamentoSpinner(){
-        new GetPaymentForms(new GetPaymentForms.OnLoadListener() {
-            @Override
-            public void onLoaded(List<PaymentForm> paymentForms) {
-                populateFormaPagamentoSpinner(paymentForms);
-            }
-            @Override
-            public void onError(String error) {
-                System.out.println(error);
-                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(3);
-    }
-
-    private void populateFormaPagamentoSpinner(List<PaymentForm> paymentForms){
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner, paymentForms);
-        formaPagamentoSpinner.setAdapter(adapter);
+    ///=====SELECT FORMA PAGAMENTO ======//
+    private void openFormaPagamentoFormToSelect(){
+        Intent intent = new Intent(this, PaymentFormListActivity.class);
+        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra(PaymentFormListActivity.KEY_MODE, PaymentFormListActivity.OPEN_TO_SELECT_MODE);
+        startActivityForResult(intent, KEY_SELECT_FORMA_PAGAMENTO_RETURN);
     }
 
     ///=====START: POPULATE CONTA BANCARIA SPINNER======//
-    private void populateContaBancariaSpinner(){
-        new GetBankAccounts(new GetBankAccounts.OnLoadListener() {
-            @Override
-            public void onLoaded(List<BankAccount> bankAccounts) {
-                populateContaBancariaSpinner(bankAccounts);
-            }
-            @Override
-            public void onError(String error) {
-                System.out.println(error);
-                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(3);
+    private void openContaBancariaFormToSelect(){
+        Intent intent = new Intent(this, BankAccountListActivity.class);
+        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra(BankAccountListActivity.KEY_MODE, BankAccountListActivity.OPEN_TO_SELECT_MODE);
+        startActivityForResult(intent, KEY_SELECT_CONTA_BANCARIA_RETURN);
     }
 
-    private void populateContaBancariaSpinner(List<BankAccount> bankAccounts){
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner, bankAccounts);
-        contaBancariaSpinner.setAdapter(adapter);
+    ///=====SELECT CARTAO CREDITO======//
+    private void openCartaoCreditoFormToSelect(){
+        Intent intent = new Intent(this, CreditCardListActivity.class);
+        intent.putExtra("ParentClassSource", this.getClass());
+        intent.putExtra(CreditCardListActivity.KEY_MODE, CreditCardListActivity.OPEN_TO_SELECT_MODE);
+        startActivityForResult(intent, KEY_SELECT_CARTAO_CREDITO_RETURN);
     }
 
-    ///=====START: POPULATE CARTAO CREDITO SPINNER======//
-    private void populateCartaoCreditoSpinner(){
-        new GetCreditCards(new GetCreditCards.OnLoadListener() {
-            @Override
-            public void onLoaded(List<CreditCard> creditCards) {
-                populateCartaoCreditoSpinner(creditCards);
-            }
-            @Override
-            public void onError(String error) {
-                System.out.println(error);
-                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(3);
-    }
+    // This method is called when the second activity finishes
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-    private void populateCartaoCreditoSpinner(List<CreditCard> creditCards){
-        ArrayAdapter adapter = new ArrayAdapter(this, R.layout.spinner, creditCards);
-        cartaoCreditoSpinner.setAdapter(adapter);
+        switch (requestCode){
+            case KEY_SELECT_FORMA_PAGAMENTO_RETURN :{
+                if (resultCode == RESULT_OK) {
+                    int id           = data.getIntExtra(PaymentFormListActivity.KEY_ID, 0);
+                    String descricao = data.getStringExtra(PaymentFormListActivity.KEY_DESCRIPTION);
+                    if ( formaPagamento == null ) {
+                        formaPagamento = new PaymentForm(id, descricao);
+                    }else{
+                        formaPagamento.setDescricao(descricao);
+                        formaPagamento.setId(id);
+                    }
+                    formaPagamentoEditText.setText(descricao);
+                }
+                break;
+            }
+
+            case KEY_SELECT_FINALIDADE_RETURN :{
+                if (resultCode == RESULT_OK) {
+                    int id           = data.getIntExtra(FinalityListActivity.KEY_ID, 0);
+                    String descricao = data.getStringExtra(FinalityListActivity.KEY_DESCRIPTION);
+                    if ( finalidade == null ) {
+                        finalidade = new Finality(id, descricao);
+                    }else{
+                        finalidade.setDescricao(descricao);
+                        finalidade.setId(id);
+                    }
+                    finalidadeEditText.setText(descricao);
+                }
+                break;
+            }
+
+            case KEY_SELECT_CARTAO_CREDITO_RETURN :{
+                if (resultCode == RESULT_OK) {
+                    int id           = data.getIntExtra(CreditCardListActivity.KEY_ID, 0);
+                    String descricao = data.getStringExtra(CreditCardListActivity.KEY_DESCRIPTION);
+                    if (cartaoCredito == null){
+                        cartaoCredito = new CreditCard(id, descricao);
+                    }else{
+                        cartaoCredito.setDescricao(descricao);
+                        cartaoCredito.setId(id);
+                    }
+                    cartaoCreditoEditText.setText(descricao);
+                }
+                break;
+            }
+
+            case KEY_SELECT_CONTA_BANCARIA_RETURN :{
+                if (resultCode == RESULT_OK) {
+                    int id           = data.getIntExtra(BankAccountListActivity.KEY_ID, 0);
+                    String descricao = data.getStringExtra(BankAccountListActivity.KEY_DESCRIPTION);
+                    if ( contaBancaria == null ) {
+                        contaBancaria = new BankAccount(id, descricao);
+                    }else{
+                        contaBancaria.setDescricao(descricao);
+                        contaBancaria.setId(id);
+                    }
+                    contaBancariaEditText.setText(descricao);
+                }
+                break;
+            }
+        }
     }
-    ///=====END: POPULATE CARTAO CREDITO SPINNER======//
 
     public void persist() {
         if(movimentoID > 0) {
@@ -295,10 +357,12 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
         m.setDescricao(descricaoEditText.getText().toString());
         m.setEmissao(DateUtil.format(emissaoEditText.getText().toString(), "dd/MM/yyyy", "yyyyMMdd"));
         m.setVencimento(DateUtil.format(vencimentoEditText.getText().toString(), "dd/MM/yyyy", "yyyyMMdd"));
-        m.setFinalidade((Finality) finalidadeSpinner.getSelectedItem());
-        m.setContaBancaria((BankAccount) contaBancariaSpinner.getSelectedItem());
-        m.setCartaoCredito((CreditCard) cartaoCreditoSpinner.getSelectedItem());
-        m.setValor(Float.parseFloat(valorEditText.getText().toString()));
+        m.setFinalidade(finalidade);
+        m.setContaBancaria(contaBancaria);
+        m.setCartaoCredito(cartaoCredito);
+        m.setFormaPagamento(formaPagamento);
+        m.setValor(Float.parseFloat(valorEditText.getText() != null && !valorEditText.getText().toString().isEmpty() ?
+                                    valorEditText.getText().toString() : "0"));
         m.setOperacao(toggleButtonCredito.isChecked() ? Movement.CREDIT : Movement.DEBIT);
         m.setUsuario(3);
         return m;

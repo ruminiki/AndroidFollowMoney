@@ -31,7 +31,7 @@ public class PutBankAccount {
             String CreditCardJson = gson.toJson(bankAccount);
             System.out.println(CreditCardJson);
 
-            final String URL = "http://192.168.1.10/followMoneyRest/bankAccounts/"+bankAccount.getId();
+            final String URL = "http://192.168.1.13/followMoneyRest/bankAccounts/"+bankAccount.getId();
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(CreditCardJson),
                     new Response.Listener<JSONObject>() {

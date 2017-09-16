@@ -19,6 +19,11 @@ public class PaymentForm {
 
     }
 
+    public PaymentForm(int id, String descricao) {
+        setId(id);
+        setDescricao(descricao);
+    }
+
     public Integer getId() {
         return id;
     }

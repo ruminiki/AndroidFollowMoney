@@ -31,7 +31,7 @@ public class PostCreditCard {
             String creditCardJson = gson.toJson(creditCard);
             System.out.println(creditCardJson);
 
-            final String URL = "http://192.168.1.10/followMoneyRest/creditCards/";
+            final String URL = "http://192.168.1.13/followMoneyRest/creditCards/";
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(creditCardJson),
                     new Response.Listener<JSONObject>() {

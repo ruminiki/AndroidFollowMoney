@@ -30,7 +30,7 @@ public class GetCreditCards {
 
     public void execute(Integer user) {
 
-        String URL = "http://192.168.1.10/followMoneyRest/creditCards/user/"+user;
+        String URL = "http://192.168.1.13/followMoneyRest/creditCards/user/"+user;
         final Gson gson = new Gson();
         // pass second argument as "null" for GET requests
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null,

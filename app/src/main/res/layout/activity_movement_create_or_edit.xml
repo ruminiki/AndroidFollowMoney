@@ -67,16 +67,16 @@
                     android:id="@+id/toggleButtonCredito"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="@string/debit"
-                    android:textOff="@string/debit"
+                    android:textOn="@string/credit"
+                    android:textOff="@string/credit"
                     android:onClick="setOperacaoCredito"/>
 
                 <ToggleButton
                     android:id="@+id/toggleButtonDebito"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textOn="@string/credit"
-                    android:textOff="@string/credit"
+                    android:textOn="@string/debit"
+                    android:textOff="@string/debit"
                     android:onClick="setOperacaoDebito"/>
             </LinearLayout>
 
@@ -137,78 +137,122 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/finalidadeSpinner"
+                android:layout_alignBottom="@+id/finalidadeEditText"
                 android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/finalidadeSpinner"
+                android:layout_toRightOf="@+id/finalidadeEditText"
                 android:text="@string/finality" />
-            <Spinner
-                android:id="@+id/finalidadeSpinner"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="0dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/finalidadeEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"/>
+                <ImageButton
+                    android:id="@+id/finalidadeSelectButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_search"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/formaPagamentoSpinner"
+                android:layout_alignBottom="@+id/formaPagamentoEditText"
                 android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/formaPagamentoSpinner"
+                android:layout_toRightOf="@+id/formaPagamentoEditText"
                 android:text="@string/payment_form" />
-            <Spinner
-                android:id="@+id/formaPagamentoSpinner"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="0dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/formaPagamentoEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"/>
+                <ImageButton
+                    android:id="@+id/formaPagamentoSelectButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_search"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/contaBancariaSpinner"
+                android:layout_alignBottom="@+id/contaBancariaEditText"
                 android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/contaBancariaSpinner"
+                android:layout_toRightOf="@+id/contaBancariaEditText"
                 android:text="@string/bank_account" />
-            <Spinner
-                android:id="@+id/contaBancariaSpinner"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="0dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/contaBancariaEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"/>
+                <ImageButton
+                    android:id="@+id/contaBancariaSelectButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_search"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/cartaoCreditoSpinner"
+                android:layout_alignBottom="@+id/cartaoCreditoEditText"
                 android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/cartaoCreditoSpinner"
+                android:layout_toRightOf="@+id/cartaoCreditoEditText"
                 android:text="@string/credit_card" />
-            <Spinner
-                android:id="@+id/cartaoCreditoSpinner"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginLeft="0dp"
+                android:orientation="horizontal">
+                <EditText
+                    android:id="@+id/cartaoCreditoEditText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:clickable="false"/>
+                <ImageButton
+                    android:id="@+id/cartaoCreditoSelectButton"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:src="@android:drawable/ic_menu_search"/>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/valorEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/valorEditText"
+                android:text="@string/value" />
+
+            <EditText
+                android:id="@+id/valorEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                style="@style/Base.Widget.AppCompat.Spinner.Underlined"/>
-
+                android:layout_marginTop="5dp"
+                android:ems="10"
+                android:inputType="numberDecimal">
+            </EditText>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/valorEditText"
-            android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/valorEditText"
-            android:text="@string/value" />
-
-        <EditText
-            android:id="@+id/valorEditText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:ems="10"
-            android:inputType="numberDecimal">
-        </EditText>
 
     </ScrollView>
 
@@ -217,6 +261,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:paddingBottom="5dp"
         android:background="@color/primary_material_light"
         android:gravity="right"
         android:orientation="horizontal">

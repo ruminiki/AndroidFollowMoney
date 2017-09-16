@@ -31,7 +31,7 @@ public class PutFinality {
             String finalityJson = gson.toJson(finality);
             System.out.println(finalityJson);
 
-            final String URL = "http://192.168.1.10/followMoneyRest/finalities/"+finality.getId();
+            final String URL = "http://192.168.1.13/followMoneyRest/finalities/"+finality.getId();
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(finalityJson),
                     new Response.Listener<JSONObject>() {

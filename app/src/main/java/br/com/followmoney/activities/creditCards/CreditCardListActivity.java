@@ -16,18 +16,18 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.followmoney.R;
+import br.com.followmoney.activities.SelectableActivity;
 import br.com.followmoney.dao.remote.creditCards.GetCreditCards;
 import br.com.followmoney.domain.CreditCard;
 
-public class CreditCardListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class CreditCardListActivity extends AppCompatActivity implements SelectableActivity<CreditCard>, AdapterView.OnItemClickListener{
 
     public final static String KEY_EXTRA_CREDIT_CARD_ID = "KEY_EXTRA_CREDIT_CARD_ID";
+    public       static int    MODE                 = OPEN_TO_EDIT_MODE;
 
     private ListView listView;
 
     private List<HashMap<String, String>> mapList = new ArrayList<>();
-    private static final String KEY_ID            = "id";
-    private static final String KEY_DESCRIPTION   = "description";
     private static final String KEY_LIMIT         = "limit";
     private static final String KEY_CLOSING_DATE  = "closing_date";
 
@@ -35,6 +35,8 @@ public class CreditCardListActivity extends AppCompatActivity implements Adapter
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_credit_card_list);
+
+        MODE = getIntent().getIntExtra(KEY_MODE, OPEN_TO_EDIT_MODE);
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
@@ -80,10 +82,18 @@ public class CreditCardListActivity extends AppCompatActivity implements Adapter
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        int id = Integer.parseInt(mapList.get(i).get(KEY_ID));
-        Intent intent = new Intent(getApplicationContext(), CreditCardCreateOrEditActivity.class);
-        intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, id);
-        startActivity(intent);
+        if ( MODE == OPEN_TO_SELECT_MODE ){
+            Intent intent = new Intent();
+            intent.putExtra(KEY_ID, Integer.parseInt(mapList.get(i).get(KEY_ID)));
+            intent.putExtra(KEY_DESCRIPTION, mapList.get(i).get(KEY_DESCRIPTION));
+            setResult(RESULT_OK, intent);
+            finish();
+        }else {
+            int id = Integer.parseInt(mapList.get(i).get(KEY_ID));
+            Intent intent = new Intent(getApplicationContext(), CreditCardCreateOrEditActivity.class);
+            intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, id);
+            startActivity(intent);
+        }
     }
 
 }

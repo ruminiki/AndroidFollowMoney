@@ -16,23 +16,24 @@ import java.util.HashMap;
 import java.util.List;
 
 import br.com.followmoney.R;
+import br.com.followmoney.activities.SelectableActivity;
 import br.com.followmoney.dao.remote.finalities.GetFinalities;
 import br.com.followmoney.domain.Finality;
 
-public class FinalityListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
+public class FinalityListActivity extends AppCompatActivity implements SelectableActivity<Finality>, AdapterView.OnItemClickListener{
 
     public final static String KEY_EXTRA_CONTACT_ID = "KEY_EXTRA_CONTACT_ID";
+    public       static int    MODE                 = OPEN_TO_EDIT_MODE;
 
     private ListView listView;
-
     private List<HashMap<String, String>> mapList = new ArrayList<>();
-    private static final String KEY_ID            = "id";
-    private static final String KEY_DESCRIPTION   = "description";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finality_list);
+
+        MODE = getIntent().getIntExtra(KEY_MODE, OPEN_TO_EDIT_MODE);
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
@@ -76,10 +77,20 @@ public class FinalityListActivity extends AppCompatActivity implements AdapterVi
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        int id = Integer.parseInt(mapList.get(i).get(KEY_ID));
-        Intent intent = new Intent(getApplicationContext(), FinalityCreateOrEditActivity.class);
-        intent.putExtra(KEY_EXTRA_CONTACT_ID, id);
-        startActivity(intent);
+
+        if ( MODE == OPEN_TO_SELECT_MODE ){
+            Intent intent = new Intent();
+            intent.putExtra(KEY_ID, Integer.parseInt(mapList.get(i).get(KEY_ID)));
+            intent.putExtra(KEY_DESCRIPTION, mapList.get(i).get(KEY_DESCRIPTION));
+            setResult(RESULT_OK, intent);
+            finish();
+        }else{
+            int id = Integer.parseInt(mapList.get(i).get(KEY_ID));
+            Intent intent = new Intent(getApplicationContext(), FinalityCreateOrEditActivity.class);
+            intent.putExtra(KEY_EXTRA_CONTACT_ID, id);
+            startActivity(intent);
+        }
+
     }
 
 }

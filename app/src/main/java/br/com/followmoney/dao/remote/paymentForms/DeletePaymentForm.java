@@ -21,7 +21,7 @@ public class DeletePaymentForm {
     }
 
     public void execute(Integer id) {
-        final String URL = "http://192.168.1.10/followMoneyRest/paymentForms/"+id;
+        final String URL = "http://192.168.1.13/followMoneyRest/paymentForms/"+id;
 
         StringRequest req = new StringRequest(Request.Method.DELETE, URL,
                 new Response.Listener<String>()

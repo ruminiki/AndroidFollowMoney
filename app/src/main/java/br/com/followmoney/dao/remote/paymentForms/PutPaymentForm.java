@@ -31,7 +31,7 @@ public class PutPaymentForm {
             String objectJson = gson.toJson(paymentForm);
             System.out.println(objectJson);
 
-            final String URL = "http://192.168.1.10/followMoneyRest/paymentForms/"+paymentForm.getId();
+            final String URL = "http://192.168.1.13/followMoneyRest/paymentForms/"+paymentForm.getId();
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(objectJson),
                     new Response.Listener<JSONObject>() {
