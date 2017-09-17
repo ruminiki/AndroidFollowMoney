@@ -1,4 +1,4 @@
-package br.com.followmoney.dao.remote.creditCards;
+package br.com.followmoney.dao.remote.creditCardInvoices;
 
 import android.content.Context;
 
@@ -16,22 +16,22 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.followmoney.dao.remote.ApplicationController;
-import br.com.followmoney.domain.CreditCard;
+import br.com.followmoney.domain.Movement;
 import br.com.followmoney.util.Params;
 
-public class GetCreditCards {
+public class GetCreditCardInvoiceMovements {
 
     private OnLoadListener onLoadlistener;
     private Context context;
 
-    public GetCreditCards(OnLoadListener onLoadlistener, Context context) {
+    public GetCreditCardInvoiceMovements(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
         this.context = context;
     }
 
-    public void execute(Integer user) {
+    public void execute(Integer invoice) {
 
-        String URL = Params.REMOTE_URL + "/creditCards/user/"+user;
+        String URL = Params.REMOTE_URL + "/movements/invoice/"+invoice;
         final Gson gson = new Gson();
         // pass second argument as "null" for GET requests
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null,
@@ -40,7 +40,7 @@ public class GetCreditCards {
                     public void onResponse(JSONArray response) {
                         try {
                             VolleyLog.v("Response:%n %s", response.toString(4));
-                            onLoadlistener.onLoaded( Arrays.asList(gson.fromJson(response.toString(4),CreditCard[].class)) );
+                            onLoadlistener.onLoaded( Arrays.asList(gson.fromJson(response.toString(4),Movement[].class)) );
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -59,7 +59,7 @@ public class GetCreditCards {
     }
 
     public interface OnLoadListener {
-        void onLoaded(List<CreditCard> creditCards);
+        void onLoaded(List<Movement> movements);
         void onError(String error);
     }
 

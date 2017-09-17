@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import br.com.followmoney.dao.remote.ApplicationController;
 import br.com.followmoney.domain.CreditCard;
+import br.com.followmoney.util.Params;
 
 public class PutCreditCard {
 
@@ -31,7 +32,7 @@ public class PutCreditCard {
             String CreditCardJson = gson.toJson(creditCard);
             System.out.println(CreditCardJson);
 
-            final String URL = "http://192.168.1.13/followMoneyRest/creditCards/"+creditCard.getId();
+            final String URL = Params.REMOTE_URL + "/creditCards/"+creditCard.getId();
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(CreditCardJson),
                     new Response.Listener<JSONObject>() {

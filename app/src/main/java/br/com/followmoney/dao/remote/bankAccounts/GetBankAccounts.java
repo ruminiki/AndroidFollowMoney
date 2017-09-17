@@ -17,6 +17,7 @@ import java.util.List;
 
 import br.com.followmoney.dao.remote.ApplicationController;
 import br.com.followmoney.domain.BankAccount;
+import br.com.followmoney.util.Params;
 
 public class GetBankAccounts {
 
@@ -30,7 +31,7 @@ public class GetBankAccounts {
 
     public void execute(Integer user) {
 
-        String URL = "http://192.168.1.13/followMoneyRest/bankAccounts/user/"+user;
+        String URL = Params.REMOTE_URL + "/bankAccounts/user/"+user;
         final Gson gson = new Gson();
         // pass second argument as "null" for GET requests
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null,

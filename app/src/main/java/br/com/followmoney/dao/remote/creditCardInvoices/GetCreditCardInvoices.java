@@ -17,8 +17,7 @@ import java.util.List;
 
 import br.com.followmoney.dao.remote.ApplicationController;
 import br.com.followmoney.domain.CreditCardInvoice;
-
-import static android.R.attr.id;
+import br.com.followmoney.util.Params;
 
 public class GetCreditCardInvoices {
 
@@ -32,7 +31,7 @@ public class GetCreditCardInvoices {
 
     public void execute(Integer creditCard) {
 
-        String URL = "http://192.168.1.13/followMoneyRest/creditCardInvoices/creditCard/"+id;
+        String URL = Params.REMOTE_URL + "/creditCardInvoices/creditCard/"+creditCard;
         final Gson gson = new Gson();
         // pass second argument as "null" for GET requests
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null,

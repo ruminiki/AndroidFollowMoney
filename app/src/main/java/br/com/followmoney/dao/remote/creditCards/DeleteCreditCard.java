@@ -9,6 +9,7 @@ import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 
 import br.com.followmoney.dao.remote.ApplicationController;
+import br.com.followmoney.util.Params;
 
 public class DeleteCreditCard {
 
@@ -21,7 +22,7 @@ public class DeleteCreditCard {
     }
 
     public void execute(Integer id) {
-        final String URL = "http://192.168.1.13/followMoneyRest/creditCards/"+id;
+        final String URL = Params.REMOTE_URL + "/creditCards/"+id;
 
         StringRequest req = new StringRequest(Request.Method.DELETE, URL,
                 new Response.Listener<String>()

@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import br.com.followmoney.R;
+import br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListActivity;
 import br.com.followmoney.dao.remote.creditCards.DeleteCreditCard;
 import br.com.followmoney.dao.remote.creditCards.GetCreditCard;
 import br.com.followmoney.dao.remote.creditCards.PostCreditCard;
@@ -18,6 +19,8 @@ import br.com.followmoney.dao.remote.creditCards.PutCreditCard;
 import br.com.followmoney.domain.CreditCard;
 
 public class CreditCardCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
+
+    public final static String KEY_EXTRA_CREDIT_CARD_DESCRIPTION = "KEY_EXTRA_CREDIT_CARD_DESCRIPTION";
 
     EditText descricaoEditText, limiteEditText, dataFechamentoFaturaEditText, dataVencimentoFaturaEditText;
     ImageButton saveButton, deleteButton;
@@ -46,7 +49,7 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
         if (creditCardID > 0) {
             new GetCreditCard(new GetCreditCard.OnLoadListener() {
                 @Override
-                public void onLoaded(CreditCard creditCard) {
+                public void onLoaded(final CreditCard creditCard) {
                     saveButton.setVisibility(View.VISIBLE);
                     deleteButton.setVisibility(View.VISIBLE);
 
@@ -65,6 +68,18 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
                     dataVencimentoFaturaEditText.setText(String.valueOf(creditCard.getDataFatura()));
                     dataVencimentoFaturaEditText.setEnabled(true);
                     dataVencimentoFaturaEditText.setClickable(true);
+
+                    //===CARREGA AS FATURAS DO CARTÃO======
+                    ImageButton listInvoicesButton = (ImageButton) findViewById(R.id.listInvoicesButton);
+                    listInvoicesButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceListActivity.class);
+                            intent.putExtra(CreditCardListActivity.KEY_EXTRA_CREDIT_CARD_ID, creditCardID);
+                            intent.putExtra(CreditCardCreateOrEditActivity.KEY_EXTRA_CREDIT_CARD_DESCRIPTION, creditCard.getDescricao());
+                            startActivity(intent);
+                        }
+                    });
                 }
 
                 @Override

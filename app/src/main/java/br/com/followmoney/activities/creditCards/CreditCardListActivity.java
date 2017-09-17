@@ -17,14 +17,13 @@ import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.SelectableActivity;
-import br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListActivity;
 import br.com.followmoney.dao.remote.creditCards.GetCreditCards;
 import br.com.followmoney.domain.CreditCard;
 
 public class CreditCardListActivity extends AppCompatActivity implements SelectableActivity<CreditCard>, AdapterView.OnItemClickListener{
 
     public final static String KEY_EXTRA_CREDIT_CARD_ID = "KEY_EXTRA_CREDIT_CARD_ID";
-    public       static int    MODE                 = OPEN_TO_EDIT_MODE;
+    public       static int    MODE                     = OPEN_TO_EDIT_MODE;
 
     private ListView listView;
 
@@ -79,13 +78,6 @@ public class CreditCardListActivity extends AppCompatActivity implements Selecta
             }
         }, this).execute(3);//@TODO precisa pegar o id do usuario logado
 
-    }
-
-    public void showCreditCardInvoiceMovements(View view){
-        //@TODO precisa pegar o id do cartão de crédito pelo clique no botao da fatura
-        Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceListActivity.class);
-        intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, 0);
-        startActivity(intent);
     }
 
     @Override

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import br.com.followmoney.dao.remote.ApplicationController;
 import br.com.followmoney.domain.Finality;
+import br.com.followmoney.util.Params;
 
 public class GetFinality {
 
@@ -29,7 +30,7 @@ public class GetFinality {
 
         try {
 
-            String URL = "http://192.168.1.13/followMoneyRest/finalities/"+id;
+            String URL = Params.REMOTE_URL + "/finalities/"+id;
             final Gson gson = new Gson();
             // pass second argument as "null" for GET requests
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,

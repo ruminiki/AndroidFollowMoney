@@ -111,6 +111,12 @@
         android:orientation="horizontal">
 
         <ImageButton
+            android:id="@+id/listInvoicesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:src="@android:drawable/ic_menu_sort_by_size"/>
+
+        <ImageButton
             android:id="@+id/saveButton"
             android:onClick="run"
             android:visibility="gone"

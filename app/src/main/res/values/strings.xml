@@ -53,5 +53,7 @@
 
     <!-- credit card invoice -->
     <string name="referenceMonth">Mês Referência</string>
+    <string name="credit_card_invoices">Faturas do Cartão de Crédito</string>
+    <string name="movements_of_invoice">Movimentos da Fatura</string>
 
 </resources>

@@ -14,6 +14,7 @@ import org.json.JSONObject;
 
 import br.com.followmoney.dao.remote.ApplicationController;
 import br.com.followmoney.domain.PaymentForm;
+import br.com.followmoney.util.Params;
 
 public class PutPaymentForm {
 
@@ -31,7 +32,7 @@ public class PutPaymentForm {
             String objectJson = gson.toJson(paymentForm);
             System.out.println(objectJson);
 
-            final String URL = "http://192.168.1.13/followMoneyRest/paymentForms/"+paymentForm.getId();
+            final String URL = Params.REMOTE_URL + "/paymentForms/"+paymentForm.getId();
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(objectJson),
                     new Response.Listener<JSONObject>() {
