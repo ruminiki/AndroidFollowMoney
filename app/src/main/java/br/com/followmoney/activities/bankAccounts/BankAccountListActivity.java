@@ -1,11 +1,13 @@
 package br.com.followmoney.activities.bankAccounts;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
@@ -18,19 +20,20 @@ import java.util.List;
 import br.com.followmoney.R;
 import br.com.followmoney.activities.SelectableActivity;
 import br.com.followmoney.dao.remote.bankAccounts.GetBankAccounts;
+import br.com.followmoney.dao.remote.creditCards.DeleteCreditCard;
 import br.com.followmoney.domain.BankAccount;
+import br.com.followmoney.domain.Finality;
 
 public class BankAccountListActivity extends AppCompatActivity implements SelectableActivity<BankAccount>, AdapterView.OnItemClickListener{
 
     public final static String KEY_EXTRA_BANK_ACCOUNT_ID = "KEY_EXTRA_BANK_ACCOUNT_ID";
-    public       static int    MODE                 = OPEN_TO_EDIT_MODE;
+    public       static int    MODE                      = OPEN_TO_EDIT_MODE;
+    private List<HashMap<String, String>> mapList        = new ArrayList<>();
+    private static final String KEY_NUMBER               = "number";
+    private static final String KEY_DIGIT                = "digit";
+    private static final String KEY_STATUS               = "status";
 
     private ListView listView;
-
-    private List<HashMap<String, String>> mapList = new ArrayList<>();
-    private static final String KEY_NUMBER        = "number";
-    private static final String KEY_DIGIT         = "digit";
-    private static final String KEY_STATUS        = "status";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,41 @@ public class BankAccountListActivity extends AppCompatActivity implements Select
         listView = (ListView) findViewById(R.id.listView);
         listView.setOnItemClickListener(this);
 
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
-        fabAdd.setOnClickListener(new View.OnClickListener() {
+        ImageButton addButton = (ImageButton) findViewById(R.id.addButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(BankAccountListActivity.this, BankAccountCreateOrEditActivity.class);
+                intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, 0);
+                startActivity(intent);
+            }
+        });
+
+        ImageButton deleteButton = (ImageButton) findViewById(R.id.deleteButton);
+        deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                builder.setMessage(R.string.delete)
+                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                confirmDelete();
+                            }
+                        })
+                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                            }
+                        });
+                AlertDialog d = builder.create();
+                d.setTitle("Delete Object?");
+                d.show();
+                return;
+            }
+        });
+
+        ImageButton extractButton = (ImageButton) findViewById(R.id.extractButton);
+        extractButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BankAccountListActivity.this, BankAccountCreateOrEditActivity.class);
@@ -82,9 +118,31 @@ public class BankAccountListActivity extends AppCompatActivity implements Select
 
     }
 
+    private void confirmDelete(){
+        new DeleteCreditCard(new DeleteCreditCard.OnLoadListener() {
+            @Override
+            public void onLoaded(String response) {
+                Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onError(String error) {
+                System.out.println(error);
+                Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(((Finality)listView.getSelectedItem()).getId());
+    }
+
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        if ( MODE == OPEN_TO_SELECT_MODE ){
+
+        listView.setSelection(i);
+        listView.setSelected(true);
+
+        /*if ( MODE == OPEN_TO_SELECT_MODE ){
             Intent intent = new Intent();
             intent.putExtra(KEY_ID, Integer.parseInt(mapList.get(i).get(KEY_ID)));
             intent.putExtra(KEY_DESCRIPTION, mapList.get(i).get(KEY_DESCRIPTION));
@@ -95,7 +153,8 @@ public class BankAccountListActivity extends AppCompatActivity implements Select
             Intent intent = new Intent(getApplicationContext(), BankAccountCreateOrEditActivity.class);
             intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, id);
             startActivity(intent);
-        }
+        }*/
+
     }
 
 }

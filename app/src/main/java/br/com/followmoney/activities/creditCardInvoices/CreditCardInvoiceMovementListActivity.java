@@ -71,7 +71,7 @@ public class CreditCardInvoiceMovementListActivity extends AppCompatActivity {
                     mapList.add(map);
                 }
 
-                ListAdapter adapter = new SimpleAdapter(getApplicationContext(), mapList, R.layout.movement_list_renderer,
+                ListAdapter adapter = new SimpleAdapter(getApplicationContext(), mapList, R.layout.movement_invoice_list_renderer,
                         new String[] { KEY_DESCRIPTION, KEY_FINALITY, KEY_VALUE, KEY_BANK_ACCOUNT, KEY_EMISSION, KEY_MATURITY },
                         new int[] { R.id.description, R.id.finality, R.id.value, R.id.bank_account, R.id.emission, R.id.maturity});
 

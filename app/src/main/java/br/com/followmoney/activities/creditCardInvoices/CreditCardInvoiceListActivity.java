@@ -84,7 +84,6 @@ public class CreditCardInvoiceListActivity extends AppCompatActivity implements 
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        //@TODO listar os movimentos do invoice
         Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceMovementListActivity.class);
         intent.putExtra(KEY_EXTRA_INVOICE_ID, Integer.parseInt(mapList.get(i).get(KEY_ID)));
         intent.putExtra(KEY_EXTRA_INVOICE_DESCRIPTION, creditCardDescription.toUpperCase() +
