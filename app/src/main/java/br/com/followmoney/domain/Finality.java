@@ -47,4 +47,5 @@ public class Finality {
     public String toString() {
         return id + " - " + descricao;
     }
+
 }

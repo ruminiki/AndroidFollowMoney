@@ -142,19 +142,6 @@ public class BankAccountListActivity extends AppCompatActivity implements Select
         listView.setSelection(i);
         listView.setSelected(true);
 
-        /*if ( MODE == OPEN_TO_SELECT_MODE ){
-            Intent intent = new Intent();
-            intent.putExtra(KEY_ID, Integer.parseInt(mapList.get(i).get(KEY_ID)));
-            intent.putExtra(KEY_DESCRIPTION, mapList.get(i).get(KEY_DESCRIPTION));
-            setResult(RESULT_OK, intent);
-            finish();
-        }else {
-            int id = Integer.parseInt(mapList.get(i).get(KEY_ID));
-            Intent intent = new Intent(getApplicationContext(), BankAccountCreateOrEditActivity.class);
-            intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, id);
-            startActivity(intent);
-        }*/
-
     }
 
 }

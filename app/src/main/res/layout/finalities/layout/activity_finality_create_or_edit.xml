@@ -46,23 +46,16 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/primary_material_light"
+        android:background="@color/colorDefault"
         android:gravity="right"
         android:orientation="horizontal">
 
         <ImageButton
             android:id="@+id/saveButton"
             android:onClick="run"
-            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_save"/>
-
-        <ImageButton
-            android:id="@+id/deleteButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_delete"/>
 
     </LinearLayout>
 

@@ -1,9 +1,7 @@
 package br.com.followmoney.activities.bankAccounts;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -16,14 +14,13 @@ import br.com.followmoney.R;
 import br.com.followmoney.dao.remote.bankAccounts.GetBankAccount;
 import br.com.followmoney.dao.remote.bankAccounts.PostBankAccount;
 import br.com.followmoney.dao.remote.bankAccounts.PutBankAccount;
-import br.com.followmoney.dao.remote.creditCards.DeleteCreditCard;
 import br.com.followmoney.domain.BankAccount;
 
-public class BankAccountCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
+public class BankAccountCreateOrEditActivity extends AppCompatActivity{
 
     EditText descricaoEditText, numeroEditText, digitoEditText;
     Spinner situacaoSpinner;
-    ImageButton saveButton, deleteButton;
+    ImageButton saveButton;
 
     int bankAccountID;
 
@@ -41,17 +38,17 @@ public class BankAccountCreateOrEditActivity extends AppCompatActivity implement
 
         //====BIND BUTTONS====//
         saveButton = (ImageButton) findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(this);
-
-        deleteButton = (ImageButton) findViewById(R.id.deleteButton);
-        deleteButton.setOnClickListener(this);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            persist();
+            }
+        });
 
         if (bankAccountID > 0) {
             new GetBankAccount(new GetBankAccount.OnLoadListener() {
                 @Override
                 public void onLoaded(BankAccount bankAccount) {
-                    saveButton.setVisibility(View.VISIBLE);
-                    deleteButton.setVisibility(View.VISIBLE);
 
                     descricaoEditText.setText(bankAccount.getDescricao());
                     descricaoEditText.setEnabled(true);
@@ -76,9 +73,6 @@ public class BankAccountCreateOrEditActivity extends AppCompatActivity implement
                 }
             }, this).execute(bankAccountID);
 
-        }else{
-            saveButton.setVisibility(View.VISIBLE);
-            deleteButton.setVisibility(View.GONE);
         }
     }
 
@@ -116,50 +110,6 @@ public class BankAccountCreateOrEditActivity extends AppCompatActivity implement
                 }
             }, this).execute(getValueDataFieldsInView());
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.saveButton:
-                persist();
-                return;
-            case R.id.deleteButton:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.delete)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                confirmDelete();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
-                        });
-                AlertDialog d = builder.create();
-                d.setTitle("Delete Object?");
-                d.show();
-                return;
-        }
-    }
-
-    private void confirmDelete(){
-        new DeleteCreditCard(new DeleteCreditCard.OnLoadListener() {
-            @Override
-            public void onLoaded(String response) {
-                Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), BankAccountListActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onError(String error) {
-                System.out.println(error);
-                Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(bankAccountID);
     }
 
     private BankAccount getValueDataFieldsInView(){

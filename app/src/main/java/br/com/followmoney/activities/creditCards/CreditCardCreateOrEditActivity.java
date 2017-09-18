@@ -1,9 +1,7 @@
 package br.com.followmoney.activities.creditCards;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -11,19 +9,17 @@ import android.widget.ImageButton;
 import android.widget.Toast;
 
 import br.com.followmoney.R;
-import br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListActivity;
-import br.com.followmoney.dao.remote.creditCards.DeleteCreditCard;
 import br.com.followmoney.dao.remote.creditCards.GetCreditCard;
 import br.com.followmoney.dao.remote.creditCards.PostCreditCard;
 import br.com.followmoney.dao.remote.creditCards.PutCreditCard;
 import br.com.followmoney.domain.CreditCard;
 
-public class CreditCardCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
+public class CreditCardCreateOrEditActivity extends AppCompatActivity{
 
     public final static String KEY_EXTRA_CREDIT_CARD_DESCRIPTION = "KEY_EXTRA_CREDIT_CARD_DESCRIPTION";
 
     EditText descricaoEditText, limiteEditText, dataFechamentoFaturaEditText, dataVencimentoFaturaEditText;
-    ImageButton saveButton, deleteButton;
+    ImageButton saveButton;
 
     int creditCardID;
 
@@ -41,17 +37,17 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
 
         //====BIND BUTTONS====//
         saveButton = (ImageButton) findViewById(R.id.saveButton);
-        saveButton.setOnClickListener(this);
-
-        deleteButton = (ImageButton) findViewById(R.id.deleteButton);
-        deleteButton.setOnClickListener(this);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                persist();
+            }
+        });
 
         if (creditCardID > 0) {
             new GetCreditCard(new GetCreditCard.OnLoadListener() {
                 @Override
                 public void onLoaded(final CreditCard creditCard) {
-                    saveButton.setVisibility(View.VISIBLE);
-                    deleteButton.setVisibility(View.VISIBLE);
 
                     descricaoEditText.setText(creditCard.getDescricao());
                     descricaoEditText.setEnabled(true);
@@ -69,17 +65,6 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
                     dataVencimentoFaturaEditText.setEnabled(true);
                     dataVencimentoFaturaEditText.setClickable(true);
 
-                    //===CARREGA AS FATURAS DO CARTÃO======
-                    ImageButton listInvoicesButton = (ImageButton) findViewById(R.id.listInvoicesButton);
-                    listInvoicesButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceListActivity.class);
-                            intent.putExtra(CreditCardListActivity.KEY_EXTRA_CREDIT_CARD_ID, creditCardID);
-                            intent.putExtra(CreditCardCreateOrEditActivity.KEY_EXTRA_CREDIT_CARD_DESCRIPTION, creditCard.getDescricao());
-                            startActivity(intent);
-                        }
-                    });
                 }
 
                 @Override
@@ -88,9 +73,6 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
                 }
             }, this).execute(creditCardID);
 
-        }else{
-            saveButton.setVisibility(View.VISIBLE);
-            deleteButton.setVisibility(View.GONE);
         }
     }
 
@@ -128,50 +110,6 @@ public class CreditCardCreateOrEditActivity extends AppCompatActivity implements
                 }
             }, this).execute(getValueDataFieldsInView());
         }
-    }
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.saveButton:
-                persist();
-                return;
-            case R.id.deleteButton:
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage(R.string.delete)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                confirmDelete();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
-                        });
-                AlertDialog d = builder.create();
-                d.setTitle("Delete Object?");
-                d.show();
-                return;
-        }
-    }
-
-    private void confirmDelete(){
-        new DeleteCreditCard(new DeleteCreditCard.OnLoadListener() {
-            @Override
-            public void onLoaded(String response) {
-                Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(getApplicationContext(), CreditCardListActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                startActivity(intent);
-            }
-
-            @Override
-            public void onError(String error) {
-                System.out.println(error);
-                Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(creditCardID);
     }
 
     private CreditCard getValueDataFieldsInView(){

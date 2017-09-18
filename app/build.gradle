@@ -16,6 +16,21 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+
+    }
+    sourceSets {
+        main {
+            res.srcDirs =
+                [
+                    'src/main/res/layout/bankAccount',
+                    'src/main/res/layout/creditCard',
+                    'src/main/res/layout/finalities',
+                    'src/main/res/layout/movements',
+                    'src/main/res/layout/paymentForm',
+                    'src/main/res/layout',
+                    'src/main/res'
+                ]
+        }
     }
 
 }
