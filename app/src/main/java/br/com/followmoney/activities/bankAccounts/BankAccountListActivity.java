@@ -18,13 +18,11 @@ import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
 import br.com.followmoney.domain.BankAccount;
 
-import static br.com.followmoney.activities.bankAccounts.BankAccountExtractMovementListActivity.KEY_EXTRA_BANK_ACCOUNT_ID;
-
 public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
-    private static final String KEY_NUMBER               = "number";
-    private static final String KEY_DIGIT                = "digit";
-    private static final String KEY_STATUS               = "status";
+    private static final String KEY_NUMBER = "number";
+    private static final String KEY_DIGIT  = "digit";
+    private static final String KEY_STATUS = "status";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +33,7 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(BankAccountListActivity.this, BankAccountCreateOrEditActivity.class);
-                intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, 0);
+                intent.putExtra(KEY_EXTRA_ID, 0);
                 startActivity(intent);
             }
         });
@@ -65,13 +63,13 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
     @Override
     protected String getRestContext() {
-        return "bankAccounts";
+        return "/bankAccounts/user/3"; //@TODO get user logged in
     }
 
     @Override
     protected void showCreateOrEditForm(int selectedEntityID) {
         Intent intent = new Intent(BankAccountListActivity.this, BankAccountCreateOrEditActivity.class);
-        intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, selectedEntityID);
+        intent.putExtra(KEY_EXTRA_ID, selectedEntityID);
         startActivity(intent);
     }
 

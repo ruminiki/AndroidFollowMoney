@@ -28,9 +28,15 @@ public class GetEntitiesJson<T> {
         this.context = context;
     }
 
-    public void execute(Integer user, String restContext, final Type target) {
+    public void execute(final Type target, String restContext, String... params) {
 
-        String URL = Params.REMOTE_URL + "/" + restContext + "/user/" + user;
+        String URL = Params.REMOTE_URL + restContext;
+
+        //movements/user/:param1/period/:param2
+        for ( String param : params ){
+            URL = URL.replaceFirst(":param", param);
+        }
+
         final Gson gson = new Gson();
         // pass second argument as "null" for GET requests
         JsonArrayRequest req = new JsonArrayRequest(Request.Method.GET, URL, null,

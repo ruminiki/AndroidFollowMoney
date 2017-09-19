@@ -22,7 +22,7 @@ import br.com.followmoney.dao.remote.PutEntityJson;
 public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
 
     protected ImageButton saveButton;
-    protected int entityID;
+    protected int entityID = 0;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

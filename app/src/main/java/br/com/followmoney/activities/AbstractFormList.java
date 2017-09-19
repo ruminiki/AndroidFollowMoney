@@ -3,6 +3,7 @@ package br.com.followmoney.activities;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -44,57 +45,73 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
         listView.setOnItemClickListener(this);
 
         ImageButton addButton = (ImageButton) findViewById(R.id.addButton);
-        addButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                showCreateOrEditForm(0);
-            }
-        });
+        if ( addButton != null ) {
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showCreateOrEditForm(0);
+                }
+            });
+        }
 
         ImageButton editButton = (ImageButton) findViewById(R.id.editButton);
-        editButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ( selectedEntityID <= 0 ){
-                    Toast.makeText(getApplicationContext(), "Please, you need select an object to edit!", Toast.LENGTH_SHORT).show();
-                }else{
-                    showCreateOrEditForm(selectedEntityID);
+        if ( editButton != null ) {
+            editButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (selectedEntityID <= 0) {
+                        Toast.makeText(getApplicationContext(), "Please, you need select an object to edit!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        showCreateOrEditForm(selectedEntityID);
+                    }
                 }
-            }
-        });
+            });
+        }
 
         ImageButton deleteButton = (ImageButton) findViewById(R.id.deleteButton);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ( selectedEntityID <= 0 ){
-                    Toast.makeText(getApplicationContext(), "Please, you need select an object to delete!", Toast.LENGTH_SHORT).show();
-                }else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
-                    builder.setMessage(R.string.delete)
-                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    confirmDelete();
-                                }
-                            })
-                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int id) {
-                                    // User cancelled the dialog
-                                }
-                            });
-                    AlertDialog d = builder.create();
-                    d.setTitle("Delete Object?");
-                    d.show();
-                    return;
+        if ( deleteButton != null ) {
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (selectedEntityID <= 0) {
+                        Toast.makeText(getApplicationContext(), "Please, you need select an object to delete!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
+                        builder.setMessage(R.string.delete)
+                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        confirmDelete();
+                                    }
+                                })
+                                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        // User cancelled the dialog
+                                    }
+                                });
+                        AlertDialog d = builder.create();
+                        d.setTitle("Delete Object?");
+                        d.show();
+                        return;
+                    }
                 }
-            }
-        });
+            });
+        }
+
+        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
+        if ( fabAdd != null ){
+            fabAdd.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showCreateOrEditForm(0);
+                }
+            });
+        }
 
        this.loadList();
 
     }
 
-    private void loadList(){
+    protected void loadList(){
 
         new GetEntitiesJson<T>(new GetEntitiesJson.OnLoadListener<T>() {
             @Override
@@ -106,10 +123,9 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
             public void onError(String error) {
                 Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(3, getRestContext(), getType());
+        }, this).execute(getType(), getRestContext());
 
     }
-
 
     private void confirmDelete(){
         new DeleteEntityJson(new DeleteEntityJson.OnResponseListener() {

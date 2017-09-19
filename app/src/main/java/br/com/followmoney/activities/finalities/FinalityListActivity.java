@@ -54,7 +54,7 @@ public class FinalityListActivity extends AbstractFormList<Finality> {
 
     @Override
     protected String getRestContext() {
-        return "finalities";
+        return "/finalities/user/3"; //@TODO get user logged in
     }
 
     @Override

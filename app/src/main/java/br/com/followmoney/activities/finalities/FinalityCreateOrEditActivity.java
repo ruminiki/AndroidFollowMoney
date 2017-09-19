@@ -43,7 +43,7 @@ public class FinalityCreateOrEditActivity extends AbstractFormCreateOrEdit<Final
 
     @Override
     protected String getRestContext() {
-        return "finalities";
+        return "/finalities";
     }
 
     @Override

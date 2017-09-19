@@ -3,7 +3,6 @@ package br.com.followmoney.activities.bankAccounts;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.Spinner;
 
 import com.google.gson.reflect.TypeToken;
@@ -19,15 +18,11 @@ public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<Ba
 
     EditText descricaoEditText, numeroEditText, digitoEditText;
     Spinner situacaoSpinner;
-    ImageButton saveButton;
-
-    int bankAccountID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_bank_account_create_or_edit);
 
-        bankAccountID     = getIntent().getIntExtra(BankAccountListActivity.KEY_EXTRA_BANK_ACCOUNT_ID, 0);
         descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
         numeroEditText    = (EditText) findViewById(R.id.numeroEditText);
         situacaoSpinner   = (Spinner)  findViewById(R.id.situacaoSpinner);
