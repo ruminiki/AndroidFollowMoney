@@ -8,19 +8,20 @@ import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
-import br.com.followmoney.activities.SelectableActivity;
 import br.com.followmoney.domain.Finality;
 
 public class FinalityListActivity extends AbstractFormList<Finality> {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finality_list);
 
         ImageButton extractButton = (ImageButton) findViewById(R.id.extractButton);
@@ -31,6 +32,7 @@ public class FinalityListActivity extends AbstractFormList<Finality> {
             }
         });
 
+        super.onCreate(savedInstanceState);
     }
 
     @Override
@@ -56,6 +58,11 @@ public class FinalityListActivity extends AbstractFormList<Finality> {
     }
 
     @Override
+    protected Type getType() {
+        return new TypeToken<List<Finality>>(){}.getType();
+    }
+
+    @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         selectedEntityID = Integer.parseInt(mapList.get(i).get(KEY_ID));
         if ( MODE == OPEN_TO_SELECT_MODE ){
@@ -69,9 +76,10 @@ public class FinalityListActivity extends AbstractFormList<Finality> {
     }
 
     @Override
-    protected void onClickButtonAdd() {
+    protected void showCreateOrEditForm(int selectedEntityID) {
         Intent intent = new Intent(FinalityListActivity.this, FinalityCreateOrEditActivity.class);
-        intent.putExtra(KEY_EXTRA_ID, 0);
+        intent.putExtra(KEY_EXTRA_ID, selectedEntityID);
         startActivity(intent);
     }
+
 }

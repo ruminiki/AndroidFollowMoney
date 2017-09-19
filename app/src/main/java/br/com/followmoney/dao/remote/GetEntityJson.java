@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 
 import br.com.followmoney.util.Params;
 
@@ -20,14 +20,13 @@ public class GetEntityJson<T> {
 
     public OnLoadListener onLoadlistener;
     public Context        context;
-    public Class          target;
 
     public GetEntityJson(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
         this.context = context;
     }
 
-    public void execute(Integer id, String restContext) {
+    public void execute(Integer id, String restContext, final Type target) {
 
         try {
 
@@ -40,7 +39,7 @@ public class GetEntityJson<T> {
                         public void onResponse(JSONObject response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                onLoadlistener.onLoaded(gson.fromJson(response.toString(4), ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+                                onLoadlistener.onLoaded(gson.fromJson(response.toString(4), target));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

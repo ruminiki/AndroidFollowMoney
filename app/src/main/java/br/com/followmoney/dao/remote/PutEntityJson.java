@@ -12,8 +12,6 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.ParameterizedType;
-
 import br.com.followmoney.util.Params;
 
 public class PutEntityJson<T> {
@@ -41,7 +39,7 @@ public class PutEntityJson<T> {
                         public void onResponse(JSONObject response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                onLoadlistener.onLoaded((T) gson.fromJson(response.toString(4), ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+                                onLoadlistener.onLoaded((T) gson.fromJson(response.toString(4), Object.class));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

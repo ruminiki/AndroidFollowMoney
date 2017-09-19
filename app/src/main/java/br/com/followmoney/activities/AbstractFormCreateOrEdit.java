@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import java.lang.reflect.Type;
+
 import br.com.followmoney.R;
 import br.com.followmoney.dao.remote.GetEntityJson;
 import br.com.followmoney.dao.remote.PostEntityJson;
@@ -25,7 +27,6 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         saveButton = (ImageButton) findViewById(R.id.saveButton);
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -34,7 +35,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
             }
         });
         entityID = getIntent().getIntExtra(AbstractFormList.KEY_EXTRA_ID, 0);
-
+        loadObjectToEdit();
     }
 
     private void loadObjectToEdit(){
@@ -49,7 +50,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
                 public void onError(String error) {
                     Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
                 }
-            }, this).execute(entityID, getRestContext());
+            }, this).execute(entityID, getRestContext(), getType());
 
         }
     }
@@ -119,5 +120,11 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
      * @return
      */
     protected abstract Class getActivityClassList();
+
+    /**
+     * Return the generic type of parametrized class. This param is used
+     * to deserialize Json object list.
+     */
+    protected abstract Type getType();
 
 }

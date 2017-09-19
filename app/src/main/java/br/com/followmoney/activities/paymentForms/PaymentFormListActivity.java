@@ -22,6 +22,8 @@ import br.com.followmoney.domain.PaymentForm;
 
 public class PaymentFormListActivity extends AppCompatActivity implements SelectableActivity<PaymentForm>, AdapterView.OnItemClickListener{
 
+    public static final  String KEY_ID          = "id";
+    public static final  String KEY_DESCRIPTION = "description";
     public final static String KEY_EXTRA_PAYMENT_FORM_ID = "KEY_EXTRA_PAYMENT_FORM_ID";
     public       static int    MODE                 = OPEN_TO_EDIT_MODE;
 

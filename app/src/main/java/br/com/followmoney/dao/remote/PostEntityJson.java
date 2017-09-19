@@ -12,14 +12,12 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.lang.reflect.ParameterizedType;
-
 import br.com.followmoney.util.Params;
 
 public class PostEntityJson<T> {
 
-    public OnLoadListener onLoadlistener;
-    public Context context;
+    public  OnLoadListener onLoadlistener;
+    public  Context context;
 
     public PostEntityJson(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
@@ -40,7 +38,7 @@ public class PostEntityJson<T> {
                         public void onResponse(JSONObject response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                onLoadlistener.onLoaded(gson.fromJson(response.toString(4), ((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0]));
+                                onLoadlistener.onLoaded(gson.fromJson(response.toString(4), Object.class));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }

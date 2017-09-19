@@ -33,7 +33,7 @@ public class CreditCardInvoiceMovementListActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_credit_card_invoice_movement_list);
+        setContentView(R.layout.activity_bank_account_extract_movement_list);
 
         int invoiceID             = getIntent().getIntExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_ID, 0);
         String invoiceDescription = getIntent().getStringExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_DESCRIPTION);

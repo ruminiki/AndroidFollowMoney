@@ -27,6 +27,9 @@ import br.com.followmoney.domain.CreditCard;
 
 public class CreditCardListActivity extends AppCompatActivity implements SelectableActivity<CreditCard>, AdapterView.OnItemClickListener{
 
+    public static final  String KEY_ID          = "id";
+    public static final  String KEY_DESCRIPTION = "description";
+
     public final static String KEY_EXTRA_CREDIT_CARD_ID = "KEY_EXTRA_CREDIT_CARD_ID";
     public       static int    MODE                     = OPEN_TO_EDIT_MODE;
 

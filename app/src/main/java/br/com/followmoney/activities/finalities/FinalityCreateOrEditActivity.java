@@ -3,6 +3,10 @@ package br.com.followmoney.activities.finalities;
 import android.os.Bundle;
 import android.widget.EditText;
 
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormCreateOrEdit;
 import br.com.followmoney.domain.Finality;
@@ -13,17 +17,19 @@ public class FinalityCreateOrEditActivity extends AbstractFormCreateOrEdit<Final
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_finality_create_or_edit);
         descricaoEditText = (EditText) findViewById(R.id.editTextDescricao);
+        super.onCreate(savedInstanceState);
     }
 
     @Override
     protected void entityToEditLoaded(Finality finality) {
-        descricaoEditText.setText(finality.getDescricao());
-        descricaoEditText.setEnabled(true);
-        descricaoEditText.setFocusableInTouchMode(true);
-        descricaoEditText.setClickable(true);
+        if ( finality != null ){
+            descricaoEditText.setText(finality.getDescricao());
+            descricaoEditText.setEnabled(true);
+            descricaoEditText.setFocusableInTouchMode(true);
+            descricaoEditText.setClickable(true);
+        }
     }
 
     @Override
@@ -38,6 +44,11 @@ public class FinalityCreateOrEditActivity extends AbstractFormCreateOrEdit<Final
     @Override
     protected String getRestContext() {
         return "finalities";
+    }
+
+    @Override
+    protected Type getType() {
+        return new TypeToken<Finality>(){}.getType();
     }
 
     @Override

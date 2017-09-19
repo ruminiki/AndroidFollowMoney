@@ -11,6 +11,7 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -46,7 +47,19 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onClickButtonAdd();
+                showCreateOrEditForm(0);
+            }
+        });
+
+        ImageButton editButton = (ImageButton) findViewById(R.id.editButton);
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( selectedEntityID <= 0 ){
+                    Toast.makeText(getApplicationContext(), "Please, you need select an object to edit!", Toast.LENGTH_SHORT).show();
+                }else{
+                    showCreateOrEditForm(selectedEntityID);
+                }
             }
         });
 
@@ -54,22 +67,26 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
-                builder.setMessage(R.string.delete)
-                        .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                confirmDelete();
-                            }
-                        })
-                        .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                            }
-                        });
-                AlertDialog d = builder.create();
-                d.setTitle("Delete Object?");
-                d.show();
-                return;
+                if ( selectedEntityID <= 0 ){
+                    Toast.makeText(getApplicationContext(), "Please, you need select an object to delete!", Toast.LENGTH_SHORT).show();
+                }else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
+                    builder.setMessage(R.string.delete)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    confirmDelete();
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Delete Object?");
+                    d.show();
+                    return;
+                }
             }
         });
 
@@ -89,7 +106,7 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
             public void onError(String error) {
                 Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(3, getRestContext());
+        }, this).execute(3, getRestContext(), getType());
 
     }
 
@@ -123,7 +140,7 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
      * @return
      */
     protected abstract String getRestContext();
-
-    protected abstract void   onClickButtonAdd();
+    protected abstract void   showCreateOrEditForm(int selectedEntityID);
+    protected abstract Type   getType();
 
 }

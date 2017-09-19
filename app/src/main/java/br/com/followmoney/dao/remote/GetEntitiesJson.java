@@ -12,24 +12,23 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 
-import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.followmoney.domain.PaymentForm;
 import br.com.followmoney.util.Params;
 
 public class GetEntitiesJson<T> {
 
     private OnLoadListener onLoadlistener;
-    private Context context;
+    private Context        context;
 
     public GetEntitiesJson(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
         this.context = context;
     }
 
-    public void execute(Integer user, String restContext) {
+    public void execute(Integer user, String restContext, final Type target) {
 
         String URL = Params.REMOTE_URL + "/" + restContext + "/user/" + user;
         final Gson gson = new Gson();
@@ -40,7 +39,8 @@ public class GetEntitiesJson<T> {
                     public void onResponse(JSONArray response) {
                         try {
                             VolleyLog.v("Response:%n %s", response.toString(4));
-                            onLoadlistener.onLoaded(Arrays.asList(gson.fromJson(response.toString(4),((ParameterizedType)getClass().getGenericSuperclass()).getActualTypeArguments()[0])));
+                            List<T> result = (List<T>) Arrays.asList(gson.fromJson(response.toString(4), target));
+                            onLoadlistener.onLoaded(result != null && result.size() > 0 ? (List<T>) result.get(0) : null);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }

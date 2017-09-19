@@ -30,6 +30,9 @@ import br.com.followmoney.util.DateUtil;
 
 public class MovementCreateOrEditActivity extends AppCompatActivity implements View.OnClickListener{
 
+    public static final  String KEY_ID          = "id";
+    public static final  String KEY_DESCRIPTION = "description";
+
     private static final int KEY_SELECT_FORMA_PAGAMENTO_RETURN = 0;
     private static final int KEY_SELECT_FINALIDADE_RETURN      = 1;
     private static final int KEY_SELECT_CARTAO_CREDITO_RETURN  = 2;
@@ -211,7 +214,7 @@ public class MovementCreateOrEditActivity extends AppCompatActivity implements V
         switch (requestCode){
             case KEY_SELECT_FORMA_PAGAMENTO_RETURN :{
                 if (resultCode == RESULT_OK) {
-                    int id           = data.getIntExtra(PaymentFormListActivity.KEY_ID, 0);
+                    int id = data.getIntExtra(PaymentFormListActivity.KEY_ID, 0);
                     String descricao = data.getStringExtra(PaymentFormListActivity.KEY_DESCRIPTION);
                     if ( formaPagamento == null ) {
                         formaPagamento = new PaymentForm(id, descricao);

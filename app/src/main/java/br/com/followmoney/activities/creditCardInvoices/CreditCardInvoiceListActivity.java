@@ -20,11 +20,12 @@ import br.com.followmoney.activities.creditCards.CreditCardCreateOrEditActivity;
 import br.com.followmoney.dao.remote.creditCardInvoices.GetCreditCardInvoices;
 import br.com.followmoney.domain.CreditCardInvoice;
 
-import static br.com.followmoney.activities.SelectableActivity.KEY_ID;
 import static br.com.followmoney.activities.creditCards.CreditCardListActivity.KEY_EXTRA_CREDIT_CARD_ID;
 
 public class CreditCardInvoiceListActivity extends AppCompatActivity implements AdapterView.OnItemClickListener{
 
+    public static final  String KEY_ID          = "id";
+    public static final  String KEY_DESCRIPTION = "description";
     public final static String KEY_EXTRA_INVOICE_ID          = "KEY_EXTRA_INVOICE_ID";
     public final static String KEY_EXTRA_INVOICE_DESCRIPTION = "KEY_EXTRA_INVOICE_DESCRIPTION";
     public final static String KEY_EXTRA_INVOICE_VALUE       = "KEY_EXTRA_INVOICE_VALUE";
