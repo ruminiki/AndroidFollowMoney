@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -30,27 +31,19 @@ public class CreditCardListActivity extends AbstractFormList<CreditCard> {
 
         setContentView(R.layout.activity_credit_card_list);
 
-        ImageButton invoiceButton = (ImageButton) findViewById(R.id.invoiceButton);
+        //===CARREGA AS FATURAS DO CARTÃO======
+        ImageButton invoiceButton = (ImageButton) findViewById(R.id.listInvoicesButton);
         invoiceButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //===CARREGA AS FATURAS DO CARTÃO======
-                ImageButton listInvoicesButton = (ImageButton) findViewById(R.id.listInvoicesButton);
-                listInvoicesButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-
-                        if ( listView.getSelectedItem() != null ) {
-                            CreditCard c = (CreditCard) listView.getSelectedItem();
-                            Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceListActivity.class);
-                            intent.putExtra(CreditCardInvoiceListActivity.KEY_EXTRA_CREDIT_CARD_ID, c.getId());
-                            intent.putExtra(CreditCardInvoiceListActivity.KEY_EXTRA_CREDIT_CARD_DESCRIPTION, c.getDescricao());
-                            startActivity(intent);
-                        }
-
-                    }
-                });
-
+                if ( selectedEntityPosition >= 0 ) {
+                    Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceListActivity.class);
+                    intent.putExtra(CreditCardInvoiceListActivity.KEY_EXTRA_CREDIT_CARD_ID, selectedEntityID);
+                    intent.putExtra(CreditCardInvoiceListActivity.KEY_EXTRA_CREDIT_CARD_DESCRIPTION, mapList.get(selectedEntityPosition).get(KEY_DESCRIPTION));
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please, you need select an object to show invoices!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -78,8 +71,13 @@ public class CreditCardListActivity extends AbstractFormList<CreditCard> {
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextList() {
         return "/creditCards/user/3"; //@TODO get user logged in
+    }
+
+    @Override
+    protected String getRestContextDelete() {
+        return "/creditCards/"+selectedEntityID;
     }
 
     @Override
@@ -97,6 +95,7 @@ public class CreditCardListActivity extends AbstractFormList<CreditCard> {
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         selectedEntityID = Integer.parseInt(mapList.get(i).get(KEY_ID));
+        selectedEntityPosition = i;
         if ( MODE == OPEN_TO_SELECT_MODE ){
             Finality f = (Finality) listView.getSelectedItem();
             Intent intent = new Intent();

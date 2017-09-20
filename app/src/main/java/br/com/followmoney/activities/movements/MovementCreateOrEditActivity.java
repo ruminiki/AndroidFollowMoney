@@ -268,7 +268,12 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextGetOrPut() {
+        return "/movements/"+entityID;
+    }
+
+    @Override
+    protected String getRestContextPost() {
         return "/movements";
     }
 

@@ -42,7 +42,12 @@ public class FinalityCreateOrEditActivity extends AbstractFormCreateOrEdit<Final
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextGetOrPut() {
+        return "/finalities/"+entityID;
+    }
+
+    @Override
+    protected String getRestContextPost() {
         return "/finalities";
     }
 

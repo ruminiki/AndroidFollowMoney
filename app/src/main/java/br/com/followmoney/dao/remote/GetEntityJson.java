@@ -26,11 +26,11 @@ public class GetEntityJson<T> {
         this.context = context;
     }
 
-    public void execute(Integer id, String restContext, final Type target) {
+    public void execute(String restContext, final Type target) {
 
         try {
 
-            String URL = Params.REMOTE_URL + "/" + restContext + "/"+id;
+            String URL = Params.REMOTE_URL + restContext;
             final Gson gson = new Gson();
             // pass second argument as "null" for GET requests
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,

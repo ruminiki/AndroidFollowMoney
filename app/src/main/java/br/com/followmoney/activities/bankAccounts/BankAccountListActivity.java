@@ -7,6 +7,7 @@ import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -32,9 +33,14 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
         extractButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(BankAccountListActivity.this, BankAccountCreateOrEditActivity.class);
-                intent.putExtra(KEY_EXTRA_ID, 0);
-                startActivity(intent);
+                if ( selectedEntityPosition >= 0 ){
+                    Intent intent = new Intent(getApplicationContext(), BankAccountExtractMovementListActivity.class);
+                    intent.putExtra(BankAccountExtractMovementListActivity.KEY_EXTRA_BANK_ACCOUNT_ID, selectedEntityID);
+                    intent.putExtra(BankAccountExtractMovementListActivity.KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION, mapList.get(selectedEntityPosition).get(KEY_DESCRIPTION));
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please, you need select an object to show extract!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
@@ -62,8 +68,13 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextList() {
         return "/bankAccounts/user/3"; //@TODO get user logged in
+    }
+
+    @Override
+    protected String getRestContextDelete() {
+        return "/bankAccounts/"+selectedEntityID;
     }
 
     @Override
@@ -81,6 +92,7 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         selectedEntityID = Integer.parseInt(mapList.get(i).get(KEY_ID));
+        selectedEntityPosition = i;
         if ( MODE == OPEN_TO_SELECT_MODE ){
             BankAccount b = (BankAccount) listView.getSelectedItem();
             Intent intent = new Intent();

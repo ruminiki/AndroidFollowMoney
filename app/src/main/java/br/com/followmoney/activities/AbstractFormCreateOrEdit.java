@@ -50,7 +50,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
                 public void onError(String error) {
                     Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
                 }
-            }, this).execute(entityID, getRestContext(), getType());
+            }, this).execute(getRestContextGetOrPut(), getType());
 
         }
     }
@@ -68,7 +68,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
                 public void onError(String error) {
                     Toast.makeText(getApplicationContext(), "Update Failed", Toast.LENGTH_SHORT).show();
                 }
-            }, this).execute(getValueDataFieldsInView(entityID), entityID, getRestContext());
+            }, this).execute(getValueDataFieldsInView(entityID), getRestContextGetOrPut());
 
         }
         else {
@@ -83,7 +83,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
                 public void onError(String error) {
                     Toast.makeText(getApplicationContext(), "Could not Insert object", Toast.LENGTH_SHORT).show();
                 }
-            }, this).execute(getValueDataFieldsInView(entityID), getRestContext());
+            }, this).execute(getValueDataFieldsInView(entityID), getRestContextPost());
         }
     }
 
@@ -110,10 +110,16 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
     protected abstract T getValueDataFieldsInView(Integer id);
 
     /**
-     * Get the string of context to form URL rest request.
+     * Get the string of context to form URL rest request GET or PUT.
      * @return
      */
-    protected abstract String getRestContext();
+    protected abstract String getRestContextGetOrPut();
+
+    /**
+     * Get the string of context to form URL rest request POST.
+     * @return
+     */
+    protected abstract String getRestContextPost();
 
     /**
      * Return the activity class that list T entities.

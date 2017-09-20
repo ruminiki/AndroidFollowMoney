@@ -68,8 +68,13 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextList() {
         return "/creditCardInvoices/creditCard/"+creditCardID;
+    }
+
+    @Override
+    protected String getRestContextDelete() {
+        return "/creditCardInvoices/"+creditCardID;
     }
 
     @Override

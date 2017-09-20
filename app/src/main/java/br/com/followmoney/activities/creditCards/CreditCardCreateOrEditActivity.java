@@ -64,8 +64,13 @@ public class CreditCardCreateOrEditActivity extends AbstractFormCreateOrEdit<Cre
     }
 
     @Override
-    protected String getRestContext() {
-        return "creditCards";
+    protected String getRestContextGetOrPut() {
+        return "/creditCards/"+entityID;
+    }
+
+    @Override
+    protected String getRestContextPost() {
+        return "/creditCards";
     }
 
     @Override

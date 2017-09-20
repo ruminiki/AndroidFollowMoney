@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import java.lang.reflect.Type;
@@ -34,7 +35,7 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
     public static int MODE = OPEN_TO_EDIT_MODE;
     protected ListView listView;
     protected List<HashMap<String, String>> mapList = new ArrayList<>();
-    protected int selectedEntityID;
+    protected int selectedEntityID, selectedEntityPosition;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -123,7 +124,7 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
             public void onError(String error) {
                 Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(getType(), getRestContext());
+        }, this).execute(getType(), getRestContextList());
 
     }
 
@@ -132,14 +133,21 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                loadList();
+                for ( int i = 0; i < mapList.size(); i++ ){
+                    if ( selectedEntityID == Integer.parseInt(mapList.get(i).get(KEY_ID)) ){
+                        mapList.remove(i);
+                        SimpleAdapter adapter = (SimpleAdapter) listView.getAdapter();
+                        adapter.notifyDataSetChanged();
+                        break;
+                    }
+                }
             }
 
             @Override
             public void onError(String error) {
                 Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
             }
-        }, this).execute(selectedEntityID, getRestContext());
+        }, this).execute(getRestContextDelete());
 
     }
 
@@ -155,7 +163,8 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
      * Get the string of context to form URL rest request.
      * @return
      */
-    protected abstract String getRestContext();
+    protected abstract String getRestContextList();
+    protected abstract String getRestContextDelete();
     protected abstract void   showCreateOrEditForm(int selectedEntityID);
     protected abstract Type   getType();
 

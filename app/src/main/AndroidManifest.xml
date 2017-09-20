@@ -107,6 +107,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.followmoney.activities.bankAccounts.BankAccountListActivity" />
         </activity>
+        <activity
+            android:name="br.com.followmoney.activities.bankAccounts.BankAccountExtractMovementListActivity"
+            android:parentActivityName="br.com.followmoney.activities.bankAccounts.BankAccountListActivity">
+
+            <!-- The meta-data tag is required if you support API level 15 and lower -->
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.followmoney.activities.bankAccounts.BankAccountListActivity" />
+        </activity>
 
         <!--========FORMA PAGAMENTO========-->
         <activity

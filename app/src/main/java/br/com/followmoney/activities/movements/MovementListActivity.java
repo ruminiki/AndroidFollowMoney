@@ -81,8 +81,13 @@ public class MovementListActivity extends AbstractFormList<Movement> {
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextList() {
         return "/movements/user/3/period/201708";//@TODO precisa pegar o mês selecionado na search panel
+    }
+
+    @Override
+    protected String getRestContextDelete() {
+        return "/movements/"+selectedEntityID;
     }
 
     @Override

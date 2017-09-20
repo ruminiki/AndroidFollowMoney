@@ -30,7 +30,7 @@ public class PostEntityJson<T> {
             String json = gson.toJson(entity);
             System.out.println(json);
 
-            final String URL = Params.REMOTE_URL + "/"+ restContext +"/";
+            final String URL = Params.REMOTE_URL + restContext;
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.POST, URL, new JSONObject(json),
                     new Response.Listener<JSONObject>() {

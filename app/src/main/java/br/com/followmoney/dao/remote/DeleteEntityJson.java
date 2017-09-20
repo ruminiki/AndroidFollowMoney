@@ -20,8 +20,8 @@ public class DeleteEntityJson {
         this.context = context;
     }
 
-    public void execute(Integer id, String restContext) {
-        final String URL = Params.REMOTE_URL + "/" + restContext + "/" + id;
+    public void execute(String restContext) {
+        final String URL = Params.REMOTE_URL + restContext;
 
         StringRequest req = new StringRequest(Request.Method.DELETE, URL,
                 new Response.Listener<String>()

@@ -65,8 +65,13 @@ public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<Ba
     }
 
     @Override
-    protected String getRestContext() {
-        return "bankAccounts";
+    protected String getRestContextGetOrPut() {
+        return "/bankAccounts/"+entityID;
+    }
+
+    @Override
+    protected String getRestContextPost() {
+        return "/bankAccounts";
     }
 
     @Override

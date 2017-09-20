@@ -20,11 +20,11 @@ import br.com.followmoney.util.DateUtil;
 
 public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Movement> {
 
-    private static final String KEY_FINALITY        = "finality";
-    private static final String KEY_BANK_ACCOUNT    = "bankAccount";
-    private static final String KEY_EMISSION        = "emission";
-    private static final String KEY_MATURITY        = "maturity";
-    private static final String KEY_VALUE           = "value";
+    private static final String KEY_FINALITY     = "finality";
+    private static final String KEY_BANK_ACCOUNT = "bankAccount";
+    private static final String KEY_EMISSION     = "emission";
+    private static final String KEY_MATURITY     = "maturity";
+    private static final String KEY_VALUE        = "value";
 
     int invoiceID;
 
@@ -33,7 +33,7 @@ public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Move
 
         setContentView(R.layout.activity_credit_card_invoice_movement_list);
 
-        invoiceID             = getIntent().getIntExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_ID, 0);
+        invoiceID                 = getIntent().getIntExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_ID, 0);
         String invoiceDescription = getIntent().getStringExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_DESCRIPTION);
         String invoiceValue       = getIntent().getStringExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_VALUE);
 
@@ -70,7 +70,7 @@ public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Move
             mapList.add(map);
         }
 
-        ListAdapter adapter = new SimpleAdapter(getApplicationContext(), mapList, R.layout.movement_invoice_list_renderer,
+        ListAdapter adapter = new SimpleAdapter(getApplicationContext(), mapList, R.layout.invoice_movement_list_renderer,
                 new String[] { KEY_DESCRIPTION, KEY_FINALITY, KEY_VALUE, KEY_BANK_ACCOUNT, KEY_EMISSION, KEY_MATURITY },
                 new int[] { R.id.description, R.id.finality, R.id.value, R.id.bank_account, R.id.emission, R.id.maturity});
 
@@ -78,14 +78,15 @@ public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Move
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextList() {
         return "/movements/invoice/"+invoiceID;
     }
 
     @Override
-    protected void showCreateOrEditForm(int selectedEntityID) {
+    protected String getRestContextDelete() { return null; }
 
-    }
+    @Override
+    protected void showCreateOrEditForm(int selectedEntityID) {  }
 
     @Override
     protected Type getType() {

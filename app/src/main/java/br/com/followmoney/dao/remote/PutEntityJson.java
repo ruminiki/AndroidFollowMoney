@@ -24,14 +24,14 @@ public class PutEntityJson<T> {
         this.context = context;
     }
 
-    public void execute(T entity, Integer id, String restContext) {
+    public void execute(T entity, String restContext) {
 
         try {
             final Gson gson = new Gson();
             String json = gson.toJson(entity);
             System.out.println(json);
 
-            final String URL = Params.REMOTE_URL + "/"+ restContext +"/"+id;
+            final String URL = Params.REMOTE_URL + restContext;
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(json),
                     new Response.Listener<JSONObject>() {

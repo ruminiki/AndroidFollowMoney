@@ -34,7 +34,6 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorDefault"
         android:gravity="right"
-        android:layout_weight="0.15"
         android:orientation="horizontal">
 
         <ImageButton

@@ -45,8 +45,13 @@ public class PaymentFormListActivity extends AbstractFormList<PaymentForm> {
     }
 
     @Override
-    protected String getRestContext() {
+    protected String getRestContextList() {
         return "/paymentForms/user/3"; //@TODO get user logged in
+    }
+
+    @Override
+    protected String getRestContextDelete() {
+        return "/paymentForms/"+selectedEntityID;
     }
 
     @Override

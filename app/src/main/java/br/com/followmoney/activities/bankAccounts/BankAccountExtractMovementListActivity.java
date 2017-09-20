@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListAdapter;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -19,15 +20,33 @@ import br.com.followmoney.util.DateUtil;
 
 public class BankAccountExtractMovementListActivity extends AbstractFormList<Movement>{
 
+    public static final String KEY_EXTRA_BANK_ACCOUNT_ID          = "KEY_EXTRA_BANK_ACCOUNT_ID";
+    public static final String KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION = "KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION";
+
     private static final String KEY_FINALITY     = "finality";
     private static final String KEY_BANK_ACCOUNT = "bankAccount";
     private static final String KEY_EMISSION     = "emission";
     private static final String KEY_MATURITY     = "maturity";
     private static final String KEY_VALUE        = "value";
 
+    int bankAccountID = 0;
+    String bankAccountDescription;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_bank_account_extract_movement_list);
+
+        bankAccountID          = getIntent().getIntExtra(KEY_EXTRA_BANK_ACCOUNT_ID, 0);
+        bankAccountDescription = getIntent().getStringExtra(KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION);
+
+        TextView bankAccountDescriptionTextView = (TextView) findViewById(R.id.bankAccountDescriptionTextView);
+        bankAccountDescriptionTextView.setText(bankAccountDescription);
+
+        TextView atualBalanceTextView = (TextView) findViewById(R.id.atualBalanceTextView);
+        atualBalanceTextView.setText("Saldo Atual: R$ 0,00");//@TODO buscar o saldo da conta bancaria no servidor
+
+        TextView foreseenBalanceTextView = (TextView) findViewById(R.id.foreseenBalanceTextView);
+        foreseenBalanceTextView.setText("Previsto: R$ 0,00");//@TODO buscar o saldo da conta bancaria no servidor
 
         super.onCreate(savedInstanceState);
     }
@@ -55,7 +74,7 @@ public class BankAccountExtractMovementListActivity extends AbstractFormList<Mov
             mapList.add(map);
         }
 
-        ListAdapter adapter = new SimpleAdapter(getApplicationContext(), mapList, R.layout.bank_account_extract_list_renderer,
+        ListAdapter adapter = new SimpleAdapter(getApplicationContext(), mapList, R.layout.extract_movement_list_renderer,
                 new String[] { KEY_DESCRIPTION, KEY_FINALITY, KEY_VALUE, KEY_BANK_ACCOUNT, KEY_EMISSION, KEY_MATURITY },
                 new int[] { R.id.description, R.id.finality, R.id.value, R.id.bank_account, R.id.emission, R.id.maturity});
 
@@ -63,8 +82,13 @@ public class BankAccountExtractMovementListActivity extends AbstractFormList<Mov
     }
 
     @Override
-    protected String getRestContext() {
-        return "movements/extract";
+    protected String getRestContextList() {
+        return "/movements/extract/"+bankAccountID+"/period/201708";
+    }
+
+    @Override
+    protected String getRestContextDelete() {
+        return null;
     }
 
     @Override

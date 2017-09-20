@@ -35,11 +35,10 @@
         android:layout_centerHorizontal="true"
         android:background="@color/colorDefault"
         android:gravity="right"
-        android:layout_weight="0.15"
         android:orientation="horizontal">
 
         <ImageButton
-            android:id="@+id/invoiceButton"
+            android:id="@+id/listInvoicesButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_agenda"/>

@@ -52,8 +52,13 @@ public class PaymentFormCreateOrEditActivity extends AbstractFormCreateOrEdit<Pa
     }
 
     @Override
-    protected String getRestContext() {
-        return "paymentForms";
+    protected String getRestContextGetOrPut() {
+        return "/paymentForms/"+entityID;
+    }
+
+    @Override
+    protected String getRestContextPost() {
+        return "/paymentForms";
     }
 
     @Override

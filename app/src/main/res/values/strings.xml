@@ -32,6 +32,7 @@
     <string name="number">Número</string>
     <string name="digit">Dígito</string>
     <string name="extract">Extrato</string>
+    <string name="extract_bank_account">Extrato de Conta Bancária</string>
     <string-array name="status_option">
         <item>ATIVO</item>
         <item>INATIVA</item>
