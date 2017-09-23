@@ -21,6 +21,9 @@ import br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListAct
 import br.com.followmoney.domain.CreditCard;
 import br.com.followmoney.domain.Finality;
 
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_ID;
+
 public class CreditCardListActivity extends AbstractFormList<CreditCard> {
 
     private static final String KEY_LIMIT        = "limit";
@@ -38,8 +41,8 @@ public class CreditCardListActivity extends AbstractFormList<CreditCard> {
             public void onClick(View view) {
                 if ( selectedEntityPosition >= 0 ) {
                     Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceListActivity.class);
-                    intent.putExtra(CreditCardInvoiceListActivity.KEY_EXTRA_CREDIT_CARD_ID, selectedEntityID);
-                    intent.putExtra(CreditCardInvoiceListActivity.KEY_EXTRA_CREDIT_CARD_DESCRIPTION, mapList.get(selectedEntityPosition).get(KEY_DESCRIPTION));
+                    intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, selectedEntityID);
+                    intent.putExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION, mapList.get(selectedEntityPosition).get(KEY_DESCRIPTION));
                     startActivity(intent);
                 }else{
                     Toast.makeText(getApplicationContext(), "Please, you need select an object to show invoices!", Toast.LENGTH_SHORT).show();

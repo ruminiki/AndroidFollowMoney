@@ -1,5 +1,6 @@
 package br.com.followmoney.activities.creditCardInvoices;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -15,27 +16,38 @@ import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
+import br.com.followmoney.activities.movements.MovementDetailActivity;
 import br.com.followmoney.domain.Movement;
 import br.com.followmoney.util.DateUtil;
 
+import static br.com.followmoney.activities.KeyParams.KEY_BANK_ACCOUNT;
+import static br.com.followmoney.activities.KeyParams.KEY_EMISSION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_VALUE;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_MOVEMENT_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_FINALITY;
+import static br.com.followmoney.activities.KeyParams.KEY_MATURITY;
+import static br.com.followmoney.activities.KeyParams.KEY_VALUE;
+
 public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Movement> {
 
-    private static final String KEY_FINALITY     = "finality";
-    private static final String KEY_BANK_ACCOUNT = "bankAccount";
-    private static final String KEY_EMISSION     = "emission";
-    private static final String KEY_MATURITY     = "maturity";
-    private static final String KEY_VALUE        = "value";
-
-    int invoiceID;
+    int invoiceID, creditCardID;
+    String creditCardDescription;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         setContentView(R.layout.activity_credit_card_invoice_movement_list);
+        //params used to on click back
+        creditCardID              = getIntent().getIntExtra(KEY_EXTRA_CREDIT_CARD_ID, 0);
+        creditCardDescription     = getIntent().getStringExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION);
 
-        invoiceID                 = getIntent().getIntExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_ID, 0);
-        String invoiceDescription = getIntent().getStringExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_DESCRIPTION);
-        String invoiceValue       = getIntent().getStringExtra(CreditCardInvoiceListActivity.KEY_EXTRA_INVOICE_VALUE);
+        invoiceID                 = getIntent().getIntExtra(KEY_EXTRA_INVOICE_ID, 0);
+        String invoiceDescription = getIntent().getStringExtra(KEY_EXTRA_INVOICE_DESCRIPTION);
+        String invoiceValue       = getIntent().getStringExtra(KEY_EXTRA_INVOICE_VALUE);
 
         TextView invoiceDescriptionTextView = (TextView) findViewById(R.id.invoiceDescriptionTextView);
         invoiceDescriptionTextView.setText(invoiceDescription);
@@ -53,20 +65,10 @@ public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Move
             HashMap<String, String> map = new HashMap<>();
             map.put(KEY_ID, String.valueOf(movement.getId()));
             map.put(KEY_DESCRIPTION, movement.getDescricao());
-            map.put(KEY_FINALITY, "Finalidade: " + movement.getFinalidade().getDescricao());
-
-            if ( movement.getContaBancaria() != null && movement.getContaBancaria().getDescricao() != null ){
-                map.put(KEY_BANK_ACCOUNT, "Conta Bancária: " + movement.getContaBancaria().getDescricao());
-            }else{
-                if ( movement.getCartaoCredito() != null && movement.getCartaoCredito().getDescricao() != null ){
-                    map.put(KEY_BANK_ACCOUNT, "Cartão Crédito: " + movement.getCartaoCredito().getDescricao());
-                }
-            }
-
+            map.put(KEY_FINALITY, movement.getFinalidade().getDescricao());
             map.put(KEY_EMISSION, "E: " + DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
             map.put(KEY_MATURITY, "V: " + DateUtil.format(movement.getVencimento(), "yyyyMMdd", "dd/MM/yyyy"));
             map.put(KEY_VALUE, "R$ " + String.valueOf(movement.getValor()));
-
             mapList.add(map);
         }
 
@@ -95,6 +97,8 @@ public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Move
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+        Intent intent = new Intent(CreditCardInvoiceMovementListActivity.this, MovementDetailActivity.class);
+        intent.putExtra(KEY_EXTRA_MOVEMENT_ID, Integer.parseInt(mapList.get(i).get(KEY_ID)));
+        startActivity(intent);
     }
 }

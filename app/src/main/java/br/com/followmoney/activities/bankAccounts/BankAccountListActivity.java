@@ -38,6 +38,17 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
                     intent.putExtra(BankAccountExtractMovementListActivity.KEY_EXTRA_BANK_ACCOUNT_ID, selectedEntityID);
                     intent.putExtra(BankAccountExtractMovementListActivity.KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION, mapList.get(selectedEntityPosition).get(KEY_DESCRIPTION));
                     startActivity(intent);
+
+                    /*Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceMovementListActivity.class);
+                    intent.putExtra(KEY_EXTRA_INVOICE_ID, 143);
+
+                    intent.putExtra(KEY_EXTRA_INVOICE_DESCRIPTION, "Teste");
+                    intent.putExtra(KEY_EXTRA_INVOICE_VALUE, "0000");
+
+                    intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, 11);
+                    intent.putExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION, "Teste");
+                    startActivity(intent);*/
+
                 }else{
                     Toast.makeText(getApplicationContext(), "Please, you need select an object to show extract!", Toast.LENGTH_SHORT).show();
                 }

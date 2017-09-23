@@ -79,13 +79,7 @@
                 android:value="br.com.followmoney.activities.creditCards.CreditCardListActivity" />
         </activity>
         <activity
-            android:name="br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceMovementListActivity"
-            android:parentActivityName="br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListActivity">
-
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListActivity" />
+            android:name="br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceMovementListActivity">
         </activity>
 
         <!--========CONTA BANCÁRIA========-->
@@ -108,13 +102,7 @@
                 android:value="br.com.followmoney.activities.bankAccounts.BankAccountListActivity" />
         </activity>
         <activity
-            android:name="br.com.followmoney.activities.bankAccounts.BankAccountExtractMovementListActivity"
-            android:parentActivityName="br.com.followmoney.activities.bankAccounts.BankAccountListActivity">
-
-            <!-- The meta-data tag is required if you support API level 15 and lower -->
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.followmoney.activities.bankAccounts.BankAccountListActivity" />
+            android:name="br.com.followmoney.activities.bankAccounts.BankAccountExtractMovementListActivity">
         </activity>
 
         <!--========FORMA PAGAMENTO========-->
@@ -155,6 +143,9 @@
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="br.com.followmoney.activities.movements.MovementListActivity" />
+        </activity>
+        <activity
+            android:name="br.com.followmoney.activities.movements.MovementDetailActivity">
         </activity>
 
     </application>

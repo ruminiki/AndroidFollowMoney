@@ -57,20 +57,10 @@ public class BankAccountExtractMovementListActivity extends AbstractFormList<Mov
             HashMap<String, String> map = new HashMap<>();
             map.put(KEY_ID, String.valueOf(movement.getId()));
             map.put(KEY_DESCRIPTION, movement.getDescricao());
-            map.put(KEY_FINALITY, "Finalidade: " + movement.getFinalidade().getDescricao());
-
-            if ( movement.getContaBancaria() != null && movement.getContaBancaria().getDescricao() != null ){
-                map.put(KEY_BANK_ACCOUNT, "Conta Bancária: " + movement.getContaBancaria().getDescricao());
-            }else{
-                if ( movement.getCartaoCredito() != null && movement.getCartaoCredito().getDescricao() != null ){
-                    map.put(KEY_BANK_ACCOUNT, "Cartão Crédito: " + movement.getCartaoCredito().getDescricao());
-                }
-            }
-
+            map.put(KEY_FINALITY, movement.getFinalidade().getDescricao());
             map.put(KEY_EMISSION, "E: " + DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
             map.put(KEY_MATURITY, "V: " + DateUtil.format(movement.getVencimento(), "yyyyMMdd", "dd/MM/yyyy"));
             map.put(KEY_VALUE, "R$ " + String.valueOf(movement.getValor()));
-
             mapList.add(map);
         }
 

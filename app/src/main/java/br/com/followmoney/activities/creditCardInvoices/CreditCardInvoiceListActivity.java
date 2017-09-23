@@ -18,18 +18,16 @@ import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
 import br.com.followmoney.domain.CreditCardInvoice;
 
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_VALUE;
+import static br.com.followmoney.activities.KeyParams.KEY_REFERENCE_MONTH;
+import static br.com.followmoney.activities.KeyParams.KEY_STATUS;
+import static br.com.followmoney.activities.KeyParams.KEY_VALUE;
+
 public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardInvoice>{
-
-    public final static String KEY_EXTRA_CREDIT_CARD_ID          = "KEY_EXTRA_CREDIT_CARD_ID";
-    public final static String KEY_EXTRA_CREDIT_CARD_DESCRIPTION = "KEY_EXTRA_CREDIT_CARD_DESCRIPTION";
-
-    public final static String KEY_EXTRA_INVOICE_ID              = "KEY_EXTRA_INVOICE_ID";
-    public final static String KEY_EXTRA_INVOICE_DESCRIPTION     = "KEY_EXTRA_INVOICE_DESCRIPTION";
-    public final static String KEY_EXTRA_INVOICE_VALUE           = "KEY_EXTRA_INVOICE_VALUE";
-
-    private static final String KEY_VALUE                        = "value";
-    private static final String KEY_REFERENCE_MONTH              = "reference_month";
-    private static final String KEY_STATUS                       = "status";
 
     int creditCardID;
     String creditCardDescription;
@@ -78,9 +76,7 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
     }
 
     @Override
-    protected void showCreateOrEditForm(int selectedEntityID) {
-
-    }
+    protected void showCreateOrEditForm(int selectedEntityID) { }
 
     @Override
     protected Type getType() {
@@ -89,13 +85,24 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceMovementListActivity.class);
+        Intent intent = new Intent(CreditCardInvoiceListActivity.this, CreditCardInvoiceMovementListActivity.class);
         intent.putExtra(KEY_EXTRA_INVOICE_ID, Integer.parseInt(mapList.get(i).get(KEY_ID)));
+
         intent.putExtra(KEY_EXTRA_INVOICE_DESCRIPTION, creditCardDescription.toUpperCase() +
                         " " + mapList.get(i).get(KEY_REFERENCE_MONTH).toUpperCase() +
                         " (" + mapList.get(i).get(KEY_STATUS).toUpperCase()+")");
         intent.putExtra(KEY_EXTRA_INVOICE_VALUE, mapList.get(i).get(KEY_VALUE));
+
+        intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, creditCardID);
+        intent.putExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION, creditCardDescription);
         startActivity(intent);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        //super.onActivityResult(requestCode, resultCode, data);
+            if (resultCode == RESULT_OK) {
+                super.loadList();
+            }
+    }
 }

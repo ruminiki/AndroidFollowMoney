@@ -48,6 +48,7 @@
     <string name="bank_account">Conta Bancária</string>
     <string name="credit_card">Cartão de Crédito</string>
     <string name="value">Valor</string>
+    <string name="movement_detail">Detalhe do Movimento</string>
 
     <!-- payment Form -->
     <string name="initials">Sigla</string>
