@@ -41,7 +41,13 @@
             android:id="@+id/extractButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_agenda"/>
+            android:src="@android:drawable/ic_menu_sort_by_size"/>
+
+        <ImageButton
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_add"/>
 
         <ImageButton
             android:id="@+id/editButton"
@@ -54,12 +60,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@android:drawable/ic_menu_delete"/>
-
-        <ImageButton
-            android:id="@+id/addButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@android:drawable/ic_menu_add"/>
 
     </LinearLayout>
 

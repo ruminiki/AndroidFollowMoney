@@ -1,5 +1,8 @@
 package br.com.followmoney.domain;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by ruminiki on 08/09/2017.
  */
@@ -70,8 +73,12 @@ public class CreditCard {
         this.dataFechamento = dataFechamento;
     }
 
+    public String getLimiteFormatado(){
+        return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(limite);
+    }
+
     @Override
     public String toString() {
-        return id + " - " + descricao;
+        return descricao;
     }
 }

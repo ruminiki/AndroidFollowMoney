@@ -29,16 +29,18 @@ public class KeyParams {
     public static final String KEY_STATUS       = "status";
 
     //MOVEMENTS: EXTRAs
-    public final static String KEY_EXTRA_MOVEMENT_ID           = "KEY_EXTRA_MOVEMENT_ID";
-    public final static String KEY_EXTRA_MOVEMENT_DESCRIPTION  = "KEY_EXTRA_MOVEMENT_DESCRIPTION";
-    public final static String KEY_EXTRA_MOVEMENT_EMISSION     = "KEY_EXTRA_MOVEMENT_EMISSION";
-    public final static String KEY_EXTRA_MOVEMENT_MATURITY     = "KEY_EXTRA_MOVEMENT_MATURITY";
-    public final static String KEY_EXTRA_MOVEMENT_OPERATION    = "KEY_EXTRA_MOVEMENT_OPERATION";
-    public final static String KEY_EXTRA_MOVEMENT_FINALITY     = "KEY_EXTRA_MOVEMENT_FINALITY";
-    public final static String KEY_EXTRA_MOVEMENT_PAYMENT_FORM = "KEY_EXTRA_MOVEMENT_PAYMENT_FORM";
-    public final static String KEY_EXTRA_MOVEMENT_BANK_ACCOUNT = "KEY_EXTRA_MOVEMENT_BANK_ACCOUNT";
-    public final static String KEY_EXTRA_MOVEMENT_CREDIT_CARD  = "KEY_EXTRA_MOVEMENT_CREDIT_CARD";
-    public final static String KEY_EXTRA_MOVEMENT_VALUE        = "KEY_EXTRA_MOVEMENT_VALUE";
+    public final static String KEY_EXTRA_MOVEMENT_ID              = "KEY_EXTRA_MOVEMENT_ID";
+    public final static String KEY_EXTRA_MOVEMENT_DESCRIPTION     = "KEY_EXTRA_MOVEMENT_DESCRIPTION";
+    public final static String KEY_EXTRA_MOVEMENT_EMISSION        = "KEY_EXTRA_MOVEMENT_EMISSION";
+    public final static String KEY_EXTRA_MOVEMENT_MATURITY        = "KEY_EXTRA_MOVEMENT_MATURITY";
+    public final static String KEY_EXTRA_MOVEMENT_OPERATION       = "KEY_EXTRA_MOVEMENT_OPERATION";
+    public final static String KEY_EXTRA_MOVEMENT_FINALITY        = "KEY_EXTRA_MOVEMENT_FINALITY";
+    public final static String KEY_EXTRA_MOVEMENT_PAYMENT_FORM    = "KEY_EXTRA_MOVEMENT_PAYMENT_FORM";
+    public final static String KEY_EXTRA_MOVEMENT_BANK_ACCOUNT    = "KEY_EXTRA_MOVEMENT_BANK_ACCOUNT";
+    public final static String KEY_EXTRA_MOVEMENT_CREDIT_CARD     = "KEY_EXTRA_MOVEMENT_CREDIT_CARD";
+    public final static String KEY_EXTRA_MOVEMENT_VALUE           = "KEY_EXTRA_MOVEMENT_VALUE";
+    public static final String KEY_EXTRA_BANK_ACCOUNT_ID          = "KEY_EXTRA_BANK_ACCOUNT_ID";
+    public static final String KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION = "KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION";
 
 
 }

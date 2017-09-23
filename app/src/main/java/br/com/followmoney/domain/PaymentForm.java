@@ -54,6 +54,6 @@ public class PaymentForm {
 
     @Override
     public String toString() {
-        return id + " - " + descricao;
+        return descricao;
     }
 }

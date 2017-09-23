@@ -36,6 +36,7 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
     protected ListView listView;
     protected List<HashMap<String, String>> mapList = new ArrayList<>();
     protected int selectedEntityID, selectedEntityPosition;
+    protected T selectedEntity;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {

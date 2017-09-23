@@ -16,7 +16,6 @@ import br.com.followmoney.R;
 import br.com.followmoney.dao.remote.DeleteEntityJson;
 import br.com.followmoney.dao.remote.GetEntityJson;
 import br.com.followmoney.domain.Movement;
-import br.com.followmoney.util.DateUtil;
 
 import static br.com.followmoney.activities.AbstractFormList.KEY_EXTRA_ID;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_MOVEMENT_ID;
@@ -47,14 +46,14 @@ public class MovementDetailActivity extends AppCompatActivity {
             @Override
             public void onLoaded(Movement movement) {
                 descricaoTextView.setText(movement.getDescricao());
-                emissaoTextView.setText(DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
-                vencimentoTextView.setText(DateUtil.format(movement.getVencimento(), "yyyyMMdd", "dd/MM/yyyy"));
+                emissaoTextView.setText(movement.getEmissaoFormatado());
+                vencimentoTextView.setText(movement.getVencimentoFormatado());
                 operacaoTextView.setText(movement.getOperacao());
                 finalidadeTextView.setText(movement.getFinalidade().getDescricao());
                 formaPagamentoTextView.setText(movement.getFormaPagamento().getDescricao());
                 cartaoCreditoTextView.setText(movement.getCartaoCredito() != null ? movement.getCartaoCredito().getDescricao() : "");
                 contaBancariaTextView.setText(movement.getCartaoCredito() != null ? movement.getContaBancaria().getDescricao() : "");
-                valorTextView.setText("R$ " + movement.getValor());
+                valorTextView.setText(movement.getValorFormatado());
             }
 
             @Override

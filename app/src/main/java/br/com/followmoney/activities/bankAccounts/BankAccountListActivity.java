@@ -5,25 +5,22 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
+import br.com.followmoney.activities.CustomListAdapter;
 import br.com.followmoney.domain.BankAccount;
 
-public class BankAccountListActivity extends AbstractFormList<BankAccount>{
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_ID;
 
-    private static final String KEY_NUMBER = "number";
-    private static final String KEY_DIGIT  = "digit";
-    private static final String KEY_STATUS = "status";
+public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,20 +32,9 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
             public void onClick(View view) {
                 if ( selectedEntityPosition >= 0 ){
                     Intent intent = new Intent(getApplicationContext(), BankAccountExtractMovementListActivity.class);
-                    intent.putExtra(BankAccountExtractMovementListActivity.KEY_EXTRA_BANK_ACCOUNT_ID, selectedEntityID);
-                    intent.putExtra(BankAccountExtractMovementListActivity.KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION, mapList.get(selectedEntityPosition).get(KEY_DESCRIPTION));
+                    intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, selectedEntity.getId());
+                    intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION, selectedEntity.getDescricao());
                     startActivity(intent);
-
-                    /*Intent intent = new Intent(getApplicationContext(), CreditCardInvoiceMovementListActivity.class);
-                    intent.putExtra(KEY_EXTRA_INVOICE_ID, 143);
-
-                    intent.putExtra(KEY_EXTRA_INVOICE_DESCRIPTION, "Teste");
-                    intent.putExtra(KEY_EXTRA_INVOICE_VALUE, "0000");
-
-                    intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, 11);
-                    intent.putExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION, "Teste");
-                    startActivity(intent);*/
-
                 }else{
                     Toast.makeText(getApplicationContext(), "Please, you need select an object to show extract!", Toast.LENGTH_SHORT).show();
                 }
@@ -60,22 +46,7 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
     @Override
     protected void entityListLoaded(List<BankAccount> bankAccounts) {
-        for (BankAccount bankAccount : bankAccounts) {
-            HashMap<String, String> map = new HashMap<>();
-            map.put(KEY_ID, String.valueOf(bankAccount.getId()));
-            map.put(KEY_DESCRIPTION, bankAccount.getDescricao());
-            map.put(KEY_NUMBER, String.valueOf(bankAccount.getNumero()));
-            map.put(KEY_DIGIT, String.valueOf(bankAccount.getDigito()));
-            map.put(KEY_STATUS, "("+bankAccount.getSituacao()+")");
-
-            mapList.add(map);
-        }
-
-        ListAdapter adapter = new SimpleAdapter(BankAccountListActivity.this, mapList, R.layout.bank_account_list_renderer,
-                new String[] { KEY_DESCRIPTION, KEY_NUMBER, KEY_DIGIT, KEY_STATUS },
-                new int[] { R.id.description, R.id.number, R.id.digit, R.id.status});
-
-        listView.setAdapter(adapter);
+        listView.setAdapter(new CustomListAdapter<BankAccount>(this, R.layout.bank_account_list_renderer, bankAccounts));
     }
 
     @Override
@@ -102,8 +73,8 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        selectedEntityID = Integer.parseInt(mapList.get(i).get(KEY_ID));
-        selectedEntityPosition = i;
+        selectedEntity = (BankAccount) listView.getItemAtPosition(i);
+        selectedEntityID = selectedEntity != null ? selectedEntity.getId() : 0;
         if ( MODE == OPEN_TO_SELECT_MODE ){
             BankAccount b = (BankAccount) listView.getSelectedItem();
             Intent intent = new Intent();

@@ -4,17 +4,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
-import java.util.HashMap;
 import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
+import br.com.followmoney.activities.CustomListAdapter;
 import br.com.followmoney.domain.PaymentForm;
 
 public class PaymentFormListActivity extends AbstractFormList<PaymentForm> {
@@ -29,19 +27,7 @@ public class PaymentFormListActivity extends AbstractFormList<PaymentForm> {
 
     @Override
     protected void entityListLoaded(List<PaymentForm> paymentForms) {
-        for (PaymentForm paymentForm : paymentForms) {
-            HashMap<String, String> map = new HashMap<>();
-            map.put(KEY_ID, String.valueOf(paymentForm.getId()));
-            map.put(KEY_DESCRIPTION, paymentForm.getDescricao());
-
-            mapList.add(map);
-        }
-
-        ListAdapter adapter = new SimpleAdapter(PaymentFormListActivity.this, mapList, R.layout.payment_form_list_renderer,
-                new String[] { KEY_DESCRIPTION },
-                new int[] { R.id.description});
-
-        listView.setAdapter(adapter);
+        listView.setAdapter(new CustomListAdapter<PaymentForm>(this, R.layout.payment_form_list_renderer, paymentForms));
     }
 
     @Override
@@ -68,12 +54,12 @@ public class PaymentFormListActivity extends AbstractFormList<PaymentForm> {
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        selectedEntityID = Integer.parseInt(mapList.get(i).get(KEY_ID));
+        selectedEntity = (PaymentForm) listView.getItemAtPosition(i);
+        selectedEntityID = selectedEntity != null ? selectedEntity.getId() : 0;
         if ( MODE == OPEN_TO_SELECT_MODE ){
-            PaymentForm f = (PaymentForm) listView.getSelectedItem();
             Intent intent = new Intent();
-            intent.putExtra(KEY_ID, f.getId());
-            intent.putExtra(KEY_DESCRIPTION, f.getDescricao());
+            intent.putExtra(KEY_ID, selectedEntity.getId());
+            intent.putExtra(KEY_DESCRIPTION, selectedEntity.getDescricao());
             setResult(RESULT_OK, intent);
             finish();
         }
