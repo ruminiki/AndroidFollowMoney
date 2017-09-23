@@ -23,9 +23,6 @@ import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_ID;
 
 public class CreditCardListActivity extends AbstractFormList<CreditCard> {
 
-    private static final String KEY_LIMIT        = "limit";
-    private static final String KEY_CLOSING_DATE = "closing_date";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 

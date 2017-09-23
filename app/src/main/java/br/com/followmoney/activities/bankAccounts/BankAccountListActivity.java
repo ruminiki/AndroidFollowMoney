@@ -30,7 +30,7 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
         extractButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if ( selectedEntityPosition >= 0 ){
+                if ( selectedEntity != null ){
                     Intent intent = new Intent(getApplicationContext(), BankAccountExtractMovementListActivity.class);
                     intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, selectedEntity.getId());
                     intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION, selectedEntity.getDescricao());

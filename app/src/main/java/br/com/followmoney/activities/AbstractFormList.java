@@ -3,7 +3,6 @@ package br.com.followmoney.activities;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -95,16 +94,6 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
                         d.show();
                         return;
                     }
-                }
-            });
-        }
-
-        FloatingActionButton fabAdd = (FloatingActionButton) findViewById(R.id.fabAdd);
-        if ( fabAdd != null ){
-            fabAdd.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showCreateOrEditForm(0);
                 }
             });
         }

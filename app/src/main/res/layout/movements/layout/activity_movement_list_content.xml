@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="bottom"
@@ -9,155 +8,91 @@
     android:background="@color/colorDefault">
 
     <LinearLayout
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:layout_width="wrap_content"
-        android:orientation="horizontal"
-        android:layout_height="match_parent">
-
-        <LinearLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:layout_width="30dp"
-            android:orientation="vertical"
-            android:layout_height="match_parent">
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Jan"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Fev"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Mar"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Abr"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Mai"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Jun"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Jul"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Ago"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Set"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Out"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Nov"/>
-
-            <android.support.v7.widget.AppCompatButton
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_margin="0dp"
-                android:padding="0dp"
-                android:textSize="12dp"
-                android:layout_weight="1"
-                android:text="Dez"/>
-
-        </LinearLayout>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <ListView
             android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_weight="1"
             android:layout_height="wrap_content"
+            android:choiceMode="singleChoice"
+            android:listSelector="#CCCCCC"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true">
         </ListView>
 
+        <!--
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/monthSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="123dp"
+            android:layout_marginRight="@dimen/fab_min_margin_right"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_menu_my_calendar" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabSearch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/fab_min_margin_bottom"
+            android:layout_marginRight="@dimen/fab_min_margin_right"
+            app:fabSize="mini"
+            app:srcCompat="@android:drawable/ic_menu_search" />
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/fabAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:layout_marginRight="@dimen/fab_margin"
+            app:srcCompat="@android:drawable/ic_input_add" />-->
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@color/colorDefault"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/selectMonthButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_agenda"/>
+
+            <ImageButton
+                android:id="@+id/searchButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_search"/>
+
+            <ImageButton
+                android:id="@+id/addButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_add"/>
+
+            <ImageButton
+                android:id="@+id/editButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_edit"/>
+
+            <ImageButton
+                android:id="@+id/deleteButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@android:drawable/ic_menu_delete"/>
+        </LinearLayout>
+
     </LinearLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabSearch"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/fab_min_margin_bottom"
-        android:layout_marginRight="@dimen/fab_min_margin_right"
-        app:fabSize="mini"
-        app:srcCompat="@android:drawable/ic_menu_search" />
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginRight="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>

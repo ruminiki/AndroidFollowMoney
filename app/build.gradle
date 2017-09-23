@@ -47,5 +47,6 @@ dependencies {
     compile 'com.android.volley:volley:1.0.0'
     testCompile 'junit:junit:4.12'
     provided 'com.google.android.wearable:wearable:1.0.0'
+    compile 'com.github.twinkle942910:monthyearpicker:0.0.1'
 }
 
