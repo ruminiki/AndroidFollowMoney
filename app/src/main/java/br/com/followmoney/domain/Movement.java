@@ -67,7 +67,7 @@ public class Movement{
     }
 
     public Float getValor() {
-        return valor;
+        return valor != null ? valor : 0f;
     }
 
     public void setValor(Float valor) {

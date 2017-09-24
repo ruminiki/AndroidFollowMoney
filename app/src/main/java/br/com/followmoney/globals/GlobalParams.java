@@ -1,5 +1,6 @@
 package br.com.followmoney.globals;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -15,8 +16,9 @@ public class GlobalParams {
     private String selectedMonthReference;
     private String selectedMonthReferenceFormated;
 
-    private static final SimpleDateFormat sdfNumber = new SimpleDateFormat("yyyyMM");
-    private static final SimpleDateFormat sdfString = new SimpleDateFormat("MMM/yyyy");
+    private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
+    private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMM");
+    private static final SimpleDateFormat sdf3 = new SimpleDateFormat("MMM/yyyy");
 
     private GlobalParams() { }
 
@@ -34,13 +36,21 @@ public class GlobalParams {
 
     public String getSelectedMonthReference() {
         if ( selectedMonthReference == null ){
-            return sdfNumber.format(new Date());
+            selectedMonthReference = sdf2.format(new Date());
         }
         return selectedMonthReference;
     }
 
     public void setSelectedMonthReference(String selectedMonthReference) {
         this.selectedMonthReference = selectedMonthReference;
+    }
+
+    public String getSelectedMonthReferenceFormated(){
+        try {
+            return sdf3.format(sdf1.parse(getSelectedMonthReference() + "01")).toUpperCase();
+        } catch (ParseException e) {
+            return sdf3.format(new Date()).toUpperCase();
+        }
     }
 
 }
