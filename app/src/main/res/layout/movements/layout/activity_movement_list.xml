@@ -12,7 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:paddingRight="5dp"
         android:background="@color/colorGray"
         android:gravity="right"
         android:orientation="vertical">
@@ -43,7 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Débito: "
+                android:text="Db.: "
                 android:textSize="12dp"/>
 
             <TextView
@@ -60,11 +59,28 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Crédito: "
+                android:text="Cr.: "
                 android:textSize="12dp"/>
 
             <TextView
                 android:id="@+id/receitasTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="R$ 0,00"
+                android:textSize="16dp"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sld: "
+                android:textSize="12dp"/>
+
+            <TextView
+                android:id="@+id/saldoMesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R$ 0,00"
@@ -83,15 +99,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saldo mês: "
+                android:text="Sld. ant.: "
                 android:textSize="12dp"/>
 
             <TextView
-                android:id="@+id/saldoMesTextView"
+                android:id="@+id/saldoAnteriorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="R$ 0,00"
                 android:textSize="16dp"/>
+
 
             <android.support.v4.widget.Space
                 android:layout_width="5dp"
@@ -100,7 +117,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Saldo previsto: "
+                android:text="Sld. prev.: "
                 android:textSize="12dp"/>
 
             <TextView
