@@ -24,7 +24,6 @@
             android:gravity="center"
             android:clickable="true"
             android:textStyle="bold"
-
             android:textSize="18dp"/>
 
         <LinearLayout
