@@ -30,6 +30,7 @@ import br.com.followmoney.globals.GlobalParams;
 
 public class MovementListActivity extends AbstractFormList<Movement> {
 
+    View status;
     YearMonthPickerDialog yearMonthPickerDialog;
     TextView mesReferenciaTextView, receitasTextView, despesasTextView, saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView;
 

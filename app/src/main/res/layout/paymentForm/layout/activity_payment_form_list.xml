@@ -1,15 +1,18 @@
-<android.support.design.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="bottom"
+    android:gravity="bottom"
     tools:context="br.com.followmoney.activities.paymentForms.PaymentFormListActivity">
 
     <ListView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true">
     </ListView>
@@ -27,8 +30,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:layout_gravity="bottom"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorDefault"
+        android:background="@color/defaultColor"
         android:gravity="right"
         android:orientation="horizontal">
 
@@ -52,4 +56,4 @@
 
     </LinearLayout>
 
-</android.support.design.widget.CoordinatorLayout>
+</LinearLayout>

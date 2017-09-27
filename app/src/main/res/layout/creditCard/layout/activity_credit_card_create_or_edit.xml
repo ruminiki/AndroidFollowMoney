@@ -106,7 +106,7 @@
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:background="@color/colorDefault"
+        android:background="@color/defaultColor"
         android:gravity="right"
         android:orientation="horizontal">
 

@@ -76,10 +76,9 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
         selectedEntity = (BankAccount) listView.getItemAtPosition(i);
         selectedEntityID = selectedEntity != null ? selectedEntity.getId() : 0;
         if ( MODE == OPEN_TO_SELECT_MODE ){
-            BankAccount b = (BankAccount) listView.getSelectedItem();
             Intent intent = new Intent();
-            intent.putExtra(KEY_ID, b.getId());
-            intent.putExtra(KEY_DESCRIPTION, b.getDescricao());
+            intent.putExtra(KEY_ID, selectedEntity.getId());
+            intent.putExtra(KEY_DESCRIPTION, selectedEntity.getDescricao());
             setResult(RESULT_OK, intent);
             finish();
         }

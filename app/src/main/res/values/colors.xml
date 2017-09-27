@@ -1,8 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#538cc6</color>
-    <color name="colorPrimaryDark">#336699</color>
-    <color name="colorAccent">#ccccb3</color>
-    <color name="colorDefault">#FFFFFF</color>
+    <color name="defaultColor">#FFFFFF</color>
     <color name="colorGray">#CCCCCC</color>
+    <color name="primaryColor">#006989</color>
+    <color name="primaryColorDark">#FFFFFF</color>
+    <color name="accentColor">#FFFFFF</color>
+    <color name="colorBackground">#B1C1C0</color>
+    <!-- Drawer -->
+    <color name="mainDrawerBackground">#564639</color>
+
+    <!-- Main (non-drawer) lists -->
+    <color name="commonMainListsBackground">#FFFFFF</color>
+    <color name="main_list_text_color">#000000</color>
+    <color name="list_item_pressed_color">#CADAFF</color>
+    <color name="list_item_color">#FFFFFF</color>
+    <color name="drawer_list_item_pressed_color">#E4FDE1</color>
+    <color name="drawer_list_item_color">@color/mainDrawerBackground</color>
+    <color name="divider_color">#DFF8EB</color>
+
+    <!-- Counters -->
+    <color name="distance_counter_color">#FE5F55</color>
+    <color name="deals_counter_color">#388659</color>
+
+    <!-- Information dialog -->
+    <color name="info_content_color">#FFFFFF</color>
+    <color name="primary_material_dark">#9e9e9e</color>
+    <color name="primary_dark_material_dark">#cad7ff</color>
+    <color name="accent_material_dark">#3469ff</color>
+    <color name="background_material_dark">#344055</color>
+    <color name="foreground_material_dark">#ffffff</color>
+    <color name="colorPrimaryDark">#044389</color>
+
+    <!-- Input dialogs -->
+    <color name="input_dialog_backgroud">#6DAEDB</color>
+    <color name="main_list_text_color_inverse">#FFFFFF</color>
 </resources>

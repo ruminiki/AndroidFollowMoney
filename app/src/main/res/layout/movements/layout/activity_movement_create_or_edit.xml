@@ -12,10 +12,11 @@
         android:id="@+id/scrollView"
         style="@android:style/Widget.Material.ScrollView"
         android:layout_width="fill_parent"
-        android:layout_height="450dp"
+        android:layout_height="wrap_content"
         android:clipToPadding="false"
         android:fillViewport="false"
         android:orientation="vertical"
+        android:layout_marginBottom="50dp"
         android:scrollbarStyle="insideInset">
 
         <LinearLayout
@@ -36,12 +37,7 @@
                 android:id="@+id/descricaoEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_marginTop="5dp"
-                android:inputType="textCapCharacters"
-                android:textAllCaps="true"
-                android:textSize="@dimen/font_size">
-
+                style="@style/edit_text">
                 <requestFocus />
             </EditText>
 
@@ -92,7 +88,6 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="0dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -118,7 +113,6 @@
                     android:layout_width="150dp"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginLeft="0dp"
                     android:orientation="vertical">
 
                     <TextView
@@ -152,7 +146,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="0dp"
                 android:orientation="horizontal">
 
                 <EditText
@@ -181,7 +174,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginLeft="0dp"
                 android:orientation="horizontal">
 
                 <EditText
