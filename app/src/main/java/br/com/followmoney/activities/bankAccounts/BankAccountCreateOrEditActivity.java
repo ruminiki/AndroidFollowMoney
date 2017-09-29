@@ -12,7 +12,6 @@ import java.lang.reflect.Type;
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormCreateOrEdit;
 import br.com.followmoney.domain.BankAccount;
-import br.com.followmoney.domain.Finality;
 
 public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<BankAccount>{
 
@@ -81,7 +80,7 @@ public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<Ba
 
     @Override
     protected Type getType() {
-        return new TypeToken<Finality>(){}.getType();
+        return new TypeToken<BankAccount>(){}.getType();
     }
 
 }

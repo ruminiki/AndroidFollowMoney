@@ -7,9 +7,9 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Toast;
 
 import java.lang.reflect.Type;
@@ -123,12 +123,17 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
-                for ( int i = 0; i < mapList.size(); i++ ){
-                    if ( selectedEntityID == Integer.parseInt(mapList.get(i).get(KEY_ID)) ){
-                        mapList.remove(i);
-                        SimpleAdapter adapter = (SimpleAdapter) listView.getAdapter();
-                        adapter.notifyDataSetChanged();
-                        break;
+                for ( int i = 0; i < listView.getAdapter().getCount(); i++ ){
+                    try {
+                        Object entity = listView.getItemAtPosition(i);
+                        Integer id = (Integer) entity.getClass().getMethod("getId").invoke(entity);
+                        if ( selectedEntityID == id ) {
+                            ((ArrayAdapter)listView.getAdapter()).remove(entity);
+                            ((ArrayAdapter)listView.getAdapter()).notifyDataSetChanged();
+                            break;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
