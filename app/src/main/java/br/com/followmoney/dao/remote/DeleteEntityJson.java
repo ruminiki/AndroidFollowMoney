@@ -8,7 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 
-import br.com.followmoney.util.Params;
+import br.com.followmoney.globals.GlobalParams;
 
 public class DeleteEntityJson {
 
@@ -21,7 +21,7 @@ public class DeleteEntityJson {
     }
 
     public void execute(String restContext) {
-        final String URL = Params.REMOTE_URL + restContext;
+        final String URL = GlobalParams.REMOTE_URL + restContext;
 
         StringRequest req = new StringRequest(Request.Method.DELETE, URL,
                 new Response.Listener<String>()

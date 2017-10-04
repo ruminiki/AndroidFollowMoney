@@ -14,7 +14,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 
-import br.com.followmoney.util.Params;
+import br.com.followmoney.globals.GlobalParams;
 
 public class GetEntityJson<T> {
 
@@ -30,7 +30,7 @@ public class GetEntityJson<T> {
 
         try {
 
-            String URL = Params.REMOTE_URL + restContext;
+            String URL = GlobalParams.REMOTE_URL + restContext;
             final Gson gson = new Gson();
             // pass second argument as "null" for GET requests
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,

@@ -16,7 +16,7 @@ import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
 
-import br.com.followmoney.util.Params;
+import br.com.followmoney.globals.GlobalParams;
 
 public class GetEntitiesJson<T> {
 
@@ -30,7 +30,7 @@ public class GetEntitiesJson<T> {
 
     public void execute(final Type target, String restContext, String... params) {
 
-        String URL = Params.REMOTE_URL + restContext;
+        String URL = GlobalParams.REMOTE_URL + restContext;
 
         //movements/user/:param1/period/:param2
         for ( String param : params ){

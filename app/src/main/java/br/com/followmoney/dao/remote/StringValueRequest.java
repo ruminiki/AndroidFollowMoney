@@ -8,7 +8,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.StringRequest;
 
-import br.com.followmoney.util.Params;
+import br.com.followmoney.globals.GlobalParams;
 
 public class StringValueRequest {
 
@@ -24,7 +24,7 @@ public class StringValueRequest {
 
         try {
 
-            String URL = Params.REMOTE_URL + restContext;
+            String URL = GlobalParams.REMOTE_URL + restContext;
             // Instantiate the RequestQueue.
             StringRequest stringRequest = new StringRequest(Request.Method.GET, URL,
                     new Response.Listener<String>() {

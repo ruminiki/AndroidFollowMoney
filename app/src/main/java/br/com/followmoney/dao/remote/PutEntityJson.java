@@ -12,7 +12,7 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import br.com.followmoney.util.Params;
+import br.com.followmoney.globals.GlobalParams;
 
 public class PutEntityJson<T> {
 
@@ -31,7 +31,7 @@ public class PutEntityJson<T> {
             String json = gson.toJson(entity);
             System.out.println(json);
 
-            final String URL = Params.REMOTE_URL + restContext;
+            final String URL = GlobalParams.REMOTE_URL + restContext;
             // Post params to be sent to the server
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.PUT, URL, new JSONObject(json),
                     new Response.Listener<JSONObject>() {
