@@ -24,7 +24,41 @@
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:choiceMode="singleChoice"
+        android:listSelector="#CCCCCC"
+        android:layout_weight="1"
+        android:layout_centerVertical="true"
         android:layout_marginTop="10dp">
     </ListView>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/defaultColor"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/listMovementsInvoiceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_zoom"/>
+
+        <ImageButton
+            android:id="@+id/unpayInvoiceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_revert"/>
+
+        <ImageButton
+            android:id="@+id/payInvoiceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_agenda"/>
+
+    </LinearLayout>
 
 </LinearLayout>

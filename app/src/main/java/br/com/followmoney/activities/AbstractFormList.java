@@ -140,10 +140,27 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
             }
         }, this).execute(getRestContextDelete());
 
+    }
+
+    protected void updateObjectInListView(T updated){
+        for ( int i = 0; i < listView.getAdapter().getCount(); i++ ){
+            try {
+                Object entity = listView.getItemAtPosition(i);
+                Integer id = (Integer) entity.getClass().getMethod("getId").invoke(entity);
+                if ( selectedEntityID == id ) {
+                    ((ArrayAdapter)listView.getAdapter()).remove(entity);
+                    ((ArrayAdapter)listView.getAdapter()).insert(updated, i);
+                    ((ArrayAdapter)listView.getAdapter()).notifyDataSetChanged();
+                    break;
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     //=========ABSTRACT METHODS==========

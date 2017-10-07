@@ -39,7 +39,8 @@ public class CustomListAdapter<T> extends ArrayAdapter<T> {
                     String getName = "get" + fieldName.replaceFirst(fieldName.substring(0,1), fieldName.substring(0,1).toUpperCase());
 
                     Method method = entity.getClass().getMethod(getName);
-                    childTextView.setText(String.valueOf(method.invoke(entity))); // pass arg
+                    Object response = method.invoke(entity);
+                    childTextView.setText(response != null ? String.valueOf(method.invoke(entity)) : ""); // pass arg
 
                 }catch (Exception e){  }
             }

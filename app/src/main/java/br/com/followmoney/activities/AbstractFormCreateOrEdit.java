@@ -48,7 +48,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
 
                 @Override
                 public void onError(String error) {
-                    Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again! ", Toast.LENGTH_SHORT).show();
                 }
             }, this).execute(getRestContextGetOrPut(), getType());
 
@@ -66,9 +66,9 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
 
                 @Override
                 public void onError(String error) {
-                    Toast.makeText(getApplicationContext(), "Update Failed", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }
-            }, this).execute(getValueDataFieldsInView(entityID), getRestContextGetOrPut());
+            }, this).execute(getValueDataFieldsInView(entityID), getRestContextGetOrPut(), getType());
 
         }
         else {
@@ -81,9 +81,9 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
 
                 @Override
                 public void onError(String error) {
-                    Toast.makeText(getApplicationContext(), "Could not Insert object", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
                 }
-            }, this).execute(getValueDataFieldsInView(entityID), getRestContextPost());
+            }, this).execute(getValueDataFieldsInView(entityID), getRestContextPost(), getType());
         }
     }
 

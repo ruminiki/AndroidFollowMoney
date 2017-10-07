@@ -2,11 +2,15 @@ package br.com.followmoney.dao.remote;
 
 import android.content.Context;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
+
+import java.io.UnsupportedEncodingException;
 
 import br.com.followmoney.globals.GlobalParams;
 
@@ -37,7 +41,21 @@ public class DeleteEntityJson {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         VolleyLog.e("Error: ", error.getMessage());
-                        onResponseListener.onError(error.getMessage());
+                        String parsed;
+                        NetworkResponse networkResponse = error.networkResponse;
+                        if(networkResponse != null && networkResponse.data != null) {
+                            try {
+                                parsed = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+                            } catch (UnsupportedEncodingException var4) {
+                                parsed = new String(networkResponse.data);
+                            }
+                            NetworkResponse response = new NetworkResponse(networkResponse.data);
+                            Response<String> parsedResponse;
+                            switch(response.statusCode){
+                                default:
+                                    onResponseListener.onError(parsed);
+                            }
+                        }
                     }
                 }
         );

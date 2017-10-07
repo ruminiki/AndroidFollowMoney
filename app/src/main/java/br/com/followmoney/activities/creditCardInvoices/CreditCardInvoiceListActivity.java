@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -14,6 +16,8 @@ import java.util.List;
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
 import br.com.followmoney.activities.CustomListAdapter;
+import br.com.followmoney.dao.remote.PutEntityJson;
+import br.com.followmoney.domain.CreditCard;
 import br.com.followmoney.domain.CreditCardInvoice;
 
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_DESCRIPTION;
@@ -23,6 +27,8 @@ import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_ID;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_VALUE;
 
 public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardInvoice>{
+
+    private static final int KEY_PAYMENT_SUCCESS = 0;
 
     int creditCardID;
     String creditCardDescription;
@@ -37,11 +43,90 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
         TextView creditCardDescriptionTextView = (TextView) findViewById(R.id.creditCardDescriptionTextView);
         creditCardDescriptionTextView.setText(creditCardDescription);
 
-        super.onCreate(savedInstanceState);
+        ImageButton listMovementsInvoiceButton = (ImageButton) findViewById(R.id.listMovementsInvoiceButton);
+        if ( listMovementsInvoiceButton != null ) {
+            listMovementsInvoiceButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listMovementsInvoice();
+                }
+            });
+        }
 
+        ImageButton unpayInvoiceButton = (ImageButton) findViewById(R.id.unpayInvoiceButton);
+        if ( unpayInvoiceButton != null ) {
+            unpayInvoiceButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    unpayInvoice();
+                }
+            });
+        }
+
+        ImageButton payInvoiceButton = (ImageButton) findViewById(R.id.payInvoiceButton);
+        if ( payInvoiceButton != null ) {
+            payInvoiceButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    payInvoice();
+                }
+            });
+        }
+
+        super.onCreate(savedInstanceState);
+    }
+
+    private void listMovementsInvoice(){
+        Intent intent = new Intent(CreditCardInvoiceListActivity.this, CreditCardInvoiceMovementListActivity.class);
+        intent.putExtra(KEY_EXTRA_INVOICE_ID, selectedEntity.getId());
+        intent.putExtra(KEY_EXTRA_INVOICE_DESCRIPTION, creditCardDescription.toUpperCase() +
+                " " + selectedEntity.getMesReferencia().toUpperCase() +
+                " (" + selectedEntity.getStatus().toUpperCase()+")");
+        intent.putExtra(KEY_EXTRA_INVOICE_VALUE, "R$ " + selectedEntity.getValor());
+        intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, creditCardID);
+        intent.putExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION, creditCardDescription);
+        startActivity(intent);
+    }
+
+    private void payInvoice(){
+        if ( selectedEntity != null && !selectedEntity.getStatus().equals(CreditCard.STATUS_CLOSED) ){
+            Intent intent = new Intent(CreditCardInvoiceListActivity.this, CreditCardPaymentInvoiceActivity.class);
+            intent.putExtra(KEY_EXTRA_INVOICE_ID, selectedEntity.getId());
+            startActivityForResult(intent, 0);
+        }else{
+            Toast.makeText(getApplicationContext(), "A fatura selecionada já está fechada!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void unpayInvoice(){
+        new PutEntityJson<CreditCardInvoice>(new PutEntityJson.OnLoadListener<CreditCardInvoice>() {
+            @Override
+            public void onLoaded(CreditCardInvoice t) {
+                Toast.makeText(getApplicationContext(), "Invoice payment successfully undone!", Toast.LENGTH_SHORT).show();
+                updateObjectInListView(t);
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+            }
+        }, this).execute(selectedEntity, "/creditCardInvoices/unpay/"+selectedEntity.getId(), new TypeToken<CreditCardInvoice>(){}.getType());
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case KEY_PAYMENT_SUCCESS: {
+                if (resultCode == RESULT_OK) {
+                    selectedEntity.setStatus(CreditCard.STATUS_CLOSED);
+                    updateObjectInListView(selectedEntity);
+                }
+                break;
+            }
+        }
+    }
+        @Override
     protected void entityListLoaded(List<CreditCardInvoice> creditCardInvoices) {
         listView.setAdapter(new CustomListAdapter<CreditCardInvoice>(this, R.layout.credit_card_invoice_list_renderer, creditCardInvoices));
     }
@@ -66,21 +151,9 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
 
     @Override
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-        selectedEntity = (CreditCardInvoice) listView.getItemAtPosition(i);
-
-        Intent intent = new Intent(CreditCardInvoiceListActivity.this, CreditCardInvoiceMovementListActivity.class);
-        intent.putExtra(KEY_EXTRA_INVOICE_ID, selectedEntity.getId());
-
-        intent.putExtra(KEY_EXTRA_INVOICE_DESCRIPTION, creditCardDescription.toUpperCase() +
-                        " " + selectedEntity.getMesReferencia().toUpperCase() +
-                        " (" + selectedEntity.getStatus().toUpperCase()+")");
-
-        intent.putExtra(KEY_EXTRA_INVOICE_VALUE, "R$ " + selectedEntity.getValor());
-
-        intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, creditCardID);
-        intent.putExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION, creditCardDescription);
-
-        startActivity(intent);
+        selectedEntity   = (CreditCardInvoice) listView.getItemAtPosition(i);
+        selectedEntityID = selectedEntity.getId();
+        selectedEntityPosition = i;
     }
 
 }

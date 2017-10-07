@@ -1,0 +1,130 @@
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:orientation="vertical"
+    android:gravity="right"
+    tools:context="br.com.followmoney.activities.creditCardInvoices.CreditCardPaymentInvoiceActivity">
+
+    <TextView
+        android:id="@+id/invoiceDescriptionTextView"
+        android:layout_width="match_parent"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/invoiceValueTextView"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:layout_gravity="left"
+        android:text="Limite disponível:"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:id="@+id/invoiceLimitAvailableTextView"
+        android:layout_width="match_parent"
+        android:textSize="16dp"
+        android:gravity="center"
+        android:layout_height="wrap_content"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/finalidadeEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/finalidadeEditText"
+        android:text="@string/finality" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/finalidadeEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/edit_text"
+            android:focusable="false"
+            android:clickable="true"
+            android:textSize="@dimen/font_size" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/formaPagamentoEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/formaPagamentoEditText"
+        android:text="@string/payment_form" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/formaPagamentoEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:focusable="false"
+            android:clickable="true"
+            style="@style/edit_text"
+            android:textSize="@dimen/font_size" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contaBancariaEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/contaBancariaEditText"
+        android:text="@string/bank_account" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="0dp"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/contaBancariaEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/edit_text"
+            android:focusable="false"
+            android:clickable="true"
+            android:textSize="@dimen/font_size" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@color/defaultColor"
+        android:layout_marginTop="10dp"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/payInvoiceButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_save"/>
+    </LinearLayout>
+
+</LinearLayout>

@@ -9,6 +9,8 @@ import java.util.Locale;
 
 public class CreditCard {
 
+    public static final String STATUS_CLOSED = "FECHADA";
+
     private Integer id;
     private String  descricao;
     private Float   limite;

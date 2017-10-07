@@ -2,15 +2,20 @@ package br.com.followmoney.dao.remote;
 
 import android.content.Context;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Type;
 
 import br.com.followmoney.globals.GlobalParams;
 
@@ -24,7 +29,7 @@ public class PutEntityJson<T> {
         this.context = context;
     }
 
-    public void execute(T entity, String restContext) {
+    public void execute(T entity, String restContext, final Type target) {
 
         try {
             final Gson gson = new Gson();
@@ -39,7 +44,7 @@ public class PutEntityJson<T> {
                         public void onResponse(JSONObject response) {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
-                                onLoadlistener.onLoaded((T) gson.fromJson(response.toString(4), Object.class));
+                                onLoadlistener.onLoaded((T) gson.fromJson(response.toString(4), target));
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -48,6 +53,21 @@ public class PutEntityJson<T> {
                 @Override
                 public void onErrorResponse(VolleyError error) {
                     VolleyLog.e("Error: ", error.getMessage());
+                    String parsed;
+                    NetworkResponse networkResponse = error.networkResponse;
+                    if(networkResponse != null && networkResponse.data != null) {
+                        try {
+                            parsed = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+                        } catch (UnsupportedEncodingException var4) {
+                            parsed = new String(networkResponse.data);
+                        }
+                        NetworkResponse response = new NetworkResponse(networkResponse.data);
+                        Response<String> parsedResponse;
+                        switch(response.statusCode){
+                            default:
+                                onLoadlistener.onError(parsed);
+                        }
+                    }
                 }
             });
 

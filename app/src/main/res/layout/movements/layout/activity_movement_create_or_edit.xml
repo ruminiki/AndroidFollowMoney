@@ -152,14 +152,6 @@
                     android:focusable="false"
                     android:clickable="true"
                     android:textSize="@dimen/font_size" />
-
-                <!--<ImageButton
-                    android:id="@+id/finalidadeSelectButton"
-                    android:layout_height="match_parent"
-                    android:layout_width="80dp"
-                    android:layout_weight="0.3"
-                    android:background="@color/defaultColor"
-                    android:src="@android:drawable/ic_menu_search" />-->
             </LinearLayout>
 
             <TextView
@@ -184,14 +176,6 @@
                     android:clickable="true"
                     style="@style/edit_text"
                     android:textSize="@dimen/font_size" />
-
-               <!-- <ImageButton
-                    android:id="@+id/formaPagamentoSelectButton"
-                    android:layout_height="match_parent"
-                    android:layout_width="80dp"
-                    android:layout_weight="0.3"
-                    android:background="@color/defaultColor"
-                    android:src="@android:drawable/ic_menu_search" />-->
             </LinearLayout>
 
             <TextView
@@ -217,14 +201,6 @@
                     android:focusable="false"
                     android:clickable="true"
                     android:textSize="@dimen/font_size" />
-
-              <!--  <ImageButton
-                    android:id="@+id/contaBancariaSelectButton"
-                    android:layout_height="match_parent"
-                    android:layout_width="80dp"
-                    android:layout_weight="0.3"
-                    android:background="@color/defaultColor"
-                    android:src="@android:drawable/ic_menu_search" />-->
             </LinearLayout>
 
             <TextView
@@ -250,14 +226,6 @@
                     android:focusable="false"
                     android:clickable="true"
                     android:textSize="@dimen/font_size" />
-<!--
-                <ImageButton
-                    android:id="@+id/cartaoCreditoSelectButton"
-                    android:layout_height="match_parent"
-                    android:layout_width="80dp"
-                    android:layout_weight="0.3"
-                    android:background="@color/defaultColor"
-                    android:src="@android:drawable/ic_menu_search" />-->
             </LinearLayout>
 
             <TextView

@@ -10,7 +10,6 @@ import java.util.Locale;
 public class CreditCardInvoice {
 
     private Integer     id;
-    private String      descricao;
     private String      emissao;
     private String      vencimento;
     private Float       valor;
@@ -30,25 +29,12 @@ public class CreditCardInvoice {
 
     }
 
-    public CreditCardInvoice(int id, String descricao) {
-        setId(id);
-        setDescricao(descricao);
-    }
-
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
     }
 
     public String getEmissao() {
@@ -137,6 +123,6 @@ public class CreditCardInvoice {
 
     @Override
     public String toString() {
-        return id + " - " + descricao;
+        return id + " - " + mesReferencia;
     }
 }

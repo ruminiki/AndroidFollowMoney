@@ -2,16 +2,19 @@ package br.com.followmoney.dao.remote;
 
 import android.content.Context;
 
+import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.Arrays;
 import java.util.List;
@@ -54,8 +57,21 @@ public class GetEntitiesJson<T> {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                VolleyLog.e("Error: ", error.getMessage());
-                onLoadlistener.onError(error.getMessage());
+                String parsed;
+                NetworkResponse networkResponse = error.networkResponse;
+                if(networkResponse != null && networkResponse.data != null) {
+                    try {
+                        parsed = new String(networkResponse.data, HttpHeaderParser.parseCharset(networkResponse.headers));
+                    } catch (UnsupportedEncodingException var4) {
+                        parsed = new String(networkResponse.data);
+                    }
+                    NetworkResponse response = new NetworkResponse(networkResponse.data);
+                    Response<String> parsedResponse;
+                    switch(response.statusCode){
+                        default:
+                            onLoadlistener.onError(parsed);
+                    }
+                }
             }
         });
 

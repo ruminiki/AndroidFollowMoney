@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ToggleButton;
 
 import com.google.gson.reflect.TypeToken;
@@ -35,7 +34,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     EditText     descricaoEditText, emissaoEditText, vencimentoEditText, valorEditText,
                  finalidadeEditText, cartaoCreditoEditText, formaPagamentoEditText, contaBancariaEditText;
     ToggleButton toggleButtonCreditoDebito;
-    ImageButton  finalidadeSelectButton, formaPagamentoSelectButton, contaBancariaSelectButton, cartaoCreditoSelectButton;
 
     private Finality finalidade;
     private PaymentForm formaPagamento;
@@ -63,7 +61,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         finalidadeEditText = (EditText) findViewById(R.id.finalidadeEditText);
-        //finalidadeSelectButton = (ImageButton) findViewById(R.id.finalidadeSelectButton);
         finalidadeEditText.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -72,7 +69,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         formaPagamentoEditText = (EditText) findViewById(R.id.formaPagamentoEditText);
-        //formaPagamentoSelectButton = (ImageButton) findViewById(R.id.formaPagamentoSelectButton);
         formaPagamentoEditText.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -81,7 +77,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         contaBancariaEditText = (EditText) findViewById(R.id.contaBancariaEditText);
-        //contaBancariaSelectButton = (ImageButton) findViewById(R.id.contaBancariaSelectButton);
         contaBancariaEditText.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -90,7 +85,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         cartaoCreditoEditText = (EditText) findViewById(R.id.cartaoCreditoEditText);
-        //cartaoCreditoSelectButton = (ImageButton) findViewById(R.id.cartaoCreditoSelectButton);
         cartaoCreditoEditText.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {

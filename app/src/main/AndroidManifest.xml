@@ -81,6 +81,9 @@
         <activity
             android:name="br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceMovementListActivity">
         </activity>
+        <activity
+            android:name="br.com.followmoney.activities.creditCardInvoices.CreditCardPaymentInvoiceActivity">
+        </activity>
 
         <!--========CONTA BANCÁRIA========-->
         <activity
