@@ -12,7 +12,7 @@ public class GlobalParams {
 
     private static final GlobalParams instance = new GlobalParams();
 
-    public final static String REMOTE_URL = "http://192.168.1.17/followMoneyRest";
+    public final static String REMOTE_URL = "http://192.168.1.17/";
 
     private int    userOnLineID;
     private String selectedMonthReference;

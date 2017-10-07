@@ -2,7 +2,7 @@
 <resources>
     <color name="defaultColor">#FFFFFF</color>
     <color name="colorGray">#CCCCCC</color>
-    <color name="primaryColor">#006989</color>
+    <color name="primaryColor">#66cc66</color>
     <color name="primaryColorDark">#FFFFFF</color>
     <color name="accentColor">#FFFFFF</color>
     <color name="colorBackground">#B1C1C0</color>
@@ -20,7 +20,7 @@
 
     <!-- Counters -->
     <color name="distance_counter_color">#FE5F55</color>
-    <color name="deals_counter_color">#388659</color>
+    <color name="deals_counter_color">#66cc66</color>
 
     <!-- Information dialog -->
     <color name="info_content_color">#FFFFFF</color>

@@ -253,6 +253,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         m.setValor(Float.parseFloat(valorEditText.getText() != null && !valorEditText.getText().toString().isEmpty() ?
                 valorEditText.getText().toString() : "0"));
         m.setOperacao(toggleButtonCreditoDebito.isChecked() ? Movement.CREDIT : Movement.DEBIT);
+        m.setStatus("PAGO");
         m.setUsuario(3);
         return m;
     }
