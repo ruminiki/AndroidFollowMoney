@@ -27,6 +27,7 @@ android {
                     'src/main/res/layout/finalities',
                     'src/main/res/layout/movements',
                     'src/main/res/layout/paymentForm',
+                    'src/main/res/layout/main',
                     'src/main/res/layout',
                     'src/main/res'
                 ]

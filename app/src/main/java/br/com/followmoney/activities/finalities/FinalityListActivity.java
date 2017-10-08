@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -14,9 +15,11 @@ import java.util.List;
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
 import br.com.followmoney.activities.CustomListAdapter;
+import br.com.followmoney.dao.remote.GetEntitiesJson;
 import br.com.followmoney.domain.Finality;
+import br.com.followmoney.globals.GlobalParams;
 
-public class FinalityListActivity extends AbstractFormList<Finality> {
+public class FinalityListActivity extends AbstractFormList<Finality> implements View.OnClickListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,4 +76,22 @@ public class FinalityListActivity extends AbstractFormList<Finality> {
         startActivity(intent);
     }
 
+    @Override
+    public void onClick(View v) {
+        String buttonName = v.getResources().getResourceEntryName(v.getId());
+        fillByLetters(buttonName);
+    }
+
+    protected void fillByLetters(String letters) {
+        new GetEntitiesJson<Finality>(new GetEntitiesJson.OnLoadListener<Finality>() {
+            @Override
+            public void onLoaded(List<Finality> entities) {
+                entityListLoaded(entities);
+            }
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(getType(), "/finalities/user/" + GlobalParams.getInstance().getUserOnLineID() + "/fill/"+letters);
+    }
 }

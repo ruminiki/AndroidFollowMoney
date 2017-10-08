@@ -23,22 +23,26 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
             android:orientation="vertical">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/descricaoEditText"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/descricaoEditText"
-                android:text="@string/descricao" />
-
-            <EditText
-                android:id="@+id/descricaoEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/edit_text">
-                <requestFocus />
+                android:layout_alignBottom="@+id/finalidadeEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/finalidadeEditText"
+                android:text="@string/finality" />
+
+            <EditText
+                android:id="@+id/finalidadeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/edit_text"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="@dimen/font_size">
             </EditText>
 
             <LinearLayout
@@ -50,24 +54,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/operacaoEditText"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toRightOf="@+id/operacaoEditText"
+                        android:layout_gravity="center"
                         android:text="@string/operation" />
 
                     <ToggleButton
+                        style="@style/Widget.AppCompat.Button.Colored"
                         android:id="@+id/toggleButtonCreditoDebito"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
                         android:layout_height="50dp"
-                        android:background="@android:color/transparent"
-                        android:button="@drawable/toggle_selector"
                         android:textOff="@string/debit"
                         android:textOn="@string/credit"
                         android:textSize="@dimen/font_size" />
@@ -76,27 +78,22 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/emissaoEditText"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toRightOf="@+id/emissaoEditText"
+                        android:layout_gravity="center"
                         android:text="@string/date_emission" />
 
-                    <EditText
-                        android:id="@+id/emissaoEditText"
+                    <Button
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:id="@+id/emissaoTextButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        style="@style/edit_text"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:inputType="date"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp"
                         android:textSize="@dimen/font_size" />
 
                 </LinearLayout>
@@ -104,54 +101,24 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:layout_weight="0.5"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignBottom="@+id/vencimentoEditText"
-                        android:layout_alignParentLeft="true"
-                        android:layout_toRightOf="@+id/vencimentoEditText"
+                        android:layout_gravity="center"
                         android:text="@string/date_maturity" />
 
-                    <EditText
-                        android:id="@+id/vencimentoEditText"
+                    <Button
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:id="@+id/vencimentoTextButton"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        style="@style/edit_text"
-                        android:focusable="false"
-                        android:clickable="true"
-                        android:inputType="date"
+                        android:layout_gravity="center"
+                        android:layout_height="50dp"
                         android:textSize="@dimen/font_size" />
-
                 </LinearLayout>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/finalidadeEditText"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/finalidadeEditText"
-                android:text="@string/finality" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/finalidadeEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/edit_text"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:textSize="@dimen/font_size" />
             </LinearLayout>
 
             <TextView
@@ -162,21 +129,14 @@
                 android:layout_toRightOf="@+id/formaPagamentoEditText"
                 android:text="@string/payment_form" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/formaPagamentoEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/formaPagamentoEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:focusable="false"
-                    android:clickable="true"
-                    style="@style/edit_text"
-                    android:textSize="@dimen/font_size" />
-            </LinearLayout>
+                android:focusable="false"
+                android:clickable="true"
+                style="@style/edit_text"
+                android:textSize="@dimen/font_size" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -186,22 +146,14 @@
                 android:layout_toRightOf="@+id/contaBancariaEditText"
                 android:text="@string/bank_account" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/contaBancariaEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="0dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/contaBancariaEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/edit_text"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:textSize="@dimen/font_size" />
-            </LinearLayout>
+                style="@style/edit_text"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="@dimen/font_size" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -211,22 +163,14 @@
                 android:layout_toRightOf="@+id/cartaoCreditoEditText"
                 android:text="@string/credit_card" />
 
-            <LinearLayout
+            <EditText
+                android:id="@+id/cartaoCreditoEditText"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginLeft="0dp"
-                android:orientation="horizontal">
-
-                <EditText
-                    android:id="@+id/cartaoCreditoEditText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    style="@style/edit_text"
-                    android:focusable="false"
-                    android:clickable="true"
-                    android:textSize="@dimen/font_size" />
-            </LinearLayout>
+                style="@style/edit_text"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="@dimen/font_size" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -243,6 +187,22 @@
                 android:inputType="numberDecimal"
                 style="@style/edit_text"
                 android:textSize="@dimen/font_size"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/descricaoEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/descricaoEditText"
+                android:text="@string/descricao" />
+
+            <EditText
+                android:id="@+id/descricaoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/edit_text">
+            </EditText>
+
         </LinearLayout>
 
     </ScrollView>
@@ -261,7 +221,7 @@
 
         <ImageButton
             android:id="@+id/saveButton"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:onClick="run"
             android:src="@android:drawable/ic_menu_save"/>

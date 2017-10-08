@@ -2,6 +2,7 @@ package br.com.followmoney.globals;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -12,11 +13,10 @@ public class GlobalParams {
 
     private static final GlobalParams instance = new GlobalParams();
 
-    public final static String REMOTE_URL = "http://192.168.1.17";
+    public final static String REMOTE_URL = "http://192.168.1.12";
 
     private int    userOnLineID;
     private String selectedMonthReference;
-    private String selectedMonthReferenceFormated;
 
     private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
     private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMM");
@@ -41,6 +41,26 @@ public class GlobalParams {
             selectedMonthReference = sdf2.format(new Date());
         }
         return selectedMonthReference;
+    }
+
+    public String getNextMonthReference() {
+        try {
+
+            if ( selectedMonthReference == null ){
+                selectedMonthReference = sdf2.format(new Date());
+            }
+
+            Date previousMonth = sdf1.parse(selectedMonthReference+"01");
+            Calendar nextMonth = Calendar.getInstance();
+
+            nextMonth.setTime(previousMonth);
+            nextMonth.add(Calendar.MONTH, 1);
+
+            return sdf2.format(nextMonth);
+
+        } catch (ParseException e) {
+            return selectedMonthReference;
+        }
     }
 
     public void setSelectedMonthReference(String selectedMonthReference) {

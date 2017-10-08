@@ -25,6 +25,7 @@ public class MovementDetailActivity extends AppCompatActivity {
     TextView descricaoTextView, emissaoTextView, vencimentoTextView, operacaoTextView, finalidadeTextView,
             formaPagamentoTextView, cartaoCreditoTextView, contaBancariaTextView, valorTextView;
     int movementID;
+    Movement movement;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,13 +45,14 @@ public class MovementDetailActivity extends AppCompatActivity {
 
         new GetEntityJson<Movement>(new GetEntityJson.OnLoadListener<Movement>() {
             @Override
-            public void onLoaded(Movement movement) {
+            public void onLoaded(Movement entity) {
+                movement = entity;
                 descricaoTextView.setText(movement.getDescricao());
                 emissaoTextView.setText(movement.getEmissaoFormatado());
                 vencimentoTextView.setText(movement.getVencimentoFormatado());
                 operacaoTextView.setText(movement.getOperacao());
                 finalidadeTextView.setText(movement.getFinalidade().getDescricao());
-                formaPagamentoTextView.setText(movement.getFormaPagamento().getDescricao());
+                formaPagamentoTextView.setText(movement.getFormaPagamento() != null ? movement.getFormaPagamento().getDescricao() : "");
                 cartaoCreditoTextView.setText((movement.getCartaoCredito() != null && movement.getCartaoCredito().getId() > 0) ? movement.getCartaoCredito().getDescricao() : "");
                 contaBancariaTextView.setText((movement.getContaBancaria() != null && movement.getContaBancaria().getId() > 0) ? movement.getContaBancaria().getDescricao() : "");
                 valorTextView.setText(movement.getValorFormatado());
@@ -70,9 +72,13 @@ public class MovementDetailActivity extends AppCompatActivity {
                     if (movementID <= 0) {
                         Toast.makeText(getApplicationContext(), "Please, you need select an object to edit!", Toast.LENGTH_SHORT).show();
                     } else {
-                        Intent intent = new Intent(getApplicationContext(), MovementCreateOrEditActivity.class);
-                        intent.putExtra(KEY_EXTRA_ID, movementID);
-                        startActivity(intent);
+                        if ( !movement.canEdit() ){
+                            Toast.makeText(getApplicationContext(), movement.getMessage(), Toast.LENGTH_SHORT).show();
+                        }else{
+                            Intent intent = new Intent(getApplicationContext(), MovementCreateOrEditActivity.class);
+                            intent.putExtra(KEY_EXTRA_ID, movementID);
+                            startActivity(intent);
+                        }
                     }
                 }
             });
@@ -86,22 +92,26 @@ public class MovementDetailActivity extends AppCompatActivity {
                     if (movementID <= 0) {
                         Toast.makeText(getApplicationContext(), "Please, you need select an object to delete!", Toast.LENGTH_SHORT).show();
                     } else {
-                        AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
-                        builder.setMessage(R.string.delete)
-                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        confirmDelete();
-                                    }
-                                })
-                                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        // User cancelled the dialog
-                                    }
-                                });
-                        AlertDialog d = builder.create();
-                        d.setTitle("Delete Object?");
-                        d.show();
-                        return;
+                        if ( !movement.canEdit() ){
+                            Toast.makeText(getApplicationContext(), movement.getMessage(), Toast.LENGTH_SHORT).show();
+                        }else{
+                            AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
+                            builder.setMessage(R.string.delete)
+                                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            confirmDelete();
+                                        }
+                                    })
+                                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                        public void onClick(DialogInterface dialog, int id) {
+                                            // User cancelled the dialog
+                                        }
+                                    });
+                            AlertDialog d = builder.create();
+                            d.setTitle("Delete Object?");
+                            d.show();
+                            return;
+                        }
                     }
                 }
             });

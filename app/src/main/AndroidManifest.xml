@@ -30,6 +30,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="br.com.followmoney.activities.main.MainBalanceActivity">
+        </activity>
+
         <!--========FINALIDADE========-->
         <activity
             android:name="br.com.followmoney.activities.finalities.FinalityListActivity"

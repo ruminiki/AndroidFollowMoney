@@ -72,6 +72,7 @@ public class GetEntitiesJson<T> {
                             onLoadlistener.onError(parsed);
                     }
                 }
+                onLoadlistener.onError("Error on server get object.");
             }
         });
 

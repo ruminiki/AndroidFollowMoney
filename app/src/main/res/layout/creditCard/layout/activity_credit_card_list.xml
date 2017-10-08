@@ -15,18 +15,10 @@
         android:layout_centerHorizontal="true"
         android:choiceMode="singleChoice"
         android:listSelector="#CCCCCC"
+        android:layout_gravity="bottom"
         android:layout_weight="1"
         android:layout_centerVertical="true">
     </ListView>
-
-   <!-- <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAdd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_marginBottom="@dimen/fab_margin"
-        android:layout_marginRight="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_input_add" />-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +26,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:background="@color/defaultColor"
-        android:gravity="right"
+        android:gravity="bottom|right"
         android:orientation="horizontal">
 
         <ImageButton

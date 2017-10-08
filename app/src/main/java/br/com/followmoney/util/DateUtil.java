@@ -2,6 +2,7 @@ package br.com.followmoney.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -31,5 +32,23 @@ public class DateUtil {
         }
     }
 
+    public static Calendar toCalendar(String date, String format) {
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        try {
+            Date d = sdf.parse(date);
+            Calendar c = Calendar.getInstance();
+            c.setTime(d);
+            return c;
+        } catch (ParseException e) {
+            return null;
+        }
+    }
 
+    public static String format(Calendar calendar, String format) {
+        if ( calendar != null ){
+            SimpleDateFormat sdf = new SimpleDateFormat(format);
+            return sdf.format(calendar.getTime());
+        }
+        return null;
+    }
 }

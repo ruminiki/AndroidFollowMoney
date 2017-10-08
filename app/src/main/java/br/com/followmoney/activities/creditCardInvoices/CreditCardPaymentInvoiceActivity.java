@@ -103,8 +103,7 @@ public class CreditCardPaymentInvoiceActivity extends AppCompatActivity {
                     creditCardInvoice = entity;
                     invoiceDescriptionTextView.setText(
                             creditCardInvoice.getCartaoCredito().getDescricao() + " " +
-                            creditCardInvoice.getMesReferencia().toUpperCase() + " " +
-                            creditCardInvoice.getStatus().toUpperCase()
+                            creditCardInvoice.getMesReferencia().toUpperCase()
                     );
                     invoiceValueTextView.setText("R$" + creditCardInvoice.getValor());
                     invoiceLimitAvailableTextView.setText("R$ 0,00");//@TODO buscar valor limite disponível

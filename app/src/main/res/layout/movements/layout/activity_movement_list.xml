@@ -41,30 +41,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Db.: "
-                android:textSize="12dp"/>
-
-            <TextView
-                android:id="@+id/despesasTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="R$ 0,00"
-                android:textSize="16dp"/>
-
-            <android.support.v4.widget.Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cr.: "
+                android:text="Cr "
                 android:textSize="12dp"/>
 
             <TextView
                 android:id="@+id/receitasTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/accentColor"
                 android:text="R$ 0,00"
                 android:textSize="16dp"/>
 
@@ -75,13 +59,32 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sld: "
+                android:text="Db "
+                android:textSize="12dp"/>
+
+            <TextView
+                android:id="@+id/despesasTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#ff5c33"
+                android:text="R$ 0,00"
+                android:textSize="16dp"/>
+
+            <android.support.v4.widget.Space
+                android:layout_width="5dp"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Sld "
                 android:textSize="12dp"/>
 
             <TextView
                 android:id="@+id/saldoMesTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="R$ 0,00"
                 android:textSize="16dp"/>
 
@@ -98,7 +101,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sld. ant.: "
+                android:text="Ant "
                 android:textSize="12dp"/>
 
             <TextView
@@ -108,7 +111,6 @@
                 android:text="R$ 0,00"
                 android:textSize="16dp"/>
 
-
             <android.support.v4.widget.Space
                 android:layout_width="5dp"
                 android:layout_height="wrap_content" />
@@ -116,13 +118,14 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Sld. prev.: "
+                android:text="Prev "
                 android:textSize="12dp"/>
 
             <TextView
                 android:id="@+id/saldoPrevistoTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textStyle="bold"
                 android:text="R$ 0,00"
                 android:textSize="16dp"/>
         </LinearLayout>

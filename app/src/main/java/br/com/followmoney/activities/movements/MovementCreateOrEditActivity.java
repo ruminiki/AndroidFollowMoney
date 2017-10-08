@@ -3,12 +3,14 @@ package br.com.followmoney.activities.movements;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ToggleButton;
 
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Calendar;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormCreateOrEdit;
@@ -16,7 +18,7 @@ import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
 import br.com.followmoney.activities.paymentForms.PaymentFormListActivity;
-import br.com.followmoney.components.EditTextDatePicker;
+import br.com.followmoney.components.DatePickerFragment;
 import br.com.followmoney.domain.BankAccount;
 import br.com.followmoney.domain.CreditCard;
 import br.com.followmoney.domain.Finality;
@@ -31,32 +33,60 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     private static final int KEY_SELECT_CARTAO_CREDITO_RETURN  = 2;
     private static final int KEY_SELECT_CONTA_BANCARIA_RETURN  = 3;
 
-    EditText     descricaoEditText, emissaoEditText, vencimentoEditText, valorEditText,
-                 finalidadeEditText, cartaoCreditoEditText, formaPagamentoEditText, contaBancariaEditText;
+    EditText     descricaoEditText, valorEditText, finalidadeEditText, cartaoCreditoEditText, formaPagamentoEditText, contaBancariaEditText;
     ToggleButton toggleButtonCreditoDebito;
+    Button       emissaoTextButton, vencimentoTextButton;
 
     private Finality finalidade;
     private PaymentForm formaPagamento;
     private CreditCard cartaoCredito;
     private BankAccount contaBancaria;
 
+    DatePickerFragment ClasseDataEmissao    = new DatePickerFragment();
+    DatePickerFragment ClasseDataVencimento = new DatePickerFragment();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_movement_create_or_edit);
 
         descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
-        emissaoEditText = (EditText) findViewById(R.id.emissaoEditText);
-        new EditTextDatePicker(this, emissaoEditText);
+        emissaoTextButton = (Button) findViewById(R.id.emissaoTextButton);
+        emissaoTextButton.setOnClickListener(new Button.OnClickListener(){
+             @Override
+             public void onClick(View v) {
+                 ClasseDataEmissao.setOnDateSetListener(new DatePickerFragment.OnDateSetListener(){
+                     @Override
+                     public void onDateSet(Calendar calendar) {
+                        emissaoTextButton.setText(DateUtil.format(calendar, "dd/MM/yyyy"));
+                     }
+                 });
+                 ClasseDataEmissao.show(getFragmentManager(),  "datepicker");
+             }
+        });
 
-        vencimentoEditText = (EditText) findViewById(R.id.vencimentoEditText);
-        new EditTextDatePicker(this, vencimentoEditText);
+        vencimentoTextButton = (Button) findViewById(R.id.vencimentoTextButton);
+        vencimentoTextButton.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ClasseDataVencimento.setOnDateSetListener(new DatePickerFragment.OnDateSetListener(){
+                    @Override
+                    public void onDateSet(Calendar calendar) {
+                        vencimentoTextButton.setText(DateUtil.format(calendar, "dd/MM/yyyy"));
+                    }
+                });
+                ClasseDataVencimento.show(getFragmentManager(),  "datepicker");
+            }
+        });
 
         toggleButtonCreditoDebito = (ToggleButton) findViewById(R.id.toggleButtonCreditoDebito);
         toggleButtonCreditoDebito.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {
-               /* toggleButtonCreditoDebito.setChecked(true);
-                toggleButtonCreditoDebito.setSelected(true);*/
+               /* if ( toggleButtonCreditoDebito.isChecked() ){
+                    toggleButtonCreditoDebito.setTextColor(Color.BLUE);
+                }else{
+                    toggleButtonCreditoDebito.setTextColor(Color.RED);
+                }*/
             }
         });
 
@@ -208,11 +238,10 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
             descricaoEditText.setEnabled(true);
             descricaoEditText.setClickable(true);
 
-            emissaoEditText.setText(DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
-            emissaoEditText.setClickable(true);
-
-            vencimentoEditText.setText(DateUtil.format(movement.getVencimento(), "yyyyMMdd", "dd/MM/yyyy"));
-            vencimentoEditText.setClickable(true);
+            emissaoTextButton.setText(DateUtil.format(movement.getEmissao(), "yyyyMMdd", "dd/MM/yyyy"));
+            ClasseDataEmissao.setDate(DateUtil.toCalendar(movement.getEmissao(), "yyyyMMdd"));
+            vencimentoTextButton.setText(DateUtil.format(movement.getVencimento(), "yyyyMMdd", "dd/MM/yyyy"));
+            ClasseDataVencimento.setDate(DateUtil.toCalendar(movement.getVencimento(), "yyyyMMdd"));
 
             toggleButtonCreditoDebito.setChecked(movement.getOperacao().equals(Movement.CREDIT));
 
@@ -238,8 +267,8 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         Movement m = new Movement();
         m.setId(id);
         m.setDescricao(descricaoEditText.getText().toString());
-        m.setEmissao(DateUtil.format(emissaoEditText.getText().toString(), "dd/MM/yyyy", "yyyyMMdd"));
-        m.setVencimento(DateUtil.format(vencimentoEditText.getText().toString(), "dd/MM/yyyy", "yyyyMMdd"));
+        m.setEmissao(DateUtil.format(ClasseDataEmissao.getDate(), "yyyyMMdd"));
+        m.setVencimento(DateUtil.format(ClasseDataVencimento.getDate(), "yyyyMMdd"));
         m.setFinalidade((finalidade != null && finalidade.getId() != null) ? finalidade : null);
         m.setContaBancaria((contaBancaria != null && contaBancaria.getId() != null) ? contaBancaria : null);
         m.setCartaoCredito((cartaoCredito != null && cartaoCredito.getId() != null) ? cartaoCredito : null);

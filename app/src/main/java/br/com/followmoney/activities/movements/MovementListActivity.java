@@ -147,6 +147,12 @@ public class MovementListActivity extends AbstractFormList<Movement> {
 
     @Override
     protected void showCreateOrEditForm(int selectedEntityID) {
+        if ( selectedEntityID > 0 ){
+            if ( !selectedEntity.canEdit() ){
+                Toast.makeText(getApplicationContext(), selectedEntity.getMessage(), Toast.LENGTH_SHORT).show();
+                return;
+            }
+        }
         Intent intent = new Intent(getApplicationContext(), MovementCreateOrEditActivity.class);
         intent.putExtra(KEY_EXTRA_ID, selectedEntityID);
         startActivity(intent);
@@ -161,9 +167,6 @@ public class MovementListActivity extends AbstractFormList<Movement> {
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         selectedEntity = (Movement) listView.getItemAtPosition(i);
         selectedEntityID = selectedEntity != null ? selectedEntity.getId() : 0;
-        /*Intent intent = new Intent(getApplicationContext(), MovementCreateOrEditActivity.class);
-        intent.putExtra(KEY_EXTRA_ID, selectedEntityID);
-        startActivity(intent);*/
     }
 
 }

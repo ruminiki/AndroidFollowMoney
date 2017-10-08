@@ -14,18 +14,22 @@ public class Movement{
 
     public static final String CREDIT = "CREDITO";
     public static final String DEBIT  = "DEBITO";
-    private Integer     id;
-    private String      descricao;
-    private String      vencimento;
-    private String      emissao;
-    private Float       valor;
-    private String      status;
-    private String      operacao;
-    private Finality    finalidade;
-    private BankAccount contaBancaria;
-    private CreditCard  cartaoCredito;
-    private PaymentForm formaPagamento;
-    private Integer     usuario;
+    private Integer           id;
+    private String            descricao;
+    private String            vencimento;
+    private String            emissao;
+    private Float             valor;
+    private String            status;
+    private String            operacao;
+    private Finality          finalidade;
+    private BankAccount       contaBancaria;
+    private CreditCard        cartaoCredito;
+    private PaymentForm       formaPagamento;
+    private CreditCardInvoice fatura;
+    private Integer           usuario;
+    private String            hashTransferencia;
+
+    private String            message;
 
     public Movement(int id) {
         setId(id);
@@ -130,6 +134,30 @@ public class Movement{
         this.formaPagamento = formaPagamento;
     }
 
+    public CreditCardInvoice getFatura() {
+        return fatura;
+    }
+
+    public void setFatura(CreditCardInvoice fatura) {
+        this.fatura = fatura;
+    }
+
+    public String getHashTransferencia() {
+        return hashTransferencia;
+    }
+
+    public void setHashTransferencia(String hashTransferencia) {
+        this.hashTransferencia = hashTransferencia;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
     public String getEmissaoFormatado(){
         return DateUtil.format(emissao, "yyyyMMdd", "dd/MM/yyyy");
     }
@@ -140,6 +168,18 @@ public class Movement{
 
     public String getValorFormatado(){
         return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(valor);
+    }
+
+    public String getFontePagadora(){
+        if ( this.getCartaoCredito() != null && this.getCartaoCredito().getId() > 0 ){
+            return this.getCartaoCredito().getDescricao();
+        }
+
+        if ( this.getContaBancaria() != null && this.getContaBancaria().getId() > 0 ){
+            return this.getContaBancaria().getDescricao();
+        }
+
+        return null;
     }
 
     @Override
@@ -165,6 +205,21 @@ public class Movement{
         c.set(Calendar.DAY_OF_MONTH, Integer.parseInt(getVencimento().substring(7, 8)));
         return c;
 
+    }
+
+    public Boolean canEdit(){
+
+        if ( this.getFatura() != null && this.getFatura().getId() > 0 ){
+            message = "O movimento é uma fatura de cartão de crédito e não pode ser editado/deletado. Você poderá usar a função de estorno de pagamento.";
+            return false;
+        }
+
+        if ( this.getHashTransferencia() != null && !this.getHashTransferencia().isEmpty() ){
+            message = "O movimento é uma transferência bancária e não pode ser editado. Você poderá usar a função de estorno de transferência.";
+            return false;
+        }
+
+        return true;
     }
 
 }
