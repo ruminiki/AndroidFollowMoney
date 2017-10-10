@@ -1,6 +1,7 @@
 package br.com.followmoney.activities.movements;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,9 +34,9 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     private static final int KEY_SELECT_CARTAO_CREDITO_RETURN  = 2;
     private static final int KEY_SELECT_CONTA_BANCARIA_RETURN  = 3;
 
-    EditText     descricaoEditText, valorEditText, finalidadeEditText, cartaoCreditoEditText, formaPagamentoEditText, contaBancariaEditText;
+    EditText     descricaoEditText, valorEditText, finalidadeEditText, selectedPaymentEditText; //cartaoCreditoEditText, formaPagamentoEditText, contaBancariaEditText;
     ToggleButton toggleButtonCreditoDebito;
-    Button       emissaoTextButton, vencimentoTextButton;
+    Button       emissaoTextButton, vencimentoTextButton, paymentMoneyButton, paymentBankButton, paymentCreditCardButton;
 
     private Finality finalidade;
     private PaymentForm formaPagamento;
@@ -48,6 +49,14 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_movement_create_or_edit);
+
+        finalidadeEditText = (EditText) findViewById(R.id.finalidadeEditText);
+        finalidadeEditText.setOnClickListener(new ToggleButton.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                openFinalidadeFormToSelect();
+            }
+        });
 
         descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
         emissaoTextButton = (Button) findViewById(R.id.emissaoTextButton);
@@ -90,23 +99,41 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
             }
         });
 
-        finalidadeEditText = (EditText) findViewById(R.id.finalidadeEditText);
-        finalidadeEditText.setOnClickListener(new ToggleButton.OnClickListener(){
+        paymentMoneyButton = (Button) findViewById(R.id.paymentMoneyButton);
+        paymentMoneyButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openFinalidadeFormToSelect();
+                openContaBancariaFormToSelect();
             }
         });
 
-        formaPagamentoEditText = (EditText) findViewById(R.id.formaPagamentoEditText);
+        paymentBankButton = (Button) findViewById(R.id.paymentBankButton);
+        paymentBankButton.setOnClickListener(new ToggleButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openContaBancariaFormToSelect();
+            }
+        });
+
+        paymentCreditCardButton = (Button) findViewById(R.id.paymentCreditCardButton);
+        paymentCreditCardButton.setOnClickListener(new ToggleButton.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openCartaoCreditoFormToSelect();
+            }
+        });
+
+        selectedPaymentEditText = (EditText) findViewById(R.id.selectedPaymentEditText);
+
+/*        formaPagamentoEditText = (EditText) findViewById(R.id.formaPagamentoEditText);
         formaPagamentoEditText.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {
                 openFormaPagamentoFormToSelect();
             }
-        });
+        });*/
 
-        contaBancariaEditText = (EditText) findViewById(R.id.contaBancariaEditText);
+       /* contaBancariaEditText = (EditText) findViewById(R.id.contaBancariaEditText);
         contaBancariaEditText.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -120,7 +147,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
             public void onClick(View v) {
                 openCartaoCreditoFormToSelect();
             }
-        });
+        });*/
 
         valorEditText = (EditText) findViewById(R.id.valorEditText);
 
@@ -140,12 +167,14 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     }
 
     ///=====SELECT FORMA PAGAMENTO ======//
+/*
     private void openFormaPagamentoFormToSelect(){
         Intent intent = new Intent(this, PaymentFormListActivity.class);
         intent.putExtra("ParentActivityName", this.getClass());
         intent.putExtra(PaymentFormListActivity.KEY_MODE, PaymentFormListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_FORMA_PAGAMENTO_RETURN);
     }
+*/
 
     ///=====START: POPULATE CONTA BANCARIA SPINNER======//
     private void openContaBancariaFormToSelect(){
@@ -169,7 +198,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         super.onActivityResult(requestCode, resultCode, data);
 
         switch (requestCode){
-            case KEY_SELECT_FORMA_PAGAMENTO_RETURN :{
+            /*case KEY_SELECT_FORMA_PAGAMENTO_RETURN :{
                 if (resultCode == RESULT_OK) {
                     int id = data.getIntExtra(PaymentFormListActivity.KEY_ID, 0);
                     String descricao = data.getStringExtra(PaymentFormListActivity.KEY_DESCRIPTION);
@@ -182,7 +211,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                     formaPagamentoEditText.setText(descricao);
                 }
                 break;
-            }
+            }*/
 
             case KEY_SELECT_FINALIDADE_RETURN :{
                 if (resultCode == RESULT_OK) {
@@ -209,7 +238,8 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                         cartaoCredito.setDescricao(descricao);
                         cartaoCredito.setId(id);
                     }
-                    cartaoCreditoEditText.setText(descricao);
+                    contaBancaria = null;
+                    selectedPaymentEditText.setText(descricao);
                 }
                 break;
             }
@@ -224,7 +254,8 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                         contaBancaria.setDescricao(descricao);
                         contaBancaria.setId(id);
                     }
-                    contaBancariaEditText.setText(descricao);
+                    cartaoCredito = null;
+                    selectedPaymentEditText.setText(descricao);
                 }
                 break;
             }
@@ -248,14 +279,14 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
             finalidade = movement.getFinalidade();
             finalidadeEditText.setText(finalidade != null ? finalidade.getDescricao() : "");
 
-            formaPagamento = movement.getFormaPagamento();
-            formaPagamentoEditText.setText(formaPagamento != null ? formaPagamento.getDescricao() : "");
+            /*formaPagamento = movement.getFormaPagamento();
+            formaPagamentoEditText.setText(formaPagamento != null ? formaPagamento.getDescricao() : "");*/
 
             contaBancaria = movement.getContaBancaria();
-            contaBancariaEditText.setText(contaBancaria != null ? contaBancaria.getDescricao() : "");
-
             cartaoCredito = movement.getCartaoCredito();
-            cartaoCreditoEditText.setText(cartaoCredito != null ? cartaoCredito.getDescricao() : "");
+
+            selectedPaymentEditText.setText(contaBancaria != null ? contaBancaria.getDescricao() :
+                                           (cartaoCredito != null ? cartaoCredito.getDescricao() : ""));
 
             valorEditText.setText(String.valueOf(movement.getValor()));
         }
@@ -272,7 +303,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         m.setFinalidade((finalidade != null && finalidade.getId() != null) ? finalidade : null);
         m.setContaBancaria((contaBancaria != null && contaBancaria.getId() != null) ? contaBancaria : null);
         m.setCartaoCredito((cartaoCredito != null && cartaoCredito.getId() != null) ? cartaoCredito : null);
-        m.setFormaPagamento((formaPagamento != null && formaPagamento.getId() != null) ? formaPagamento : null);
+        /*m.setFormaPagamento((formaPagamento != null && formaPagamento.getId() != null) ? formaPagamento : null);*/
         m.setValor(Float.parseFloat(valorEditText.getText() != null && !valorEditText.getText().toString().isEmpty() ?
                 valorEditText.getText().toString() : "0"));
         m.setOperacao(toggleButtonCreditoDebito.isChecked() ? Movement.CREDIT : Movement.DEBIT);
