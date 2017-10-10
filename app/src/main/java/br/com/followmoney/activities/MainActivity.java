@@ -18,6 +18,7 @@ import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
 import br.com.followmoney.activities.movements.MovementListActivity;
+import br.com.followmoney.activities.paymentForms.PaymentFormListActivity;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -96,6 +97,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.bank_account) {
             Intent intent = new Intent(this, BankAccountListActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.payment_form) {
+            Intent intent = new Intent(this, PaymentFormListActivity.class);
             startActivity(intent);
         } else if (id == R.id.movements) {
             Intent intent = new Intent(this, MovementListActivity.class);
