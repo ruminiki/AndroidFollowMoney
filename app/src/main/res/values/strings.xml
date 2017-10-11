@@ -47,8 +47,13 @@
     <string name="finality">Finalidade</string>
     <string name="bank_account">Conta Bancária</string>
     <string name="credit_card">Cartão de Crédito</string>
+    <string name="payment_method">Pagamento Selecionado</string>
     <string name="value">Valor</string>
     <string name="movement_detail">Detalhe do Movimento</string>
+    <string name="payment_money">Dinheiro</string>
+    <string name="payment_bank">Conta Bancária</string>
+    <string name="payment_credit_card">Cartão de Crédito</string>
+
     <string-array name="months">
         <item>JAN</item>
         <item>FEV</item>
