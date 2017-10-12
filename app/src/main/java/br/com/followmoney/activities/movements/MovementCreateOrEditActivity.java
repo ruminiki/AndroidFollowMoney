@@ -34,7 +34,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     private static final int KEY_SELECT_CONTA_BANCARIA_RETURN  = 3;
 
     EditText     descricaoEditText, valorEditText, finalidadeEditText, selectedPaymentEditText; //cartaoCreditoEditText, formaPagamentoEditText, contaBancariaEditText;
-    ToggleButton toggleButtonCreditoDebito;
+    ToggleButton toggleButtonCreditoDebito, toggleButtonStatus;
     Button       emissaoTextButton, vencimentoTextButton, paymentMoneyButton, paymentBankButton, paymentCreditCardButton;
 
     private Finality finalidade;
@@ -90,16 +90,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         toggleButtonCreditoDebito = (ToggleButton) findViewById(R.id.toggleButtonCreditoDebito);
-        toggleButtonCreditoDebito.setOnClickListener(new ToggleButton.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-               /* if ( toggleButtonCreditoDebito.isChecked() ){
-                    toggleButtonCreditoDebito.setTextColor(Color.BLUE);
-                }else{
-                    toggleButtonCreditoDebito.setTextColor(Color.RED);
-                }*/
-            }
-        });
+        toggleButtonStatus = (ToggleButton) findViewById(R.id.toggleButtonStatus);
 
         paymentMoneyButton = (Button) findViewById(R.id.paymentMoneyButton);
         paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
@@ -321,6 +312,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
             ClasseDataVencimento.setDate(DateUtil.toCalendar(movement.getVencimento(), "yyyyMMdd"));
 
             toggleButtonCreditoDebito.setChecked(movement.getOperacao().equals(Movement.CREDIT));
+            toggleButtonStatus.setChecked(movement.getStatus().equals(Movement.PAYD));
 
             finalidade = movement.getFinality();
             finalidadeEditText.setText(finalidade != null ? finalidade.getDescricao() : "");
@@ -375,7 +367,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         m.setValor(Float.parseFloat(valorEditText.getText() != null && !valorEditText.getText().toString().isEmpty() ?
                 valorEditText.getText().toString() : "0"));
         m.setOperacao(toggleButtonCreditoDebito.isChecked() ? Movement.CREDIT : Movement.DEBIT);
-        m.setStatus("PAGO");
+        m.setStatus(toggleButtonStatus.isChecked() ? Movement.PAYD : Movement.TO_PAY);
         m.setUsuario(3);
         return m;
     }

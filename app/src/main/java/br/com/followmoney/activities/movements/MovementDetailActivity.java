@@ -60,7 +60,7 @@ public class MovementDetailActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
             }
         }, this).execute("/movements/"+movementID, new TypeToken<Movement>(){}.getType());
 
@@ -127,7 +127,7 @@ public class MovementDetailActivity extends AppCompatActivity {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Could not Delete object", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
             }
         }, this).execute("/movements/"+movementID);
     }

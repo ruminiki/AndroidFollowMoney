@@ -1,7 +1,9 @@
 package br.com.followmoney.activities.creditCardInvoices;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -58,7 +60,22 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
             unpayInvoiceButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    unpayInvoice();
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
+                    builder.setMessage(R.string.unpay_invoice)
+                            .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    unpayInvoice();
+                                }
+                            })
+                            .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    // User cancelled the dialog
+                                }
+                            });
+                    AlertDialog d = builder.create();
+                    d.setTitle("Deseja reabrir a fatura?");
+                    d.show();
+                    return;
                 }
             });
         }

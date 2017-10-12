@@ -53,7 +53,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_gravity="center"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -69,11 +69,45 @@
                         android:id="@+id/toggleButtonCreditoDebito"
                         android:layout_width="match_parent"
                         android:layout_gravity="center"
-                        android:layout_height="50dp"
+                        android:layout_height="match_parent"
                         android:textOff="@string/debit"
                         android:textOn="@string/credit"
                         android:textSize="@dimen/font_size" />
+
                 </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/status" />
+
+                    <ToggleButton
+                        style="@style/Widget.AppCompat.Button.Colored"
+                        android:id="@+id/toggleButtonStatus"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="match_parent"
+                        android:textOff="@string/status_to_pay"
+                        android:textOn="@string/status_payd"
+                        android:textSize="@dimen/font_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -129,15 +163,6 @@
                 android:layout_toRightOf="@+id/formaPagamentoEditText"
                 android:text="@string/payment_form" />
 
-            <!--<EditText
-                android:id="@+id/formaPagamentoEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:focusable="false"
-                android:clickable="true"
-                style="@style/edit_text"
-                android:textSize="@dimen/font_size" />-->
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
@@ -176,23 +201,6 @@
 
             </LinearLayout>
 
-          <!--  <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/contaBancariaEditText"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/contaBancariaEditText"
-                android:text="@string/bank_account" />
-
-            <EditText
-                android:id="@+id/contaBancariaEditText"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                style="@style/edit_text"
-                android:focusable="false"
-                android:clickable="true"
-                android:textSize="@dimen/font_size" />
--->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

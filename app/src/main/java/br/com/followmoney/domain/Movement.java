@@ -15,8 +15,10 @@ import br.com.followmoney.util.DateUtil;
 
 public class Movement{
 
-    public static final String CREDIT = "CREDITO";
-    public static final String DEBIT  = "DEBITO";
+    public static final String CREDIT  = "CREDITO";
+    public static final String DEBIT   = "DEBITO";
+    public static final String PAYD    = "PAGO";
+    public static final String TO_PAY  = "A PAGAR";
     private Integer           id;
     private String            descricao;
     private String            vencimento;
