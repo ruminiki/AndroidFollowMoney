@@ -106,6 +106,9 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         paymentMoneyButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                openContaBancariaFormToSelect();
+
                 paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 paymentMoneyButton.setTextColor(getResources().getColor(R.color.defaultColor));
 
@@ -115,7 +118,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                 paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
                 paymentCreditCardButton.setTextColor(getResources().getColor(R.color.colorGray));
 
-                openContaBancariaFormToSelect();
             }
         });
 
@@ -124,6 +126,9 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         paymentBankButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                openContaBancariaFormToSelect();
+
                 paymentBankButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 paymentBankButton.setTextColor(getResources().getColor(R.color.defaultColor));
 
@@ -133,7 +138,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                 paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
                 paymentCreditCardButton.setTextColor(getResources().getColor(R.color.colorGray));
 
-                openContaBancariaFormToSelect();
             }
         });
 
@@ -142,6 +146,9 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         paymentCreditCardButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                openCartaoCreditoFormToSelect();
+
                 paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 paymentCreditCardButton.setTextColor(getResources().getColor(R.color.defaultColor));
 
@@ -151,7 +158,6 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                 paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
                 paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
 
-                openCartaoCreditoFormToSelect();
             }
         });
 
@@ -324,6 +330,28 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
 
             contaBancaria = movement.getBankAccount();
             cartaoCredito = movement.getCreditCard();
+
+            if ( contaBancaria != null ){
+                paymentBankButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                paymentBankButton.setTextColor(getResources().getColor(R.color.defaultColor));
+
+                paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentCreditCardButton.setTextColor(getResources().getColor(R.color.colorGray));
+
+                paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
+            }
+
+            if ( cartaoCredito != null ){
+                paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentBankButton.setTextColor(getResources().getColor(R.color.colorGray));
+
+                paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                paymentCreditCardButton.setTextColor(getResources().getColor(R.color.defaultColor));
+
+                paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
+            }
 
             selectedPaymentEditText.setText(contaBancaria != null ? contaBancaria.getDescricao() :
                                            (cartaoCredito != null ? cartaoCredito.getDescricao() : ""));

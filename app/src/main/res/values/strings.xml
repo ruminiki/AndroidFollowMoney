@@ -41,6 +41,7 @@
     <!-- movement -->
     <string name="debit">Débito</string>
     <string name="credit">Crédito</string>
+    <string name="balance">Saldo</string>
     <string name="operation">Operação</string>
     <string name="date_emission">Emissão</string>
     <string name="date_maturity">Vencimento</string>
@@ -70,7 +71,7 @@
 
     <!-- payment Form -->
     <string name="initials">Sigla</string>
-    <string name="payment_form">Forma de Pagamento</string>
+    <string name="payment_form">Forma de pagamento</string>
 
     <!-- credit card invoice -->
     <string name="referenceMonth">Mês Referência</string>

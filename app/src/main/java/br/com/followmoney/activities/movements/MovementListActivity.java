@@ -54,8 +54,8 @@ public class MovementListActivity extends AbstractFormList<Movement> {
         receitasTextView = (TextView) findViewById(R.id.receitasTextView);
         despesasTextView = (TextView) findViewById(R.id.despesasTextView);
         saldoMesTextView = (TextView) findViewById(R.id.saldoMesTextView);
-        saldoPrevistoTextView = (TextView) findViewById(R.id.saldoPrevistoTextView);
-        saldoAnteriorTextView = (TextView) findViewById(R.id.saldoAnteriorTextView);
+        //saldoPrevistoTextView = (TextView) findViewById(R.id.saldoPrevistoTextView);
+        //saldoAnteriorTextView = (TextView) findViewById(R.id.saldoAnteriorTextView);
 
         ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -129,8 +129,8 @@ public class MovementListActivity extends AbstractFormList<Movement> {
             saldoAnterior = 0;
             saldoPrevisto = saldoAnterior + receitas - despesas;
         }
-        saldoAnteriorTextView.setText(numberFormat.format(saldoAnterior));
-        saldoPrevistoTextView.setText(numberFormat.format(saldoPrevisto));
+        //saldoAnteriorTextView.setText(numberFormat.format(saldoAnterior));
+        //saldoPrevistoTextView.setText(numberFormat.format(saldoPrevisto));
 
         listView.setAdapter(new CustomListAdapter<Movement>(MovementListActivity.this, R.layout.movement_list_renderer, movements));
     }

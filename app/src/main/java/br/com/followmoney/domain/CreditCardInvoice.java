@@ -1,5 +1,7 @@
 package br.com.followmoney.domain;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.text.NumberFormat;
 import java.util.Locale;
 
@@ -13,9 +15,12 @@ public class CreditCardInvoice {
     private String      emissao;
     private String      vencimento;
     private Float       valor;
+    @SerializedName("credit_card")
     private CreditCard  creditCard;
     private String      mesReferencia;
+    @SerializedName("payment_form")
     private PaymentForm paymentForm;
+    @SerializedName("bank_account")
     private BankAccount bankAccount;
     private Float       valorPagamento;
     private String      status;

@@ -9,7 +9,9 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -34,7 +36,8 @@ public class GetEntityJson<T> {
         try {
 
             String URL = GlobalParams.REMOTE_URL + restContext;
-            final Gson gson = new Gson();
+            //final Gson gson = new Gson();
+            final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
             // pass second argument as "null" for GET requests
             JsonObjectRequest req = new JsonObjectRequest(Request.Method.GET, URL, null,
                     new Response.Listener<JSONObject>() {

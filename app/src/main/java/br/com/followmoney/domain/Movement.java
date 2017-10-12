@@ -1,5 +1,8 @@
 package br.com.followmoney.domain;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.text.NumberFormat;
 import java.util.Calendar;
 import java.util.Locale;
@@ -22,9 +25,17 @@ public class Movement{
     private String            status;
     private String            operacao;
     private Finality          finality;
+    @SerializedName("bank_account")
+    @Expose
     private BankAccount       bankAccount;
+    @SerializedName("credit_card")
+    @Expose
     private CreditCard        creditCard;
+    @SerializedName("payment_form")
+    @Expose
     private PaymentForm       paymentForm;
+    @SerializedName("invoice")
+    @Expose
     private CreditCardInvoice invoice;
     private Integer           usuario;
     private String            hashTransferencia;

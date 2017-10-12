@@ -12,11 +12,11 @@
         android:orientation="vertical"
         android:layout_weight="0.6">
 
-       <!-- <TextView
+        <TextView
             android:id="@+id/descricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14dp"/>-->
+            android:textSize="14dp"/>
 
         <TextView
             android:id="@+id/finality"
