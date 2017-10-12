@@ -76,21 +76,63 @@
             android:inputType="number">
         </EditText>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/situacaoSpinner"
-            android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/situacaoSpinner"
-            android:text="@string/status" />
-
-        <Spinner
-            android:id="@+id/situacaoSpinner"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="5dp"
-            android:entries="@array/status_option"/>
+            android:layout_centerHorizontal="true"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/status" />
+
+                <ToggleButton
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:id="@+id/toggleButtonStatus"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:textOff="@string/status_active"
+                    android:textOn="@string/status_inactive"
+                    android:textSize="@dimen/font_size" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="@string/type" />
+
+                <ToggleButton
+                    style="@style/Widget.AppCompat.Button.Colored"
+                    android:id="@+id/toggleButtonType"
+                    android:layout_width="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
+                    android:textOff="@string/type_wallet"
+                    android:textOn="@string/type_bank_account"
+                    android:textSize="@dimen/font_size" />
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </LinearLayout>
 

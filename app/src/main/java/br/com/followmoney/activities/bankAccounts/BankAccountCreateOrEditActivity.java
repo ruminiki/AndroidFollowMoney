@@ -1,9 +1,8 @@
 package br.com.followmoney.activities.bankAccounts;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.Spinner;
+import android.widget.ToggleButton;
 
 import com.google.gson.reflect.TypeToken;
 
@@ -16,7 +15,7 @@ import br.com.followmoney.domain.BankAccount;
 public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<BankAccount>{
 
     EditText descricaoEditText, numeroEditText, digitoEditText;
-    Spinner situacaoSpinner;
+    ToggleButton toggleButtonType, toggleButtonStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +23,8 @@ public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<Ba
 
         descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
         numeroEditText    = (EditText) findViewById(R.id.numeroEditText);
-        situacaoSpinner   = (Spinner)  findViewById(R.id.situacaoSpinner);
+        toggleButtonType = (ToggleButton) findViewById(R.id.toggleButtonType);
+        toggleButtonStatus = (ToggleButton) findViewById(R.id.toggleButtonStatus);
         digitoEditText    = (EditText) findViewById(R.id.digitoEditText);
 
         super.onCreate(savedInstanceState);
@@ -41,9 +41,8 @@ public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<Ba
             numeroEditText.setEnabled(true);
             numeroEditText.setClickable(true);
 
-            situacaoSpinner.setSelection( ((ArrayAdapter) situacaoSpinner.getAdapter()).getPosition(bankAccount.getSituacao()));
-            situacaoSpinner.setEnabled(true);
-            situacaoSpinner.setClickable(true);
+            toggleButtonType.setChecked(bankAccount.getTipo().equals(BankAccount.BANK));
+            toggleButtonStatus.setChecked(bankAccount.getTipo().equals(BankAccount.ACTIVE));
 
             digitoEditText.setText(String.valueOf(bankAccount.getDigito()));
             digitoEditText.setEnabled(true);
@@ -58,7 +57,8 @@ public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<Ba
         b.setDescricao(descricaoEditText.getText().toString());
         b.setNumero(numeroEditText.getText().toString());
         b.setDigito(Integer.parseInt(digitoEditText.getText().toString()));
-        b.setSituacao(situacaoSpinner.getSelectedItem().toString());
+        b.setSituacao(toggleButtonStatus.isChecked() ? BankAccount.ACTIVE : BankAccount.INACTIVE);
+        b.setTipo(toggleButtonType.isChecked() ? BankAccount.BANK : BankAccount.WALLET);
         b.setUsuario(3);
         return b;
     }

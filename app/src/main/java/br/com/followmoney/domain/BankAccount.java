@@ -6,11 +6,18 @@ package br.com.followmoney.domain;
 
 public class BankAccount {
 
+    public static final String BANK   = "BANK";
+    public static final String WALLET = "WALLET";
+
+    public static final String ACTIVE   = "ATIVO";
+    public static final String INACTIVE = "INATIVO";
+
     private Integer id;
     private String  descricao;
     private String  numero;
     private int     digito;
     private String  situacao;
+    private String  tipo;
     private Integer usuario;
 
     public BankAccount(int id) {
@@ -72,6 +79,14 @@ public class BankAccount {
 
     public void setSituacao(String situacao) {
         this.situacao = situacao;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
     }
 
     @Override

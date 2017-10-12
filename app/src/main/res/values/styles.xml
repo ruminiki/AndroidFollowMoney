@@ -75,7 +75,7 @@
 
     <style name="InputLayout" parent="TextAppearance.AppCompat">
         <item name="android:textSize">18sp</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:textColor">@color/colorAccent</item>
         <item name="android:textColorHint">@color/colorMainBackground</item>
         <item name="colorAccent">@color/colorMainBackground</item>
         <item name="colorControlNormal">@color/colorMainBackground</item>

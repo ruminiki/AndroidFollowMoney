@@ -33,10 +33,11 @@
     <string name="digit">Dígito</string>
     <string name="extract">Extrato</string>
     <string name="extract_bank_account">Extrato de Conta Bancária</string>
-    <string-array name="status_option">
-        <item>ATIVO</item>
-        <item>INATIVA</item>
-    </string-array>
+    <string name="status_active">ATIVO</string>
+    <string name="status_inactive">INATIVO</string>
+    <string name="type">Tipo</string>
+    <string name="type_bank_account">Conta Bancária</string>
+    <string name="type_wallet">Carteira</string>
 
     <!-- movement -->
     <string name="status_payd">Pago</string>
