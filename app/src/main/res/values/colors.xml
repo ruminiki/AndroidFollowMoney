@@ -4,7 +4,7 @@
     <color name="colorGray">#CCCCCC</color>
     <color name="primaryColor">#4775d1</color>
     <color name="primaryColorDark">#FFFFFF</color>
-    <color name="accentColor">#4775d1</color>
+    <color name="accentColor">#66cc99</color>
     <color name="colorBackground">#B1C1C0</color>
     <!-- Drawer -->
     <color name="mainDrawerBackground">#564639</color>

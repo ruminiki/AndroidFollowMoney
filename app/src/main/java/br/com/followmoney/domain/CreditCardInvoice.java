@@ -13,10 +13,10 @@ public class CreditCardInvoice {
     private String      emissao;
     private String      vencimento;
     private Float       valor;
-    private CreditCard  cartaoCredito;
+    private CreditCard  creditCard;
     private String      mesReferencia;
-    private PaymentForm formaPagamento;
-    private BankAccount contaBancaria;
+    private PaymentForm paymentForm;
+    private BankAccount bankAccount;
     private Float       valorPagamento;
     private String      status;
     private Integer     usuario;
@@ -61,12 +61,12 @@ public class CreditCardInvoice {
         this.valor = valor;
     }
 
-    public CreditCard getCartaoCredito() {
-        return cartaoCredito;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 
-    public void setCartaoCredito(CreditCard cartaoCredito) {
-        this.cartaoCredito = cartaoCredito;
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 
     public String getMesReferencia() {
@@ -77,20 +77,20 @@ public class CreditCardInvoice {
         this.mesReferencia = mesReferencia;
     }
 
-    public PaymentForm getFormaPagamento() {
-        return formaPagamento;
+    public PaymentForm getPaymentForm() {
+        return paymentForm;
     }
 
-    public void setFormaPagamento(PaymentForm formaPagamento) {
-        this.formaPagamento = formaPagamento;
+    public void setPaymentForm(PaymentForm paymentForm) {
+        this.paymentForm = paymentForm;
     }
 
-    public BankAccount getContaBancaria() {
-        return contaBancaria;
+    public BankAccount getBankAccount() {
+        return bankAccount;
     }
 
-    public void setContaBancaria(BankAccount contaBancaria) {
-        this.contaBancaria = contaBancaria;
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 
     public Float getValorPagamento() {

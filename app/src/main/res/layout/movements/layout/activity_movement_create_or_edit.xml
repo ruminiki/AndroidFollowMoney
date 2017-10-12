@@ -145,12 +145,13 @@
                 android:orientation="horizontal">
 
                     <Button
-                        style="@style/Widget.AppCompat.Button.Colored"
+                        style="@style/ThemeOverlay.AppCompat.Dark"
                         android:id="@+id/paymentBankButton"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:text="@string/payment_bank"
+                        android:textColor="@color/colorGray"
                         android:textSize="@dimen/font_medium" />
 
                     <Button
@@ -159,7 +160,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textColor="@color/colorBackground"
+                        android:textColor="@color/colorGray"
                         android:text="@string/payment_credit_card"
                         android:textSize="@dimen/font_medium" />
 
@@ -170,7 +171,7 @@
                         android:layout_weight="1"
                         android:text="@string/payment_money"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorBackground"
+                        android:textColor="@color/colorGray"
                         android:textSize="@dimen/font_medium" />
 
             </LinearLayout>
@@ -198,7 +199,7 @@
                 android:layout_alignBottom="@+id/selectedPaymentEditText"
                 android:layout_alignParentLeft="true"
                 android:layout_toRightOf="@+id/selectedPaymentEditText"
-                android:text="@string/payment_method" />
+                android:text="@string/payment_form_selected" />
 
             <EditText
                 android:id="@+id/selectedPaymentEditText"
@@ -207,6 +208,7 @@
                 style="@style/edit_text"
                 android:focusable="false"
                 android:clickable="false"
+                android:background="@color/colorAccent"
                 android:textStyle="bold"
                 android:textAlignment="center"
                 android:textSize="@dimen/font_size" />

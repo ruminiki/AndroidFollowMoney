@@ -20,6 +20,8 @@ import br.com.followmoney.domain.CreditCard;
 
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_DESCRIPTION;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_INVOICE_DAY_CLOSING;
+import static br.com.followmoney.activities.KeyParams.KEY_INVOICE_DAY_MATURITY;
 
 public class CreditCardListActivity extends AbstractFormList<CreditCard> {
 
@@ -83,6 +85,8 @@ public class CreditCardListActivity extends AbstractFormList<CreditCard> {
             Intent intent = new Intent();
             intent.putExtra(KEY_ID, selectedEntity.getId());
             intent.putExtra(KEY_DESCRIPTION, selectedEntity.getDescricao());
+            intent.putExtra(KEY_INVOICE_DAY_CLOSING, selectedEntity.getDataFechamento());
+            intent.putExtra(KEY_INVOICE_DAY_MATURITY, selectedEntity.getDataFatura());
             setResult(RESULT_OK, intent);
             finish();
         }

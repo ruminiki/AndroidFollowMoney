@@ -102,7 +102,7 @@ public class CreditCardPaymentInvoiceActivity extends AppCompatActivity {
                 public void onLoaded(CreditCardInvoice entity) {
                     creditCardInvoice = entity;
                     invoiceDescriptionTextView.setText(
-                            creditCardInvoice.getCartaoCredito().getDescricao() + " " +
+                            creditCardInvoice.getCreditCard().getDescricao() + " " +
                             creditCardInvoice.getMesReferencia().toUpperCase()
                     );
                     invoiceValueTextView.setText("R$" + creditCardInvoice.getValor());
@@ -212,8 +212,8 @@ public class CreditCardPaymentInvoiceActivity extends AppCompatActivity {
     }
 
     protected CreditCardInvoice getValueDataFieldsInView() {
-        creditCardInvoice.setFormaPagamento(formaPagamento);
-        creditCardInvoice.setContaBancaria(contaBancaria);
+        creditCardInvoice.setPaymentForm(formaPagamento);
+        creditCardInvoice.setBankAccount(contaBancaria);
         creditCardInvoice.setValorPagamento(creditCardInvoice.getValor());//@TODO set valo pagamento menor que fatura
         return creditCardInvoice;
     }

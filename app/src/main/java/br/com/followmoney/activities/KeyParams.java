@@ -9,6 +9,8 @@ public class KeyParams {
     //CREDIT CARDs: KEY
     public final static String KEY_EXTRA_CREDIT_CARD_ID          = "KEY_EXTRA_CREDIT_CARD_ID";
     public final static String KEY_EXTRA_CREDIT_CARD_DESCRIPTION = "KEY_EXTRA_CREDIT_CARD_DESCRIPTION";
+    public final static String KEY_INVOICE_DAY_CLOSING           = "KEY_INVOICE_DAY_CLOSING";
+    public final static String KEY_INVOICE_DAY_MATURITY          = "KEY_INVOICE_DAY_MATURITY";
 
     //CREDIT CARD INVOICE: KEYs
     public static final String KEY_REFERENCE_MONTH              = "reference_month";

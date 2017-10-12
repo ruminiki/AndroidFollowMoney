@@ -21,11 +21,11 @@ public class Movement{
     private Float             valor;
     private String            status;
     private String            operacao;
-    private Finality          finalidade;
-    private BankAccount       contaBancaria;
-    private CreditCard        cartaoCredito;
-    private PaymentForm       formaPagamento;
-    private CreditCardInvoice fatura;
+    private Finality          finality;
+    private BankAccount       bankAccount;
+    private CreditCard        creditCard;
+    private PaymentForm       paymentForm;
+    private CreditCardInvoice invoice;
     private Integer           usuario;
     private String            hashTransferencia;
 
@@ -94,28 +94,28 @@ public class Movement{
         this.operacao = operacao;
     }
 
-    public Finality getFinalidade() {
-        return finalidade;
+    public Finality getFinality() {
+        return finality;
     }
 
-    public void setFinalidade(Finality finalidade) {
-        this.finalidade = finalidade;
+    public void setFinality(Finality finality) {
+        this.finality = finality;
     }
 
-    public BankAccount getContaBancaria() {
-        return contaBancaria;
+    public BankAccount getBankAccount() {
+        return bankAccount;
     }
 
-    public void setContaBancaria(BankAccount contaBancaria) {
-        this.contaBancaria = contaBancaria;
+    public void setBankAccount(BankAccount bankAccount) {
+        this.bankAccount = bankAccount;
     }
 
-    public CreditCard getCartaoCredito() {
-        return cartaoCredito;
+    public CreditCard getCreditCard() {
+        return creditCard;
     }
 
-    public void setCartaoCredito(CreditCard cartaoCredito) {
-        this.cartaoCredito = cartaoCredito;
+    public void setCreditCard(CreditCard creditCard) {
+        this.creditCard = creditCard;
     }
 
     public Integer getUsuario() {
@@ -126,20 +126,20 @@ public class Movement{
         this.usuario = usuario;
     }
 
-    public PaymentForm getFormaPagamento() {
-        return formaPagamento;
+    public PaymentForm getPaymentForm() {
+        return paymentForm;
     }
 
-    public void setFormaPagamento(PaymentForm formaPagamento) {
-        this.formaPagamento = formaPagamento;
+    public void setPaymentForm(PaymentForm paymentForm) {
+        this.paymentForm = paymentForm;
     }
 
-    public CreditCardInvoice getFatura() {
-        return fatura;
+    public CreditCardInvoice getInvoice() {
+        return invoice;
     }
 
-    public void setFatura(CreditCardInvoice fatura) {
-        this.fatura = fatura;
+    public void setInvoice(CreditCardInvoice invoice) {
+        this.invoice = invoice;
     }
 
     public String getHashTransferencia() {
@@ -171,12 +171,12 @@ public class Movement{
     }
 
     public String getFontePagadora(){
-        if ( this.getCartaoCredito() != null && this.getCartaoCredito().getId() > 0 ){
-            return this.getCartaoCredito().getDescricao();
+        if ( this.getCreditCard() != null && this.getCreditCard().getId() > 0 ){
+            return this.getCreditCard().getDescricao();
         }
 
-        if ( this.getContaBancaria() != null && this.getContaBancaria().getId() > 0 ){
-            return this.getContaBancaria().getDescricao();
+        if ( this.getBankAccount() != null && this.getBankAccount().getId() > 0 ){
+            return this.getBankAccount().getDescricao();
         }
 
         return null;
@@ -209,8 +209,8 @@ public class Movement{
 
     public Boolean canEdit(){
 
-        if ( this.getFatura() != null && this.getFatura().getId() > 0 ){
-            message = "O movimento é uma fatura de cartão de crédito e não pode ser editado/deletado. Você poderá usar a função de estorno de pagamento.";
+        if ( this.getInvoice() != null && this.getInvoice().getId() > 0 ){
+            message = "O movimento é uma invoice de cartão de crédito e não pode ser editado/deletado. Você poderá usar a função de estorno de pagamento.";
             return false;
         }
 

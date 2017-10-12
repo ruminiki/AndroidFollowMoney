@@ -51,10 +51,10 @@ public class MovementDetailActivity extends AppCompatActivity {
                 emissaoTextView.setText(movement.getEmissaoFormatado());
                 vencimentoTextView.setText(movement.getVencimentoFormatado());
                 operacaoTextView.setText(movement.getOperacao());
-                finalidadeTextView.setText(movement.getFinalidade().getDescricao());
-                formaPagamentoTextView.setText(movement.getFormaPagamento() != null ? movement.getFormaPagamento().getDescricao() : "");
-                cartaoCreditoTextView.setText((movement.getCartaoCredito() != null && movement.getCartaoCredito().getId() > 0) ? movement.getCartaoCredito().getDescricao() : "");
-                contaBancariaTextView.setText((movement.getContaBancaria() != null && movement.getContaBancaria().getId() > 0) ? movement.getContaBancaria().getDescricao() : "");
+                finalidadeTextView.setText(movement.getFinality().getDescricao());
+                formaPagamentoTextView.setText(movement.getPaymentForm() != null ? movement.getPaymentForm().getDescricao() : "");
+                cartaoCreditoTextView.setText((movement.getCreditCard() != null && movement.getCreditCard().getId() > 0) ? movement.getCreditCard().getDescricao() : "");
+                contaBancariaTextView.setText((movement.getBankAccount() != null && movement.getBankAccount().getId() > 0) ? movement.getBankAccount().getDescricao() : "");
                 valorTextView.setText(movement.getValorFormatado());
             }
 

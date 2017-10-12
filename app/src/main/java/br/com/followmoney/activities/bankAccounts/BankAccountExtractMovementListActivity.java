@@ -126,7 +126,7 @@ public class BankAccountExtractMovementListActivity extends AbstractFormList<Mov
 
     @Override
     protected String getRestContextList() {
-        return "/movements/extract/"+bankAccountID+"/period/"+GlobalParams.getInstance().getSelectedMonthReference();
+        return "/movements/bankAccount/"+bankAccountID+"/period/"+GlobalParams.getInstance().getSelectedMonthReference();
     }
 
     @Override

@@ -51,4 +51,13 @@ public class DateUtil {
         }
         return null;
     }
+
+    public static Calendar getVencimentoMovimentoCartaoCredito(int diaFatura, int diaFechamento) {
+        Calendar c = Calendar.getInstance();
+        c.set(Calendar.DAY_OF_MONTH, diaFatura);
+        if ( diaFechamento > diaFatura ){//fatura vence no mes seguinte
+            c.add(Calendar.MONTH, 1);
+        }
+        return c;
+    }
 }

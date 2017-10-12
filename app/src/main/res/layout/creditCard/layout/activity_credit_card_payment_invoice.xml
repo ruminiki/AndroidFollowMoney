@@ -68,7 +68,7 @@
                 android:layout_width="match_parent"
                 android:textSize="10dp"
                 android:gravity="center"
-                android:text="Valor fatura"
+                android:text="Valor invoice"
                 android:layout_height="wrap_content"/>
 
         </LinearLayout>

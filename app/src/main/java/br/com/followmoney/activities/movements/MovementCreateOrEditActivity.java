@@ -1,7 +1,6 @@
 package br.com.followmoney.activities.movements;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,10 +14,10 @@ import java.util.Calendar;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormCreateOrEdit;
+import br.com.followmoney.activities.KeyParams;
 import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
-import br.com.followmoney.activities.paymentForms.PaymentFormListActivity;
 import br.com.followmoney.components.DatePickerFragment;
 import br.com.followmoney.domain.BankAccount;
 import br.com.followmoney.domain.CreditCard;
@@ -59,7 +58,9 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         descricaoEditText = (EditText) findViewById(R.id.descricaoEditText);
+
         emissaoTextButton = (Button) findViewById(R.id.emissaoTextButton);
+        emissaoTextButton.setText(DateUtil.format(Calendar.getInstance(), "dd/MM/yyyy"));
         emissaoTextButton.setOnClickListener(new Button.OnClickListener(){
              @Override
              public void onClick(View v) {
@@ -74,6 +75,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         vencimentoTextButton = (Button) findViewById(R.id.vencimentoTextButton);
+        vencimentoTextButton.setText(DateUtil.format(Calendar.getInstance(), "dd/MM/yyyy"));
         vencimentoTextButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -100,25 +102,55 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         });
 
         paymentMoneyButton = (Button) findViewById(R.id.paymentMoneyButton);
+        paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
         paymentMoneyButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+                paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                paymentMoneyButton.setTextColor(getResources().getColor(R.color.defaultColor));
+
+                paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentBankButton.setTextColor(getResources().getColor(R.color.colorGray));
+
+                paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentCreditCardButton.setTextColor(getResources().getColor(R.color.colorGray));
+
                 openContaBancariaFormToSelect();
             }
         });
 
         paymentBankButton = (Button) findViewById(R.id.paymentBankButton);
+        paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
         paymentBankButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+                paymentBankButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                paymentBankButton.setTextColor(getResources().getColor(R.color.defaultColor));
+
+                paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
+
+                paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentCreditCardButton.setTextColor(getResources().getColor(R.color.colorGray));
+
                 openContaBancariaFormToSelect();
             }
         });
 
         paymentCreditCardButton = (Button) findViewById(R.id.paymentCreditCardButton);
+        paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
         paymentCreditCardButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
+                paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                paymentCreditCardButton.setTextColor(getResources().getColor(R.color.defaultColor));
+
+                paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentBankButton.setTextColor(getResources().getColor(R.color.colorGray));
+
+                paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
+                paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
+
                 openCartaoCreditoFormToSelect();
             }
         });
@@ -230,8 +262,11 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
 
             case KEY_SELECT_CARTAO_CREDITO_RETURN :{
                 if (resultCode == RESULT_OK) {
-                    int id           = data.getIntExtra(CreditCardListActivity.KEY_ID, 0);
-                    String descricao = data.getStringExtra(CreditCardListActivity.KEY_DESCRIPTION);
+                    int id                  = data.getIntExtra(CreditCardListActivity.KEY_ID, 0);
+                    String descricao        = data.getStringExtra(CreditCardListActivity.KEY_DESCRIPTION);
+                    int diaFechamentoFatura = data.getIntExtra(KeyParams.KEY_INVOICE_DAY_CLOSING, 0);
+                    int diaVencimentoFatura = data.getIntExtra(KeyParams.KEY_INVOICE_DAY_MATURITY, 0);
+
                     if (cartaoCredito == null){
                         cartaoCredito = new CreditCard(id, descricao);
                     }else{
@@ -239,6 +274,11 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                         cartaoCredito.setId(id);
                     }
                     contaBancaria = null;
+                    if ( diaFechamentoFatura > 0 && diaVencimentoFatura > 0 ){
+                        Calendar dataVencimento = DateUtil.getVencimentoMovimentoCartaoCredito(diaVencimentoFatura, diaFechamentoFatura);
+                        vencimentoTextButton.setText(DateUtil.format(dataVencimento,"dd/MM/yyyy"));
+                        ClasseDataVencimento.setDate(dataVencimento);
+                    }
                     selectedPaymentEditText.setText(descricao);
                 }
                 break;
@@ -276,14 +316,14 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
 
             toggleButtonCreditoDebito.setChecked(movement.getOperacao().equals(Movement.CREDIT));
 
-            finalidade = movement.getFinalidade();
+            finalidade = movement.getFinality();
             finalidadeEditText.setText(finalidade != null ? finalidade.getDescricao() : "");
 
-            /*formaPagamento = movement.getFormaPagamento();
+            /*formaPagamento = movement.getPaymentForm();
             formaPagamentoEditText.setText(formaPagamento != null ? formaPagamento.getDescricao() : "");*/
 
-            contaBancaria = movement.getContaBancaria();
-            cartaoCredito = movement.getCartaoCredito();
+            contaBancaria = movement.getBankAccount();
+            cartaoCredito = movement.getCreditCard();
 
             selectedPaymentEditText.setText(contaBancaria != null ? contaBancaria.getDescricao() :
                                            (cartaoCredito != null ? cartaoCredito.getDescricao() : ""));
@@ -300,10 +340,10 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         m.setDescricao(descricaoEditText.getText().toString());
         m.setEmissao(DateUtil.format(ClasseDataEmissao.getDate(), "yyyyMMdd"));
         m.setVencimento(DateUtil.format(ClasseDataVencimento.getDate(), "yyyyMMdd"));
-        m.setFinalidade((finalidade != null && finalidade.getId() != null) ? finalidade : null);
-        m.setContaBancaria((contaBancaria != null && contaBancaria.getId() != null) ? contaBancaria : null);
-        m.setCartaoCredito((cartaoCredito != null && cartaoCredito.getId() != null) ? cartaoCredito : null);
-        /*m.setFormaPagamento((formaPagamento != null && formaPagamento.getId() != null) ? formaPagamento : null);*/
+        m.setFinality((finalidade != null && finalidade.getId() != null) ? finalidade : null);
+        m.setBankAccount((contaBancaria != null && contaBancaria.getId() != null) ? contaBancaria : null);
+        m.setCreditCard((cartaoCredito != null && cartaoCredito.getId() != null) ? cartaoCredito : null);
+        /*m.setPaymentForm((formaPagamento != null && formaPagamento.getId() != null) ? formaPagamento : null);*/
         m.setValor(Float.parseFloat(valorEditText.getText() != null && !valorEditText.getText().toString().isEmpty() ?
                 valorEditText.getText().toString() : "0"));
         m.setOperacao(toggleButtonCreditoDebito.isChecked() ? Movement.CREDIT : Movement.DEBIT);
