@@ -2,6 +2,7 @@ package br.com.followmoney.dao.remote;
 
 import android.content.Context;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.Response;
@@ -11,6 +12,8 @@ import com.android.volley.toolbox.HttpHeaderParser;
 import com.android.volley.toolbox.StringRequest;
 
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 import br.com.followmoney.globals.GlobalParams;
 
@@ -58,7 +61,14 @@ public class DeleteEntityJson {
                         }
                     }
                 }
-        );
+        ){//here before semicolon ; and use { }.
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map headers = new HashMap();
+                headers.put("Authorization", GlobalParams.getInstance().getAccessToken());
+                return headers;
+            }
+        };
 
         // add the request object to the queue to be executed
         ApplicationController.getInstance(context).addToRequestQueue(req);

@@ -49,6 +49,16 @@ public class BankAccount {
         this.descricao = descricao;
     }
 
+    public String getDescricaoFormatada() {
+
+        if ( this.getTipo().equals(BANK) ){
+            return descricao + " (" + this.getNumero()+"-"+this.getDigito() + ")";
+        }else{
+            return descricao;
+        }
+
+    }
+
     public String getNumero() {
         return numero;
     }

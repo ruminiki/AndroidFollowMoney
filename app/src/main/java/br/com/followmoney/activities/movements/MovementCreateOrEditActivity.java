@@ -32,8 +32,8 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     private static final int KEY_SELECT_CONTA_BANCARIA_RETURN  = 3;
 
     EditText     descricaoEditText, valorEditText, finalidadeEditText, selectedPaymentEditText;
-    ToggleButton toggleButtonCreditoDebito, toggleButtonStatus;
-    Button       emissaoTextButton, vencimentoTextButton, paymentMoneyButton, paymentBankButton, paymentCreditCardButton;
+    ToggleButton toggleButtonCreditoDebito, paymentMoneyToggleButton,  paymentBankToggleButton, paymentCreditCardToggleButton, toggleButtonStatus;
+    Button       emissaoTextButton, vencimentoTextButton;
 
     private Finality finalidade;
     private CreditCard cartaoCredito;
@@ -91,27 +91,24 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
         toggleButtonCreditoDebito = (ToggleButton) findViewById(R.id.toggleButtonCreditoDebito);
         toggleButtonStatus = (ToggleButton) findViewById(R.id.toggleButtonStatus);
 
-        paymentMoneyButton = (Button) findViewById(R.id.paymentMoneyButton);
-        paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-        paymentMoneyButton.setOnClickListener(new ToggleButton.OnClickListener() {
+        paymentMoneyToggleButton = (ToggleButton) findViewById(R.id.paymentMoneyToggleButton);
+        paymentMoneyToggleButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openContaBancariaFormToSelect();
             }
         });
 
-        paymentBankButton = (Button) findViewById(R.id.paymentBankButton);
-        paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-        paymentBankButton.setOnClickListener(new ToggleButton.OnClickListener() {
+        paymentBankToggleButton = (ToggleButton) findViewById(R.id.paymentBankToggleButton);
+        paymentBankToggleButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openContaBancariaFormToSelect();
             }
         });
 
-        paymentCreditCardButton = (Button) findViewById(R.id.paymentCreditCardButton);
-        paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-        paymentCreditCardButton.setOnClickListener(new ToggleButton.OnClickListener() {
+        paymentCreditCardToggleButton = (ToggleButton) findViewById(R.id.paymentCreditCardToggleButton);
+        paymentCreditCardToggleButton.setOnClickListener(new ToggleButton.OnClickListener() {
             @Override
             public void onClick(View v) {
                 openCartaoCreditoFormToSelect();
@@ -132,7 +129,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     ///=====SELECT FINALIDADE======//
     private void openFinalidadeFormToSelect(){
         Intent intent = new Intent(this, FinalityListActivity.class);
-        intent.putExtra("ParentActivityName", this.getClass());
+        intent.putExtra("ParentActivityName", this.getClass().getName());
         intent.putExtra(FinalityListActivity.KEY_MODE, FinalityListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_FINALIDADE_RETURN);
     }
@@ -140,7 +137,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     ///=====START: POPULATE CONTA BANCARIA SPINNER======//
     private void openContaBancariaFormToSelect(){
         Intent intent = new Intent(this, BankAccountListActivity.class);
-        intent.putExtra("ParentActivityName", this.getClass());
+        intent.putExtra("ParentActivityName", this.getClass().getName());
         intent.putExtra(BankAccountListActivity.KEY_MODE, BankAccountListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_CONTA_BANCARIA_RETURN);
     }
@@ -148,7 +145,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
     ///=====SELECT CARTAO CREDITO======//
     private void openCartaoCreditoFormToSelect(){
         Intent intent = new Intent(this, CreditCardListActivity.class);
-        intent.putExtra("ParentActivityName", this.getClass());
+        intent.putExtra("ParentActivityName", this.getClass().getName());
         intent.putExtra(CreditCardListActivity.KEY_MODE, CreditCardListActivity.OPEN_TO_SELECT_MODE);
         startActivityForResult(intent, KEY_SELECT_CARTAO_CREDITO_RETURN);
     }
@@ -195,15 +192,12 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                     }
                     selectedPaymentEditText.setText(descricao);
 
-                    paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    paymentCreditCardButton.setTextColor(getResources().getColor(R.color.defaultColor));
+                    paymentCreditCardToggleButton.setChecked(true);
+                    paymentBankToggleButton.setChecked(false);
+                    paymentMoneyToggleButton.setChecked(false);
 
-                    paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                    paymentBankButton.setTextColor(getResources().getColor(R.color.colorGray));
-
-                    paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                    paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
-
+                }else{
+                    paymentCreditCardToggleButton.setChecked(false);
                 }
                 break;
             }
@@ -228,24 +222,18 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
 
                     //style buttons
                     if ( contaBancaria.getTipo() != null && contaBancaria.getTipo().equals(BankAccount.BANK) ){
-                        paymentBankButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                        paymentBankButton.setTextColor(getResources().getColor(R.color.defaultColor));
-
-                        paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                        paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
+                        paymentBankToggleButton.setChecked(true);
+                        paymentMoneyToggleButton.setChecked(false);
                     }
 
                     if ( contaBancaria.getTipo() != null && contaBancaria.getTipo().equals(BankAccount.WALLET) ){
-                        paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                        paymentMoneyButton.setTextColor(getResources().getColor(R.color.defaultColor));
-
-                        paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                        paymentBankButton.setTextColor(getResources().getColor(R.color.colorGray));
+                        paymentBankToggleButton.setChecked(false);
+                        paymentMoneyToggleButton.setChecked(true);
                     }
-
-                    paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                    paymentCreditCardButton.setTextColor(getResources().getColor(R.color.colorGray));
-
+                    paymentCreditCardToggleButton.setChecked(false);
+                }else{
+                    paymentBankToggleButton.setChecked(contaBancaria != null && contaBancaria.getTipo().equals(BankAccount.BANK));
+                    paymentMoneyToggleButton.setChecked(contaBancaria != null && contaBancaria.getTipo().equals(BankAccount.WALLET));
                 }
                 break;
             }
@@ -275,17 +263,16 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
 
             if ( contaBancaria != null ){
                 if ( contaBancaria.getTipo() != null && contaBancaria.getTipo().equals(BankAccount.BANK) ) {
-                    paymentBankButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    paymentBankButton.setTextColor(getResources().getColor(R.color.defaultColor));
+                    paymentBankToggleButton.setChecked(true);
+                    paymentMoneyToggleButton.setChecked(false);
                 }else{
-                    paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                    paymentMoneyButton.setTextColor(getResources().getColor(R.color.defaultColor));
+                    paymentBankToggleButton.setChecked(false);
+                    paymentMoneyToggleButton.setChecked(true);
                 }
             }
 
             if ( cartaoCredito != null ){
-                paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                paymentCreditCardButton.setTextColor(getResources().getColor(R.color.defaultColor));
+                paymentCreditCardToggleButton.setChecked(true);
             }
 
             selectedPaymentEditText.setText(contaBancaria != null ? contaBancaria.getDescricao() :

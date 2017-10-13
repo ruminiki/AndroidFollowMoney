@@ -65,11 +65,12 @@
                         android:text="@string/operation" />
 
                     <ToggleButton
-                        style="@style/Widget.AppCompat.Button.Colored"
                         android:id="@+id/toggleButtonCreditoDebito"
+                        android:background="@drawable/select_button"
                         android:layout_width="match_parent"
+                        android:textColor="@color/colorMainBackground"
                         android:layout_gravity="center"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
                         android:textOff="@string/debit"
                         android:textOn="@string/credit"
                         android:textSize="@dimen/font_size" />
@@ -90,11 +91,12 @@
                         android:text="@string/status" />
 
                     <ToggleButton
-                        style="@style/Widget.AppCompat.Button.Colored"
                         android:id="@+id/toggleButtonStatus"
                         android:layout_width="match_parent"
                         android:layout_gravity="center"
-                        android:layout_height="match_parent"
+                        android:layout_height="40dp"
+                        android:background="@drawable/select_button"
+                        android:textColor="@color/colorMainBackground"
                         android:textOff="@string/status_to_pay"
                         android:textOn="@string/status_payd"
                         android:textSize="@dimen/font_size" />
@@ -105,52 +107,52 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:text="@string/date_emission" />
 
                     <Button
-                        style="@style/Widget.AppCompat.Button.Colored"
                         android:id="@+id/emissaoTextButton"
+                        android:textColor="@color/colorMainBackground"
+                        android:background="@color/colorAccent"
                         android:layout_width="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:textSize="@dimen/font_size" />
 
                 </LinearLayout>
 
+                <android.support.v4.widget.Space
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
+                    android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:orientation="vertical">
 
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
                         android:text="@string/date_maturity" />
 
                     <Button
-                        style="@style/Widget.AppCompat.Button.Colored"
                         android:id="@+id/vencimentoTextButton"
+                        android:textColor="@color/colorMainBackground"
+                        android:background="@color/colorAccent"
                         android:layout_width="match_parent"
-                        android:layout_gravity="center"
-                        android:layout_height="50dp"
+                        android:layout_height="40dp"
                         android:textSize="@dimen/font_size" />
                 </LinearLayout>
             </LinearLayout>
@@ -161,7 +163,7 @@
                 android:layout_alignBottom="@+id/formaPagamentoEditText"
                 android:layout_alignParentLeft="true"
                 android:layout_toRightOf="@+id/formaPagamentoEditText"
-                android:text="@string/payment_form" />
+                android:text="@string/payment_form"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -169,34 +171,37 @@
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
 
-                    <Button
-                        style="@style/ThemeOverlay.AppCompat.Dark"
-                        android:id="@+id/paymentBankButton"
+                    <ToggleButton
+                        android:id="@+id/paymentBankToggleButton"
+                        android:background="@drawable/select_button_payment"
+                        android:textColor="@color/select_button_color"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/payment_bank"
-                        android:textColor="@color/colorGray"
+                        android:textOff="@string/payment_bank"
+                        android:textOn="@string/payment_bank"
                         android:textSize="@dimen/font_medium" />
 
-                    <Button
-                        style="@style/ThemeOverlay.AppCompat.Dark"
-                        android:id="@+id/paymentCreditCardButton"
+                    <ToggleButton
+                        android:id="@+id/paymentCreditCardToggleButton"
+                        android:background="@drawable/select_button_payment"
+                        android:textColor="@color/select_button_color"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
-                        android:textColor="@color/colorGray"
-                        android:text="@string/payment_credit_card"
+                        android:textOff="@string/payment_credit_card"
+                        android:textOn="@string/payment_credit_card"
                         android:textSize="@dimen/font_medium" />
 
-                    <Button
-                        style="@style/ThemeOverlay.AppCompat.Dark"
-                        android:id="@+id/paymentMoneyButton"
+                    <ToggleButton
+                        android:id="@+id/paymentMoneyToggleButton"
+                        android:background="@drawable/select_button_payment"
+                        android:textColor="@color/select_button_color"
                         android:layout_width="match_parent"
                         android:layout_weight="1"
-                        android:text="@string/payment_money"
+                        android:textOff="@string/payment_money"
+                        android:textOn="@string/payment_money"
                         android:layout_height="match_parent"
-                        android:textColor="@color/colorGray"
                         android:textSize="@dimen/font_medium" />
 
             </LinearLayout>

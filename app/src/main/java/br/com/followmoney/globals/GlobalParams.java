@@ -13,6 +13,7 @@ public class GlobalParams {
 
     private static final GlobalParams instance = new GlobalParams();
 
+    //public final static String REMOTE_URL = "http://milkmoney.com.br";
     public final static String REMOTE_URL = "http://192.168.1.12";
 
     private int    userOnLineID = 3;

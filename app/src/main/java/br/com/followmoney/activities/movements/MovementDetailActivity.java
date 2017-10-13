@@ -77,7 +77,7 @@ public class MovementDetailActivity extends AppCompatActivity {
                         }else{
                             Intent intent = new Intent(getApplicationContext(), MovementCreateOrEditActivity.class);
                             intent.putExtra(KEY_EXTRA_ID, movementID);
-                            startActivity(intent);
+                            startActivityForResult(intent, RESULT_OK);
                         }
                     }
                 }
@@ -123,6 +123,9 @@ public class MovementDetailActivity extends AppCompatActivity {
             @Override
             public void onResponse(String response) {
                 Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                setResult(RESULT_OK, intent);
+                finish();
             }
 
             @Override
