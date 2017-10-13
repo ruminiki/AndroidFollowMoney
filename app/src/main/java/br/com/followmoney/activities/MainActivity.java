@@ -12,16 +12,28 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
+import br.com.followmoney.activities.movements.MovementCreateOrEditActivity;
 import br.com.followmoney.activities.movements.MovementListActivity;
 import br.com.followmoney.activities.paymentForms.PaymentFormListActivity;
+import br.com.followmoney.dao.remote.StringValueRequest;
+import br.com.followmoney.globals.GlobalParams;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    TextView saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView;
+
+    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,14 +42,21 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabList = (FloatingActionButton) findViewById(R.id.fabList);
+        fabList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(getApplicationContext(), MovementListActivity.class);
                 startActivity(intent);
-                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();*/
+            }
+        });
+
+        FloatingActionButton fabNew = (FloatingActionButton) findViewById(R.id.fabNew);
+        fabNew.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(), MovementCreateOrEditActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -49,6 +68,56 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //saldoMesTextView = (TextView) findViewById(R.id.saldoMesTextView);
+        saldoPrevistoTextView = (TextView) findViewById(R.id.saldoPrevistoTextView);
+        saldoAnteriorTextView = (TextView) findViewById(R.id.saldoAnteriorTextView);
+
+        loadBalances();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        loadBalances();
+    }
+
+    protected void loadBalances() {
+        //GET PREVIOUS BALANCE
+        String context = "/movements/previousBalance" +
+                "/user/"+GlobalParams.getInstance().getUserOnLineID() +
+                "/period/"+GlobalParams.getInstance().getSelectedMonthReference();
+
+        new StringValueRequest(new StringValueRequest.OnLoadListener() {
+            @Override
+            public void onLoaded(String result) {
+                saldoAnteriorTextView.setText(numberFormat.format(Double.parseDouble(result)));
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(context);
+
+
+        //GET FORESEEN BALANCE
+        context = "/movements/previousBalance" +
+                "/user/"+ GlobalParams.getInstance().getUserOnLineID() +
+                "/period/"+GlobalParams.getInstance().getNextMonthReference();
+
+        new StringValueRequest(new StringValueRequest.OnLoadListener() {
+            @Override
+            public void onLoaded(String result) {
+                saldoPrevistoTextView.setText(numberFormat.format(Double.parseDouble(result)));
+            }
+
+            @Override
+            public void onError(String error) {
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
+            }
+        }, this).execute(context);
+
     }
 
     @Override

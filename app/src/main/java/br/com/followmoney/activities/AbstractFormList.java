@@ -112,7 +112,7 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Could not get list of objects.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
             }
         }, this).execute(getType(), getRestContextList());
 

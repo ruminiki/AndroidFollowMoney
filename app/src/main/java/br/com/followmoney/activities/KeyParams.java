@@ -6,6 +6,10 @@ package br.com.followmoney.activities;
 
 public class KeyParams {
 
+    //BANK ACCOUNTs: KEY
+    public final static String KEY_EXTRA_BANK_ACCOUNT_TYPE       = "KEY_EXTRA_BANK_ACCOUNT_TYPE";
+    public final static String KEY_EXTRA_BANK_ACCOUNT_STATUS     = "KEY_EXTRA_BANK_ACCOUNT_STATUS";
+
     //CREDIT CARDs: KEY
     public final static String KEY_EXTRA_CREDIT_CARD_ID          = "KEY_EXTRA_CREDIT_CARD_ID";
     public final static String KEY_EXTRA_CREDIT_CARD_DESCRIPTION = "KEY_EXTRA_CREDIT_CARD_DESCRIPTION";

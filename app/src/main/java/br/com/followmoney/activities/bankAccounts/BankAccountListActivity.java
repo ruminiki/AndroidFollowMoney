@@ -19,6 +19,8 @@ import br.com.followmoney.domain.BankAccount;
 
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_STATUS;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_TYPE;
 
 public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
@@ -79,6 +81,8 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
             Intent intent = new Intent();
             intent.putExtra(KEY_ID, selectedEntity.getId());
             intent.putExtra(KEY_DESCRIPTION, selectedEntity.getDescricao());
+            intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_TYPE, selectedEntity.getTipo());
+            intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_STATUS, selectedEntity.getSituacao());
             setResult(RESULT_OK, intent);
             finish();
         }

@@ -58,6 +58,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
 
         emissaoTextButton = (Button) findViewById(R.id.emissaoTextButton);
         emissaoTextButton.setText(DateUtil.format(Calendar.getInstance(), "dd/MM/yyyy"));
+        ClasseDataEmissao.setDate(Calendar.getInstance());
         emissaoTextButton.setOnClickListener(new Button.OnClickListener(){
              @Override
              public void onClick(View v) {
@@ -73,6 +74,7 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
 
         vencimentoTextButton = (Button) findViewById(R.id.vencimentoTextButton);
         vencimentoTextButton.setText(DateUtil.format(Calendar.getInstance(), "dd/MM/yyyy"));
+        ClasseDataVencimento.setDate(Calendar.getInstance());
         vencimentoTextButton.setOnClickListener(new Button.OnClickListener(){
             @Override
             public void onClick(View v) {
@@ -210,12 +212,17 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
                 if (resultCode == RESULT_OK) {
                     int id           = data.getIntExtra(BankAccountListActivity.KEY_ID, 0);
                     String descricao = data.getStringExtra(BankAccountListActivity.KEY_DESCRIPTION);
+                    String tipo      = data.getStringExtra(KeyParams.KEY_EXTRA_BANK_ACCOUNT_TYPE);
+                    String status    = data.getStringExtra(KeyParams.KEY_EXTRA_BANK_ACCOUNT_STATUS);
+
                     if ( contaBancaria == null ) {
-                        contaBancaria = new BankAccount(id, descricao);
-                    }else{
-                        contaBancaria.setDescricao(descricao);
-                        contaBancaria.setId(id);
+                        contaBancaria = new BankAccount();
                     }
+                    contaBancaria.setId(id);
+                    contaBancaria.setDescricao(descricao);
+                    contaBancaria.setTipo(tipo);
+                    contaBancaria.setSituacao(status);
+
                     cartaoCredito = null;
                     selectedPaymentEditText.setText(descricao);
 
@@ -267,25 +274,18 @@ public class MovementCreateOrEditActivity extends AbstractFormCreateOrEdit<Movem
             cartaoCredito = movement.getCreditCard();
 
             if ( contaBancaria != null ){
-                paymentBankButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
-                paymentBankButton.setTextColor(getResources().getColor(R.color.defaultColor));
-
-                paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                paymentCreditCardButton.setTextColor(getResources().getColor(R.color.colorGray));
-
-                paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
+                if ( contaBancaria.getTipo() != null && contaBancaria.getTipo().equals(BankAccount.BANK) ) {
+                    paymentBankButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    paymentBankButton.setTextColor(getResources().getColor(R.color.defaultColor));
+                }else{
+                    paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
+                    paymentMoneyButton.setTextColor(getResources().getColor(R.color.defaultColor));
+                }
             }
 
             if ( cartaoCredito != null ){
-                paymentBankButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                paymentBankButton.setTextColor(getResources().getColor(R.color.colorGray));
-
                 paymentCreditCardButton.setBackgroundColor(getResources().getColor(R.color.colorAccent));
                 paymentCreditCardButton.setTextColor(getResources().getColor(R.color.defaultColor));
-
-                paymentMoneyButton.setBackgroundColor(getResources().getColor(R.color.defaultColor));
-                paymentMoneyButton.setTextColor(getResources().getColor(R.color.colorGray));
             }
 
             selectedPaymentEditText.setText(contaBancaria != null ? contaBancaria.getDescricao() :

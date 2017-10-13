@@ -102,7 +102,7 @@ public class MovementListActivity extends AbstractFormList<Movement> {
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
             }
         }, this).execute(context);
 

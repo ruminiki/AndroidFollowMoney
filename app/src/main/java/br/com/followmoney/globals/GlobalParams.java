@@ -15,7 +15,8 @@ public class GlobalParams {
 
     public final static String REMOTE_URL = "http://192.168.1.12";
 
-    private int    userOnLineID;
+    private int    userOnLineID = 3;
+    private String accessToken = "7be2531ea6205505f6bd851d9c1f8199e83eafda";
     private String selectedMonthReference;
 
     private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
@@ -29,7 +30,7 @@ public class GlobalParams {
     }
 
     public int getUserOnLineID() {
-        return 3;
+        return userOnLineID;
     }
 
     public void setUserOnLineID(int userOnLineID) {
@@ -50,13 +51,13 @@ public class GlobalParams {
                 selectedMonthReference = sdf2.format(new Date());
             }
 
-            Date previousMonth = sdf1.parse(selectedMonthReference+"01");
+            Date atualMonth = sdf1.parse(selectedMonthReference+"01");
             Calendar nextMonth = Calendar.getInstance();
 
-            nextMonth.setTime(previousMonth);
+            nextMonth.setTime(atualMonth);
             nextMonth.add(Calendar.MONTH, 1);
 
-            return sdf2.format(nextMonth);
+            return sdf2.format(nextMonth.getTime());
 
         } catch (ParseException e) {
             return selectedMonthReference;
@@ -75,4 +76,7 @@ public class GlobalParams {
         }
     }
 
+    public String getAccessToken() {
+        return accessToken;
+    }
 }
