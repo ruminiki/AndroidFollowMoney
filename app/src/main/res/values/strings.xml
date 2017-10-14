@@ -55,7 +55,7 @@
     <string name="movement_detail">Detalhe do Movimento</string>
     <string name="payment_money">Dinheiro</string>
     <string name="payment_bank">Conta Bancária</string>
-    <string name="payment_credit_card">Cartão de Crédito</string>
+    <string name="payment_credit_card">Cartão Crédito</string>
     <string name="payment_form_selected">Forma de pagamento selecionada</string>
     <string-array name="months">
         <item>JAN</item>
@@ -81,4 +81,9 @@
     <string name="credit_card_invoices">Faturas do Cartão de Crédito</string>
     <string name="movements_of_invoice">Movimentos da Fatura</string>
     <string name="unpay_invoice">Reabrir fatura</string>
+
+    <!-- account tranfer form -->
+    <string name="bank_account_origin">Conta origem</string>
+    <string name="bank_account_destiny">Conta destino</string>
+
 </resources>

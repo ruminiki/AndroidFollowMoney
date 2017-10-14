@@ -42,7 +42,7 @@ public class BankAccountCreateOrEditActivity extends AbstractFormCreateOrEdit<Ba
             numeroEditText.setClickable(true);
 
             toggleButtonType.setChecked(bankAccount.getTipo().equals(BankAccount.BANK));
-            toggleButtonStatus.setChecked(bankAccount.getTipo().equals(BankAccount.ACTIVE));
+            toggleButtonStatus.setChecked(bankAccount.getSituacao().equals(BankAccount.ACTIVE));
 
             digitoEditText.setText(String.valueOf(bankAccount.getDigito()));
             digitoEditText.setEnabled(true);

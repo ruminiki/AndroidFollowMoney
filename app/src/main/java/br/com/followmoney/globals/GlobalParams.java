@@ -13,8 +13,8 @@ public class GlobalParams {
 
     private static final GlobalParams instance = new GlobalParams();
 
-    //public final static String REMOTE_URL = "http://milkmoney.com.br";
-    public final static String REMOTE_URL = "http://192.168.1.12";
+    public final static String REMOTE_URL = "http://milkmoney.com.br";
+    //public final static String REMOTE_URL = "http://192.168.1.12";
 
     private int    userOnLineID = 3;
     private String accessToken = "7be2531ea6205505f6bd851d9c1f8199e83eafda";

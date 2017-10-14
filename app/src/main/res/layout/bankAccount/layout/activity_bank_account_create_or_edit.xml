@@ -101,8 +101,8 @@
                     android:layout_width="match_parent"
                     android:layout_gravity="center"
                     android:layout_height="match_parent"
-                    android:textOff="@string/status_active"
-                    android:textOn="@string/status_inactive"
+                    android:textOff="@string/status_inactive"
+                    android:textOn="@string/status_active"
                     android:textSize="@dimen/font_size" />
 
             </LinearLayout>

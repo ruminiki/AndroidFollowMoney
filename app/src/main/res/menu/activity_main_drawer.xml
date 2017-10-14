@@ -31,6 +31,10 @@
                 android:id="@+id/invoices"
                 android:icon="@android:drawable/ic_menu_sort_by_size"
                 android:title="Faturas" />
+            <item
+                android:id="@+id/account_transfer"
+                android:icon="@android:drawable/ic_menu_sort_by_size"
+                android:title="Transferências" />
         </menu>
     </item>
 

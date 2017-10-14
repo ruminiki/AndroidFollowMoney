@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_centerHorizontal="true"
+    android:focusableInTouchMode="true"
+    android:focusable="true"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="br.com.followmoney.activities.bankAccounts.BankAccountTransfer">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/finalidadeEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/finalidadeEditText"
+        android:text="@string/finality" />
+
+    <EditText
+        android:id="@+id/finalidadeEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/edit_text"
+        android:focusable="false"
+        android:clickable="true"
+        android:textSize="@dimen/font_size">
+    </EditText>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contaBancariaOrigemEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/contaBancariaOrigemEditText"
+        android:text="@string/bank_account_origin"/>
+
+    <EditText
+        android:id="@+id/contaBancariaOrigemEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/edit_text"
+        android:focusable="false"
+        android:clickable="false"
+        android:background="#66cc99"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/contaBancariaDestinoEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/contaBancariaDestinoEditText"
+        android:text="@string/bank_account_destiny"/>
+
+    <EditText
+        android:id="@+id/contaBancariaDestinoEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/edit_text"
+        android:focusable="false"
+        android:clickable="false"
+        android:background="#66cc99"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:textAlignment="center"
+        android:textSize="@dimen/font_size" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/date_emission" />
+
+            <Button
+                android:id="@+id/emissaoTextButton"
+                android:textColor="#ffffff"
+                android:background="#66cc99"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/font_size" />
+
+        </LinearLayout>
+
+        <android.support.v4.widget.Space
+            android:layout_width="2dp"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/valorEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/valorEditText"
+                android:text="@string/value" />
+
+            <EditText
+                android:id="@+id/valorEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                style="@style/edit_text"
+                android:textSize="@dimen/font_size"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:background="@color/primary_material_light"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/saveButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:onClick="run"
+            android:src="@android:drawable/ic_menu_save"/>
+
+    </LinearLayout>
+
+</LinearLayout>

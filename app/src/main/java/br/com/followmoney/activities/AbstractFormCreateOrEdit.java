@@ -57,33 +57,36 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
 
     public void persist() {
         if(entityID > 0) {
-            new PutEntityJson<T>(new PutEntityJson.OnLoadListener<T>() {
-                @Override
-                public void onLoaded(T t) {
-                    Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_SHORT).show();
-                    returnToListActivity();
-                }
+            if ( validateSave() ) {
+                new PutEntityJson<T>(new PutEntityJson.OnLoadListener<T>() {
+                    @Override
+                    public void onLoaded(T t) {
+                        Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_SHORT).show();
+                        returnToListActivity();
+                    }
 
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-                }
-            }, this).execute(getValueDataFieldsInView(entityID), getRestContextGetOrPut(), getType());
-
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    }
+                }, this).execute(getValueDataFieldsInView(entityID), getRestContextGetOrPut(), getType());
+            }
         }
         else {
-            new PostEntityJson<T>(new PostEntityJson.OnLoadListener<T>() {
-                @Override
-                public void onLoaded(T t) {
-                    Toast.makeText(getApplicationContext(), "Object Inserted", Toast.LENGTH_SHORT).show();
-                    returnToListActivity();
-                }
+            if ( validateSave() ) {
+                new PostEntityJson<T>(new PostEntityJson.OnLoadListener<T>() {
+                    @Override
+                    public void onLoaded(T t) {
+                        Toast.makeText(getApplicationContext(), "Object Inserted", Toast.LENGTH_SHORT).show();
+                        returnToListActivity();
+                    }
 
-                @Override
-                public void onError(String error) {
-                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
-                }
-            }, this).execute(getValueDataFieldsInView(entityID), getRestContextPost(), getType());
+                    @Override
+                    public void onError(String error) {
+                        Toast.makeText(getApplicationContext(), error, Toast.LENGTH_LONG).show();
+                    }
+                }, this).execute(getValueDataFieldsInView(entityID), getRestContextPost(), getType());
+            }
         }
     }
 
@@ -132,5 +135,13 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
      * to deserialize Json object list.
      */
     protected abstract Type getType();
+
+    /**
+     * Method used to make a validation before save.
+     * @return
+     */
+    protected boolean validateSave(){
+        return true;
+    }
 
 }

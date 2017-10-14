@@ -68,7 +68,7 @@
                         android:id="@+id/toggleButtonCreditoDebito"
                         android:background="@drawable/select_button"
                         android:layout_width="match_parent"
-                        android:textColor="@color/colorMainBackground"
+                        android:textColor="#FFFFFF"
                         android:layout_gravity="center"
                         android:layout_height="40dp"
                         android:textOff="@string/debit"
@@ -96,7 +96,7 @@
                         android:layout_gravity="center"
                         android:layout_height="40dp"
                         android:background="@drawable/select_button"
-                        android:textColor="@color/colorMainBackground"
+                        android:textColor="#FFFFFF"
                         android:textOff="@string/status_to_pay"
                         android:textOn="@string/status_payd"
                         android:textSize="@dimen/font_size" />
@@ -124,8 +124,8 @@
 
                     <Button
                         android:id="@+id/emissaoTextButton"
-                        android:textColor="@color/colorMainBackground"
-                        android:background="@color/colorAccent"
+                        android:textColor="#ffffff"
+                        android:background="#66cc99"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:textSize="@dimen/font_size" />
@@ -149,8 +149,8 @@
 
                     <Button
                         android:id="@+id/vencimentoTextButton"
-                        android:textColor="@color/colorMainBackground"
-                        android:background="@color/colorAccent"
+                        android:textColor="#ffffff"
+                        android:background="#66cc99"
                         android:layout_width="match_parent"
                         android:layout_height="40dp"
                         android:textSize="@dimen/font_size" />
@@ -221,9 +221,9 @@
                 style="@style/edit_text"
                 android:focusable="false"
                 android:clickable="false"
-                android:background="@color/colorAccent"
+                android:background="#66cc99"
                 android:textStyle="bold"
-                android:textColor="@color/colorMainBackground"
+                android:textColor="#FFFFFF"
                 android:textAlignment="center"
                 android:textSize="@dimen/font_size" />
 

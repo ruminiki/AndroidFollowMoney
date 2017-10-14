@@ -20,6 +20,7 @@ import java.util.Locale;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
+import br.com.followmoney.activities.bankAccounts.BankAccountTransfer;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
 import br.com.followmoney.activities.movements.MovementCreateOrEditActivity;
@@ -172,6 +173,9 @@ public class MainActivity extends AppCompatActivity
             startActivity(intent);
         } else if (id == R.id.movements) {
             Intent intent = new Intent(this, MovementListActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.account_transfer) {
+            Intent intent = new Intent(this, BankAccountTransfer.class);
             startActivity(intent);
         }
 
