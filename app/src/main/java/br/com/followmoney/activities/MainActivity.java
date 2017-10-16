@@ -4,13 +4,17 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -32,9 +36,11 @@ import br.com.followmoney.globals.GlobalParams;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    TextView saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView;
+    TextView saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView, mesReferenciaTextView;
 
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+    private GestureDetectorCompat mDetector;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,8 +79,19 @@ public class MainActivity extends AppCompatActivity
         //saldoMesTextView = (TextView) findViewById(R.id.saldoMesTextView);
         saldoPrevistoTextView = (TextView) findViewById(R.id.saldoPrevistoTextView);
         saldoAnteriorTextView = (TextView) findViewById(R.id.saldoAnteriorTextView);
+        mesReferenciaTextView = (TextView) findViewById(R.id.mesReferenciaTextView);
+        mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+
+        View balanceView = findViewById(R.id.balanceLinearLayout);
+        mDetector = new GestureDetectorCompat(this, new MyGestureListener());
 
         loadBalances();
+    }
+
+    @Override
+    public boolean onTouchEvent(MotionEvent event){
+        this.mDetector.onTouchEvent(event);
+        return super.onTouchEvent(event);
     }
 
     @Override
@@ -183,5 +200,24 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
+
+    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onDown(MotionEvent event) {
+            Log.d(DEBUG_TAG,"onDown: " + event.toString());
+            return true;
+        }
+
+        @Override
+        public boolean onFling(MotionEvent event1, MotionEvent event2,
+                               float velocityX, float velocityY) {
+            Log.d(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString());
+            return true;
+        }
+    }
+
 
 }
