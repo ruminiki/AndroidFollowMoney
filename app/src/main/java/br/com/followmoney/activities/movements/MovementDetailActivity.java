@@ -23,7 +23,7 @@ import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_MOVEMENT_ID;
 public class MovementDetailActivity extends AppCompatActivity {
 
     TextView descricaoTextView, emissaoTextView, vencimentoTextView, operacaoTextView, finalidadeTextView,
-            formaPagamentoTextView, cartaoCreditoTextView, contaBancariaTextView, valorTextView;
+             fontePagadoraTextView, valorTextView;
     int movementID;
     Movement movement;
 
@@ -38,9 +38,7 @@ public class MovementDetailActivity extends AppCompatActivity {
         vencimentoTextView = (TextView) findViewById(R.id.vencimentoTextView);
         operacaoTextView = (TextView) findViewById(R.id.operacaoTextView);
         finalidadeTextView = (TextView) findViewById(R.id.finalidadeTextView);
-        formaPagamentoTextView = (TextView) findViewById(R.id.formaPagamentoTextView);
-        cartaoCreditoTextView = (TextView) findViewById(R.id.cartaoCreditoTextView);
-        contaBancariaTextView = (TextView) findViewById(R.id.contaBancariaTextView);
+        fontePagadoraTextView = (TextView) findViewById(R.id.fontePagadoraTextView);
         valorTextView = (TextView) findViewById(R.id.valorTextView);
 
         new GetEntityJson<Movement>(new GetEntityJson.OnLoadListener<Movement>() {
@@ -52,9 +50,7 @@ public class MovementDetailActivity extends AppCompatActivity {
                 vencimentoTextView.setText(movement.getVencimentoFormatado());
                 operacaoTextView.setText(movement.getOperacao());
                 finalidadeTextView.setText(movement.getFinality().getDescricao());
-                formaPagamentoTextView.setText(movement.getPaymentForm() != null ? movement.getPaymentForm().getDescricao() : "");
-                cartaoCreditoTextView.setText((movement.getCreditCard() != null && movement.getCreditCard().getId() > 0) ? movement.getCreditCard().getDescricao() : "");
-                contaBancariaTextView.setText((movement.getBankAccount() != null && movement.getBankAccount().getId() > 0) ? movement.getBankAccount().getDescricao() : "");
+                fontePagadoraTextView.setText(movement.getFontePagadora());
                 valorTextView.setText(movement.getValorFormatado());
             }
 
@@ -90,25 +86,20 @@ public class MovementDetailActivity extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (movementID <= 0) {
-                        Toast.makeText(getApplicationContext(), "Please, you need select an object to delete!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Please, select an object to delete!", Toast.LENGTH_SHORT).show();
                     } else {
-                        if ( !movement.canEdit() ){
+                        if ( !movement.canDelete() ){
                             Toast.makeText(getApplicationContext(), movement.getMessage(), Toast.LENGTH_SHORT).show();
                         }else{
                             AlertDialog.Builder builder = new AlertDialog.Builder(getSupportActionBar().getThemedContext());
                             builder.setMessage(R.string.delete)
-                                    .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            confirmDelete();
-                                        }
-                                    })
-                                    .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                                        public void onClick(DialogInterface dialog, int id) {
-                                            // User cancelled the dialog
-                                        }
-                                    });
+                                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        confirmDelete();
+                                    }
+                                });
                             AlertDialog d = builder.create();
-                            d.setTitle("Delete Object?");
+                            d.setTitle("Delete object?");
                             d.show();
                             return;
                         }
@@ -122,7 +113,7 @@ public class MovementDetailActivity extends AppCompatActivity {
         new DeleteEntityJson(new DeleteEntityJson.OnResponseListener() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(), "Deleted Successfully", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Deleted successfully!", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent();
                 setResult(RESULT_OK, intent);
                 finish();

@@ -3,8 +3,12 @@ package br.com.followmoney.activities.movements;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
+import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
@@ -24,6 +28,7 @@ import java.util.Locale;
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
 import br.com.followmoney.activities.CustomListAdapter;
+import br.com.followmoney.activities.MainActivity;
 import br.com.followmoney.dao.remote.StringValueRequest;
 import br.com.followmoney.domain.Movement;
 import br.com.followmoney.globals.GlobalParams;
@@ -35,6 +40,8 @@ public class MovementListActivity extends AbstractFormList<Movement> {
     TextView mesReferenciaTextView, receitasTextView, despesasTextView, saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView;
 
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
+
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +90,16 @@ public class MovementListActivity extends AbstractFormList<Movement> {
                 loadList();
             }
         }, R.style.MonthPickerTheme);
+
+        View balanceView = findViewById(R.id.balanceLinearLayout);
+        gestureDetector = new GestureDetector(this, new MyGestureListener());
+        balanceView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, final MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
 
         super.onCreate(savedInstanceState);
     }
@@ -167,6 +184,45 @@ public class MovementListActivity extends AbstractFormList<Movement> {
     public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
         selectedEntity = (Movement) listView.getItemAtPosition(i);
         selectedEntityID = selectedEntity != null ? selectedEntity.getId() : 0;
+    }
+
+    class MyGestureListener implements GestureDetector.OnGestureListener {
+        private static final String DEBUG_TAG = "Gestures";
+
+        @Override
+        public boolean onDown(MotionEvent event) { return true; }
+
+        @Override
+        public void onShowPress(MotionEvent e) { }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) { return false; }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) { return false; }
+
+        @Override
+        public void onLongPress(MotionEvent e) {}
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+            if (e1.getX() < e2.getX()) {
+                Log.d(DEBUG_TAG, "Left to Right swipe performed");
+                GlobalParams.getInstance().setPreviousMonthReference();
+                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+                loadList();
+            }
+
+            if (e1.getX() > e2.getX()) {
+                Log.d(DEBUG_TAG, "Right to Left swipe performed");
+                GlobalParams.getInstance().setNextMonthReference();
+                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+                loadList();
+            }
+
+            return true;
+        }
     }
 
 }

@@ -23,8 +23,8 @@
 
     <!-- credit card-->
     <string name="limit">Limite</string>
-    <string name="date_closing_invoice">Data de Fechamento Fatura</string>
-    <string name="date_maturity_invoice">Data Vencimento Fatura</string>
+    <string name="date_closing_invoice">Fechamento fatura</string>
+    <string name="date_maturity_invoice">Vencimento fatura</string>
 
 
     <!-- bank account -->

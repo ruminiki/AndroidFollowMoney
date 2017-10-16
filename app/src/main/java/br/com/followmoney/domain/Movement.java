@@ -235,4 +235,14 @@ public class Movement{
         return true;
     }
 
+    public Boolean canDelete(){
+
+        if ( this.getInvoice() != null && this.getInvoice().getId() > 0 ){
+            message = "O movimento é uma invoice de cartão de crédito e não pode ser editado/deletado. Você poderá usar a função de estorno de pagamento.";
+            return false;
+        }
+
+        return true;
+    }
+
 }

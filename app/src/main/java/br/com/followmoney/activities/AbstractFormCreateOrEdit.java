@@ -48,7 +48,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
 
                 @Override
                 public void onError(String error) {
-                    Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again! ", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
                 }
             }, this).execute(getRestContextGetOrPut(), getType());
 
@@ -61,7 +61,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
                 new PutEntityJson<T>(new PutEntityJson.OnLoadListener<T>() {
                     @Override
                     public void onLoaded(T t) {
-                        Toast.makeText(getApplicationContext(), "Update Successful", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Update successfuly!", Toast.LENGTH_SHORT).show();
                         returnToListActivity();
                     }
 
@@ -77,7 +77,7 @@ public abstract class AbstractFormCreateOrEdit<T> extends AppCompatActivity {
                 new PostEntityJson<T>(new PostEntityJson.OnLoadListener<T>() {
                     @Override
                     public void onLoaded(T t) {
-                        Toast.makeText(getApplicationContext(), "Object Inserted", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Object saved sucessfuly!", Toast.LENGTH_SHORT).show();
                         returnToListActivity();
                     }
 

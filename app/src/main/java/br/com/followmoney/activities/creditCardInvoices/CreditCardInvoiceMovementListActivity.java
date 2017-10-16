@@ -17,10 +17,11 @@ import br.com.followmoney.activities.CustomListAdapter;
 import br.com.followmoney.activities.movements.MovementDetailActivity;
 import br.com.followmoney.domain.Movement;
 
-import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_DESCRIPTION;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_ID;
-import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_CREDIT_CARD_DESCRIPTION;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_MONTH_REFERENCE;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_STATUS;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_VALUE;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_MOVEMENT_ID;
 
@@ -35,17 +36,19 @@ public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Move
         setContentView(R.layout.activity_credit_card_invoice_movement_list);
         //params used to on click back
         creditCardID              = getIntent().getIntExtra(KEY_EXTRA_CREDIT_CARD_ID, 0);
-        creditCardDescription     = getIntent().getStringExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION);
-
         invoiceID                 = getIntent().getIntExtra(KEY_EXTRA_INVOICE_ID, 0);
-        String invoiceDescription = getIntent().getStringExtra(KEY_EXTRA_INVOICE_DESCRIPTION);
-        String invoiceValue       = getIntent().getStringExtra(KEY_EXTRA_INVOICE_VALUE);
 
-        TextView invoiceDescriptionTextView = (TextView) findViewById(R.id.invoiceDescriptionTextView);
-        invoiceDescriptionTextView.setText(invoiceDescription);
+        TextView mesReferenciaTextView = (TextView) findViewById(R.id.mesReferenciaTextView);
+        mesReferenciaTextView.setText(getIntent().getStringExtra(KEY_EXTRA_INVOICE_MONTH_REFERENCE));
+
+        TextView statusTextView = (TextView) findViewById(R.id.statusTextView);
+        statusTextView.setText(getIntent().getStringExtra(KEY_EXTRA_INVOICE_STATUS));
+
+        TextView creditCardTextView = (TextView) findViewById(R.id.creditCardTextView);
+        creditCardTextView.setText(getIntent().getStringExtra(KEY_EXTRA_INVOICE_CREDIT_CARD_DESCRIPTION));
 
         TextView invoiceValueTextView = (TextView) findViewById(R.id.invoiceValueTextView);
-        invoiceValueTextView.setText(invoiceValue);
+        invoiceValueTextView.setText(getIntent().getStringExtra(KEY_EXTRA_INVOICE_VALUE));
 
         super.onCreate(savedInstanceState);
 

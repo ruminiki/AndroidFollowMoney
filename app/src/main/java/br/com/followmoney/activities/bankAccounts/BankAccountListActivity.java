@@ -16,6 +16,7 @@ import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
 import br.com.followmoney.activities.CustomListAdapter;
 import br.com.followmoney.domain.BankAccount;
+import br.com.followmoney.globals.GlobalParams;
 
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_ID;
@@ -38,9 +39,24 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
                     intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION, selectedEntity.getDescricao());
                     startActivity(intent);
                 }else{
-                    Toast.makeText(getApplicationContext(), "Please, you need select an object to show extract!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Please, select an object to show extract!", Toast.LENGTH_SHORT).show();
                 }
             }
+        });
+
+        ImageButton transferButton = (ImageButton) findViewById(R.id.transferButton);
+        transferButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if ( selectedEntity != null ){
+                    Intent intent = new Intent(getApplicationContext(), BankAccountTransfer.class);
+                    intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_ID, selectedEntity.getId());
+                    intent.putExtra(KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION, selectedEntity.getDescricao());
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Please, select an account/wallet to transfer money!", Toast.LENGTH_SHORT).show();
+                }
+        }
         });
 
         super.onCreate(savedInstanceState);
@@ -53,7 +69,7 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
     @Override
     protected String getRestContextList() {
-        return "/bankAccounts/user/3"; //@TODO get user logged in
+        return "/bankAccounts/user/"+ GlobalParams.getInstance().getUserOnLineID();
     }
 
     @Override

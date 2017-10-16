@@ -65,6 +65,42 @@ public class GlobalParams {
         }
     }
 
+    public void setNextMonthReference() {
+        try {
+
+            if ( selectedMonthReference == null ){
+                selectedMonthReference = sdf2.format(new Date());
+            }
+
+            Date atualMonth = sdf1.parse(selectedMonthReference+"01");
+            Calendar nextMonth = Calendar.getInstance();
+
+            nextMonth.setTime(atualMonth);
+            nextMonth.add(Calendar.MONTH, 1);
+
+            setSelectedMonthReference(sdf2.format(nextMonth.getTime()));
+
+        } catch (ParseException e) {}
+    }
+
+    public void setPreviousMonthReference() {
+        try {
+
+            if ( selectedMonthReference == null ){
+                selectedMonthReference = sdf2.format(new Date());
+            }
+
+            Date atualMonth = sdf1.parse(selectedMonthReference+"01");
+            Calendar previousMonth = Calendar.getInstance();
+
+            previousMonth.setTime(atualMonth);
+            previousMonth.add(Calendar.MONTH, -1);
+
+            setSelectedMonthReference(sdf2.format(previousMonth.getTime()));
+
+        } catch (ParseException e) {}
+    }
+
     public void setSelectedMonthReference(String selectedMonthReference) {
         this.selectedMonthReference = selectedMonthReference;
     }

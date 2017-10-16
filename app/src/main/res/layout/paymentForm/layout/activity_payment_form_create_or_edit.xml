@@ -1,71 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="br.com.followmoney.activities.paymentForms.PaymentFormCreateOrEditActivity">
 
-    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="fill_parent"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:fillViewport="false"
-        android:id="@+id/scrollView">
+        android:layout_alignParentBottom="false"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical">
 
-        <LinearLayout
+        <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/descricaoEditText"
+        android:layout_alignParentLeft="true"
+        android:layout_toRightOf="@+id/descricaoEditText"
+        android:text="@string/descricao" />
+
+        <EditText
+            android:id="@+id/editTextDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="false"
-            android:layout_centerHorizontal="true"
-            android:layout_marginLeft="0dp"
-            android:layout_marginTop="@dimen/activity_vertical_margin"
-            android:orientation="vertical">
+            android:layout_alignParentRight="true"
+            android:textAllCaps="true"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/font_size"
+            android:inputType="textCapCharacters">
 
-            <TextView
+            <requestFocus />
+        </EditText>
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/descricaoEditText"
+            android:layout_alignBottom="@+id/siglaEditText"
             android:layout_alignParentLeft="true"
-            android:layout_toRightOf="@+id/descricaoEditText"
-            android:text="@string/descricao" />
+            android:layout_toRightOf="@+id/siglaEditText"
+            android:text="@string/initials" />
 
-            <EditText
-                android:id="@+id/editTextDescricao"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textAllCaps="true"
-                android:layout_marginTop="5dp"
-                android:textSize="@dimen/font_size"
-                android:inputType="textCapCharacters">
-
-                <requestFocus />
-            </EditText>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@+id/siglaEditText"
-                android:layout_alignParentLeft="true"
-                android:layout_toRightOf="@+id/siglaEditText"
-                android:text="@string/initials" />
-
-            <EditText
-                android:id="@+id/editTextSigla"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:textAllCaps="true"
-                android:maxLength="3"
-                android:layout_marginTop="5dp"
-                android:textSize="@dimen/font_size"
-                android:inputType="textCapCharacters"/>
-        </LinearLayout>
-    </ScrollView>
+        <EditText
+            android:id="@+id/editTextSigla"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:textAllCaps="true"
+            android:maxLength="3"
+            android:layout_marginTop="5dp"
+            android:textSize="@dimen/font_size"
+            android:inputType="textCapCharacters"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -85,4 +79,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</LinearLayout>

@@ -24,8 +24,10 @@ import br.com.followmoney.domain.CreditCardInvoice;
 
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_DESCRIPTION;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_CREDIT_CARD_ID;
-import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_CREDIT_CARD_DESCRIPTION;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_MONTH_REFERENCE;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_STATUS;
 import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_VALUE;
 
 public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardInvoice>{
@@ -96,12 +98,11 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
     private void listMovementsInvoice(){
         Intent intent = new Intent(CreditCardInvoiceListActivity.this, CreditCardInvoiceMovementListActivity.class);
         intent.putExtra(KEY_EXTRA_INVOICE_ID, selectedEntity.getId());
-        intent.putExtra(KEY_EXTRA_INVOICE_DESCRIPTION, creditCardDescription.toUpperCase() +
-                " " + selectedEntity.getMesReferencia().toUpperCase() +
-                " (" + selectedEntity.getStatus().toUpperCase()+")");
-        intent.putExtra(KEY_EXTRA_INVOICE_VALUE, "R$ " + selectedEntity.getValor());
+        intent.putExtra(KEY_EXTRA_INVOICE_CREDIT_CARD_DESCRIPTION, creditCardDescription.toUpperCase());
+        intent.putExtra(KEY_EXTRA_INVOICE_MONTH_REFERENCE, selectedEntity.getMesReferencia().toUpperCase());
+        intent.putExtra(KEY_EXTRA_INVOICE_STATUS, selectedEntity.getStatus().toUpperCase());
+        intent.putExtra(KEY_EXTRA_INVOICE_VALUE, selectedEntity.getValorFormatado());
         intent.putExtra(KEY_EXTRA_CREDIT_CARD_ID, creditCardID);
-        intent.putExtra(KEY_EXTRA_CREDIT_CARD_DESCRIPTION, creditCardDescription);
         startActivity(intent);
     }
 

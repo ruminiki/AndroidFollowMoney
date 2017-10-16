@@ -1,6 +1,7 @@
 package br.com.followmoney.activities;
 
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -39,8 +40,7 @@ public class MainActivity extends AppCompatActivity
     TextView saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView, mesReferenciaTextView;
 
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-    private GestureDetectorCompat mDetector;
-
+    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,15 +83,16 @@ public class MainActivity extends AppCompatActivity
         mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
 
         View balanceView = findViewById(R.id.balanceLinearLayout);
-        mDetector = new GestureDetectorCompat(this, new MyGestureListener());
+        gestureDetector = new GestureDetector(this, new MyGestureListener());
+        balanceView.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, final MotionEvent event) {
+                gestureDetector.onTouchEvent(event);
+                return true;
+            }
+        });
 
         loadBalances();
-    }
-
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        this.mDetector.onTouchEvent(event);
-        return super.onTouchEvent(event);
     }
 
     @Override
@@ -191,9 +192,6 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.movements) {
             Intent intent = new Intent(this, MovementListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.account_transfer) {
-            Intent intent = new Intent(this, BankAccountTransfer.class);
-            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -202,7 +200,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    class MyGestureListener extends GestureDetector.SimpleOnGestureListener {
+    class MyGestureListener implements GestureDetector.OnGestureListener {
         private static final String DEBUG_TAG = "Gestures";
 
         @Override
@@ -212,9 +210,41 @@ public class MainActivity extends AppCompatActivity
         }
 
         @Override
-        public boolean onFling(MotionEvent event1, MotionEvent event2,
-                               float velocityX, float velocityY) {
-            Log.d(DEBUG_TAG, "onFling: " + event1.toString() + event2.toString());
+        public void onShowPress(MotionEvent e) {
+        }
+
+        @Override
+        public boolean onSingleTapUp(MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
+            return false;
+        }
+
+        @Override
+        public void onLongPress(MotionEvent e) {
+
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+            if (e1.getX() < e2.getX()) {
+                Log.d(DEBUG_TAG, "Left to Right swipe performed");
+                GlobalParams.getInstance().setPreviousMonthReference();
+                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+                loadBalances();
+            }
+
+            if (e1.getX() > e2.getX()) {
+                Log.d(DEBUG_TAG, "Right to Left swipe performed");
+                GlobalParams.getInstance().setNextMonthReference();
+                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+                loadBalances();
+            }
+
             return true;
         }
     }

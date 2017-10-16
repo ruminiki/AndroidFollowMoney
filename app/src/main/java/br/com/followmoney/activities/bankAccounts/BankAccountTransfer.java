@@ -16,22 +16,21 @@ import java.util.Calendar;
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormCreateOrEdit;
 import br.com.followmoney.activities.KeyParams;
-import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
 import br.com.followmoney.components.DatePickerFragment;
 import br.com.followmoney.domain.AccountTransfer;
 import br.com.followmoney.domain.BankAccount;
-import br.com.followmoney.domain.CreditCard;
 import br.com.followmoney.domain.Finality;
-import br.com.followmoney.domain.Movement;
 import br.com.followmoney.globals.GlobalParams;
 import br.com.followmoney.util.DateUtil;
+
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION;
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_BANK_ACCOUNT_ID;
 
 public class BankAccountTransfer extends AbstractFormCreateOrEdit<AccountTransfer>{
 
     private static final int KEY_SELECT_FINALIDADE_RETURN              = 1;
-    private static final int KEY_SELECT_CONTA_BANCARIA_ORIGEM_RETURN   = 2;
-    private static final int KEY_SELECT_CONTA_BANCARIA_DESTINO_RETURN  = 3;
+    private static final int KEY_SELECT_CONTA_BANCARIA_DESTINO_RETURN  = 2;
 
     EditText descricaoEditText, valorEditText, finalidadeEditText, contaBancariaOrigemEditText, contaBancariaDestinoEditText;
     DatePickerFragment ClasseDataEmissao = new DatePickerFragment();
@@ -70,19 +69,17 @@ public class BankAccountTransfer extends AbstractFormCreateOrEdit<AccountTransfe
             }
         });
 
+        contaBancariaOrigem = new BankAccount();
+        contaBancariaOrigem.setId(getIntent().getIntExtra(KEY_EXTRA_BANK_ACCOUNT_ID, 0));
+        contaBancariaOrigem.setDescricao(getIntent().getStringExtra(KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION));
         contaBancariaOrigemEditText = (EditText) findViewById(R.id.contaBancariaOrigemEditText);
-        contaBancariaOrigemEditText.setOnClickListener(new ToggleButton.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                openContaBancariaFormToSelect(KEY_SELECT_CONTA_BANCARIA_ORIGEM_RETURN);
-            }
-        });
+        contaBancariaOrigemEditText.setText(contaBancariaOrigem.getDescricao());
 
         contaBancariaDestinoEditText = (EditText) findViewById(R.id.contaBancariaDestinoEditText);
         contaBancariaDestinoEditText.setOnClickListener(new ToggleButton.OnClickListener(){
             @Override
             public void onClick(View v) {
-                openContaBancariaFormToSelect(KEY_SELECT_CONTA_BANCARIA_DESTINO_RETURN);
+                openContaBancariaFormToSelect();
             }
         });
 
@@ -101,11 +98,11 @@ public class BankAccountTransfer extends AbstractFormCreateOrEdit<AccountTransfe
     }
 
     ///=====START: POPULATE CONTA BANCARIA SPINNER======//
-    private void openContaBancariaFormToSelect(int key){
+    private void openContaBancariaFormToSelect(){
         Intent intent = new Intent(this, BankAccountListActivity.class);
         intent.putExtra("ParentActivityName", this.getClass().getName());
         intent.putExtra(BankAccountListActivity.KEY_MODE, BankAccountListActivity.OPEN_TO_SELECT_MODE);
-        startActivityForResult(intent, key);
+        startActivityForResult(intent, KEY_SELECT_CONTA_BANCARIA_DESTINO_RETURN);
     }
 
     // This method is called when the second activity finishes
@@ -125,26 +122,6 @@ public class BankAccountTransfer extends AbstractFormCreateOrEdit<AccountTransfe
                         finalidade.setId(id);
                     }
                     finalidadeEditText.setText(descricao);
-                }
-                break;
-            }
-
-            case KEY_SELECT_CONTA_BANCARIA_ORIGEM_RETURN :{
-                if (resultCode == RESULT_OK) {
-                    int id = data.getIntExtra(BankAccountListActivity.KEY_ID, 0);
-                    String descricao = data.getStringExtra(BankAccountListActivity.KEY_DESCRIPTION);
-                    String tipo = data.getStringExtra(KeyParams.KEY_EXTRA_BANK_ACCOUNT_TYPE);
-                    String status = data.getStringExtra(KeyParams.KEY_EXTRA_BANK_ACCOUNT_STATUS);
-
-                    if (contaBancariaOrigem == null) {
-                        contaBancariaOrigem = new BankAccount();
-                    }
-                    contaBancariaOrigem.setId(id);
-                    contaBancariaOrigem.setDescricao(descricao);
-                    contaBancariaOrigem.setTipo(tipo);
-                    contaBancariaOrigem.setSituacao(status);
-
-                    contaBancariaOrigemEditText.setText(contaBancariaOrigem.getDescricao());
                 }
                 break;
             }

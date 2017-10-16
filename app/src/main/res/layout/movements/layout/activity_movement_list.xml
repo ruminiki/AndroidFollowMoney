@@ -9,10 +9,10 @@
     tools:context="br.com.followmoney.activities.movements.MovementListActivity">
 
     <LinearLayout
+        android:id="@+id/balanceLinearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:background="#dddddd"
         android:gravity="right"
         android:orientation="vertical">
 
@@ -43,8 +43,7 @@
                     android:id="@+id/receitasTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="#3366cc"
-                    android:textStyle="bold"
+                    android:textColor="#4885ff"
                     android:layout_gravity="center"
                     android:text="R$ 0,00"
                     android:textSize="16dp"/>
@@ -69,8 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="#ff5c33"
-                    android:textStyle="bold"
+                    android:textColor="#f97554"
                     android:text="R$ 0,00"
                     android:textSize="16dp"/>
 

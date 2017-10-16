@@ -171,38 +171,48 @@
                 android:layout_centerHorizontal="true"
                 android:orientation="horizontal">
 
-                    <ToggleButton
-                        android:id="@+id/paymentBankToggleButton"
-                        android:background="@drawable/select_button_payment"
-                        android:textColor="@color/select_button_color"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textOff="@string/payment_bank"
-                        android:textOn="@string/payment_bank"
-                        android:textSize="@dimen/font_medium" />
+                <ToggleButton
+                    android:id="@+id/paymentBankToggleButton"
+                    android:background="@drawable/select_button_payment"
+                    android:textColor="@color/select_button_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOff="@string/payment_bank"
+                    android:textOn="@string/payment_bank"
+                    android:textSize="@dimen/font_medium" />
 
-                    <ToggleButton
-                        android:id="@+id/paymentCreditCardToggleButton"
-                        android:background="@drawable/select_button_payment"
-                        android:textColor="@color/select_button_color"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:textOff="@string/payment_credit_card"
-                        android:textOn="@string/payment_credit_card"
-                        android:textSize="@dimen/font_medium" />
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#c0c0c0"/>
 
-                    <ToggleButton
-                        android:id="@+id/paymentMoneyToggleButton"
-                        android:background="@drawable/select_button_payment"
-                        android:textColor="@color/select_button_color"
-                        android:layout_width="match_parent"
-                        android:layout_weight="1"
-                        android:textOff="@string/payment_money"
-                        android:textOn="@string/payment_money"
-                        android:layout_height="match_parent"
-                        android:textSize="@dimen/font_medium" />
+                <ToggleButton
+                    android:id="@+id/paymentMoneyToggleButton"
+                    android:background="@drawable/select_button_payment"
+                    android:textColor="@color/select_button_color"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:textOff="@string/payment_money"
+                    android:textOn="@string/payment_money"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/font_medium" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#c0c0c0"/>
+
+                <ToggleButton
+                    android:id="@+id/paymentCreditCardToggleButton"
+                    android:background="@drawable/select_button_payment"
+                    android:textColor="@color/select_button_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOff="@string/payment_credit_card"
+                    android:textOn="@string/payment_credit_card"
+                    android:textSize="@dimen/font_medium" />
 
             </LinearLayout>
 

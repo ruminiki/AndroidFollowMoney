@@ -20,9 +20,11 @@ public class KeyParams {
     public static final String KEY_REFERENCE_MONTH              = "reference_month";
 
     //CREDIT CARD INVOICE: EXTRAs
-    public final static String KEY_EXTRA_INVOICE_ID              = "KEY_EXTRA_INVOICE_ID";
-    public final static String KEY_EXTRA_INVOICE_DESCRIPTION     = "KEY_EXTRA_INVOICE_DESCRIPTION";
-    public final static String KEY_EXTRA_INVOICE_VALUE           = "KEY_EXTRA_INVOICE_VALUE";
+    public final static String KEY_EXTRA_INVOICE_ID                      = "KEY_EXTRA_INVOICE_ID";
+    public final static String KEY_EXTRA_INVOICE_MONTH_REFERENCE         = "KEY_EXTRA_INVOICE_MONTH_REFERENCE";
+    public final static String KEY_EXTRA_INVOICE_STATUS                  = "KEY_EXTRA_INVOICE_STATUS";
+    public final static String KEY_EXTRA_INVOICE_CREDIT_CARD_DESCRIPTION = "KEY_EXTRA_INVOICE_CREDIT_CARD_DESCRIPTION";
+    public final static String KEY_EXTRA_INVOICE_VALUE                   = "KEY_EXTRA_INVOICE_VALUE";
 
     //MOVEMENTS: KEYs
     public static final String KEY_FINALITY     = "finality";

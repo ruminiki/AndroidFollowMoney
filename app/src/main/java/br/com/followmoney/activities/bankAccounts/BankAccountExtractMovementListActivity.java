@@ -93,7 +93,7 @@ public class BankAccountExtractMovementListActivity extends AbstractFormList<Mov
 
             @Override
             public void onError(String error) {
-                Toast.makeText(getApplicationContext(), "Error on get remote object. Please try again!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
             }
         }, this).execute(context);
 
@@ -118,8 +118,8 @@ public class BankAccountExtractMovementListActivity extends AbstractFormList<Mov
             saldoPrevisto = saldoAnterior + receitas - despesas;
         }
 
-        previousBalanceTextView.setText("Saldo ant.: " + numberFormat.format(saldoAnterior));
-        foreseenBalanceTextView.setText("Saldo Prev.: " + numberFormat.format(saldoPrevisto));
+        previousBalanceTextView.setText(numberFormat.format(saldoAnterior));
+        foreseenBalanceTextView.setText(numberFormat.format(saldoPrevisto));
 
         listView.setAdapter(new CustomListAdapter<Movement>(this, R.layout.extract_movement_list_renderer, movements));
     }
