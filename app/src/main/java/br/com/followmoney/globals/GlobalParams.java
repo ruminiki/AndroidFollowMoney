@@ -1,5 +1,6 @@
 package br.com.followmoney.globals;
 
+import java.beans.PropertyChangeSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -13,7 +14,7 @@ public class GlobalParams {
 
     private static final GlobalParams instance = new GlobalParams();
 
-    public final static String REMOTE_URL = "http://milkmoney.com.br";
+    public final static String REMOTE_URL = "http://followmoney.com.br";
     //public final static String REMOTE_URL = "http://192.168.1.12";
 
     private int    userOnLineID = 3;
@@ -23,6 +24,8 @@ public class GlobalParams {
     private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");
     private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMM");
     private static final SimpleDateFormat sdf3 = new SimpleDateFormat("MMM/yyyy");
+
+    public PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     private GlobalParams() { }
 
@@ -40,7 +43,7 @@ public class GlobalParams {
 
     public String getSelectedMonthReference() {
         if ( selectedMonthReference == null ){
-            selectedMonthReference = sdf2.format(new Date());
+            setSelectedMonthReference(sdf2.format(new Date()));
         }
         return selectedMonthReference;
     }
@@ -49,7 +52,7 @@ public class GlobalParams {
         try {
 
             if ( selectedMonthReference == null ){
-                selectedMonthReference = sdf2.format(new Date());
+                setSelectedMonthReference(sdf2.format(new Date()));
             }
 
             Date atualMonth = sdf1.parse(selectedMonthReference+"01");
@@ -69,7 +72,7 @@ public class GlobalParams {
         try {
 
             if ( selectedMonthReference == null ){
-                selectedMonthReference = sdf2.format(new Date());
+                setSelectedMonthReference(sdf2.format(new Date()));
             }
 
             Date atualMonth = sdf1.parse(selectedMonthReference+"01");
@@ -87,7 +90,7 @@ public class GlobalParams {
         try {
 
             if ( selectedMonthReference == null ){
-                selectedMonthReference = sdf2.format(new Date());
+                setSelectedMonthReference(sdf2.format(new Date()));
             }
 
             Date atualMonth = sdf1.parse(selectedMonthReference+"01");
@@ -101,8 +104,10 @@ public class GlobalParams {
         } catch (ParseException e) {}
     }
 
-    public void setSelectedMonthReference(String selectedMonthReference) {
-        this.selectedMonthReference = selectedMonthReference;
+    public void setSelectedMonthReference(String newValue) {
+        String oldValue = this.selectedMonthReference;
+        this.selectedMonthReference = newValue;
+        this.changes.firePropertyChange("selectedMonthReference",oldValue, newValue);
     }
 
     public String getSelectedMonthReferenceFormated(){

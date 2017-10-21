@@ -15,10 +15,10 @@
             android:icon="@android:drawable/ic_menu_info_details"
             android:title="Conta Bancária" />
 
-        <item
+ <!--       <item
             android:id="@+id/payment_form"
             android:icon="@android:drawable/ic_menu_info_details"
-            android:title="Forma de Pagamento" />
+            android:title="Forma de Pagamento" />-->
     </group>
 
     <item android:title="Movements">

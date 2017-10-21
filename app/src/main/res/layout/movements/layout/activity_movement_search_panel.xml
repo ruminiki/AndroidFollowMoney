@@ -6,19 +6,220 @@
     android:layout_height="match_parent"
     android:padding="@dimen/activity_vertical_margin">
 
-    <TextView
-        android:id="@+id/textViewDescricao"
-        android:layout_width="wrap_content"
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/scrollView"
+        style="@android:style/Widget.Material.ScrollView"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/finality" />
+        android:clipToPadding="false"
+        android:fillViewport="false"
+        android:orientation="vertical"
+        android:layout_marginBottom="50dp"
+        android:scrollbarStyle="insideInset">
 
-    <EditText
-        android:id="@+id/editTextDescricao"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:focusableInTouchMode="true"
+            android:focusable="true"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/finalidadeEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/finalidadeEditText"
+                android:text="@string/finality" />
+
+            <EditText
+                android:id="@+id/finalidadeEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/edit_text"
+                android:focusable="false"
+                android:clickable="true"
+                android:textSize="@dimen/font_size">
+            </EditText>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/operation" />
+
+                    <ToggleButton
+                        android:id="@+id/toggleButtonCreditoDebito"
+                        android:background="@drawable/select_button"
+                        android:layout_width="match_parent"
+                        android:textColor="#FFFFFF"
+                        android:layout_gravity="center"
+                        android:layout_height="40dp"
+                        android:textOff="@string/debit"
+                        android:textOn="@string/credit"
+                        android:textSize="@dimen/font_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="@string/status" />
+
+                    <ToggleButton
+                        android:id="@+id/toggleButtonStatus"
+                        android:layout_width="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_height="40dp"
+                        android:background="@drawable/select_button"
+                        android:textColor="#FFFFFF"
+                        android:textOff="@string/status_to_pay"
+                        android:textOn="@string/status_payd"
+                        android:textSize="@dimen/font_size" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/formaPagamentoEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/formaPagamentoEditText"
+                android:text="@string/payment_form"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+
+                <ToggleButton
+                    android:id="@+id/paymentBankToggleButton"
+                    android:background="@drawable/select_button_payment"
+                    android:textColor="@color/select_button_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOff="@string/payment_bank"
+                    android:textOn="@string/payment_bank"
+                    android:textSize="@dimen/font_medium" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#c0c0c0"/>
+
+                <ToggleButton
+                    android:id="@+id/paymentMoneyToggleButton"
+                    android:background="@drawable/select_button_payment"
+                    android:textColor="@color/select_button_color"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"
+                    android:textOff="@string/payment_money"
+                    android:textOn="@string/payment_money"
+                    android:layout_height="match_parent"
+                    android:textSize="@dimen/font_medium" />
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="fill_parent"
+                    android:background="#c0c0c0"/>
+
+                <ToggleButton
+                    android:id="@+id/paymentCreditCardToggleButton"
+                    android:background="@drawable/select_button_payment"
+                    android:textColor="@color/select_button_color"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:textOff="@string/payment_credit_card"
+                    android:textOn="@string/payment_credit_card"
+                    android:textSize="@dimen/font_medium" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/selectedPaymentEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/selectedPaymentEditText"
+                android:text="@string/payment_form_selected" />
+
+            <EditText
+                android:id="@+id/selectedPaymentEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/edit_text"
+                android:focusable="false"
+                android:clickable="false"
+                android:background="#66cc99"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:textAlignment="center"
+                android:textSize="@dimen/font_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/descricaoEditText"
+                android:layout_alignParentLeft="true"
+                android:layout_toRightOf="@+id/descricaoEditText"
+                android:text="@string/descricao" />
+
+            <EditText
+                android:id="@+id/descricaoEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                style="@style/edit_text">
+            </EditText>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:inputType="textCapCharacters"
-        android:textSize="@dimen/font_size"
-        android:layout_marginTop="5dp"/>
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:paddingBottom="0dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:background="@color/primary_material_light"
+        android:gravity="right"
+        android:orientation="horizontal">
+
+        <ImageButton
+            android:id="@+id/searchButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_menu_search"/>
+
+    </LinearLayout>
+
 
 </LinearLayout>

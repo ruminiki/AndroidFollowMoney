@@ -28,7 +28,7 @@
         </activity>
 
         <activity
-            android:name="br.com.followmoney.activities.main.MainBalanceActivity">
+            android:name="br.com.followmoney.fragments.BalanceFragment">
         </activity>
 
         <!--========FINALIDADE========-->

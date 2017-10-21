@@ -1,46 +1,27 @@
 package br.com.followmoney.activities;
 
 import android.content.Intent;
-import android.graphics.Path;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.view.GestureDetectorCompat;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
-
-import java.text.NumberFormat;
-import java.util.Locale;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
-import br.com.followmoney.activities.bankAccounts.BankAccountTransfer;
 import br.com.followmoney.activities.creditCards.CreditCardListActivity;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
 import br.com.followmoney.activities.movements.MovementCreateOrEditActivity;
 import br.com.followmoney.activities.movements.MovementListActivity;
-import br.com.followmoney.activities.paymentForms.PaymentFormListActivity;
-import br.com.followmoney.dao.remote.StringValueRequest;
-import br.com.followmoney.globals.GlobalParams;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    TextView saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView, mesReferenciaTextView;
-
-    NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-    private GestureDetector gestureDetector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,67 +56,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
-        //saldoMesTextView = (TextView) findViewById(R.id.saldoMesTextView);
-        saldoPrevistoTextView = (TextView) findViewById(R.id.saldoPrevistoTextView);
-        saldoAnteriorTextView = (TextView) findViewById(R.id.saldoAnteriorTextView);
-        mesReferenciaTextView = (TextView) findViewById(R.id.mesReferenciaTextView);
-        mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-
-        View balanceView = findViewById(R.id.balanceLinearLayout);
-        gestureDetector = new GestureDetector(this, new MyGestureListener());
-        balanceView.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, final MotionEvent event) {
-                gestureDetector.onTouchEvent(event);
-                return true;
-            }
-        });
-
-        loadBalances();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        loadBalances();
-    }
-
-    protected void loadBalances() {
-        //GET PREVIOUS BALANCE
-        String context = "/movements/previousBalance" +
-                "/user/"+GlobalParams.getInstance().getUserOnLineID() +
-                "/period/"+GlobalParams.getInstance().getSelectedMonthReference();
-
-        new StringValueRequest(new StringValueRequest.OnLoadListener() {
-            @Override
-            public void onLoaded(String result) {
-                saldoAnteriorTextView.setText(numberFormat.format(Double.parseDouble(result)));
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(context);
-
-
-        //GET FORESEEN BALANCE
-        context = "/movements/previousBalance" +
-                "/user/"+ GlobalParams.getInstance().getUserOnLineID() +
-                "/period/"+GlobalParams.getInstance().getNextMonthReference();
-
-        new StringValueRequest(new StringValueRequest.OnLoadListener() {
-            @Override
-            public void onLoaded(String result) {
-                saldoPrevistoTextView.setText(numberFormat.format(Double.parseDouble(result)));
-            }
-
-            @Override
-            public void onError(String error) {
-                Toast.makeText(getApplicationContext(), error, Toast.LENGTH_SHORT).show();
-            }
-        }, this).execute(context);
 
     }
 
@@ -186,68 +106,17 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.bank_account) {
             Intent intent = new Intent(this, BankAccountListActivity.class);
             startActivity(intent);
-        } else if (id == R.id.payment_form) {
-            Intent intent = new Intent(this, PaymentFormListActivity.class);
-            startActivity(intent);
         } else if (id == R.id.movements) {
             Intent intent = new Intent(this, MovementListActivity.class);
             startActivity(intent);
-        }
+        }/*else if (id == R.id.payment_form) {
+            Intent intent = new Intent(this, PaymentFormListActivity.class);
+            startActivity(intent);
+        }*/
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
-
-    class MyGestureListener implements GestureDetector.OnGestureListener {
-        private static final String DEBUG_TAG = "Gestures";
-
-        @Override
-        public boolean onDown(MotionEvent event) {
-            Log.d(DEBUG_TAG,"onDown: " + event.toString());
-            return true;
-        }
-
-        @Override
-        public void onShowPress(MotionEvent e) {
-        }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) {
-            return false;
-        }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) {
-            return false;
-        }
-
-        @Override
-        public void onLongPress(MotionEvent e) {
-
-        }
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
-            if (e1.getX() < e2.getX()) {
-                Log.d(DEBUG_TAG, "Left to Right swipe performed");
-                GlobalParams.getInstance().setPreviousMonthReference();
-                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-                loadBalances();
-            }
-
-            if (e1.getX() > e2.getX()) {
-                Log.d(DEBUG_TAG, "Right to Left swipe performed");
-                GlobalParams.getInstance().setNextMonthReference();
-                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-                loadBalances();
-            }
-
-            return true;
-        }
-    }
-
-
-}
+ }

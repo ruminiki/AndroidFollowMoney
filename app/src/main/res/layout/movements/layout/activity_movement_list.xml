@@ -27,6 +27,7 @@
             android:textSize="18dp"/>
 
         <LinearLayout
+            android:id="@+id/resumeLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
@@ -107,45 +108,23 @@
 
         </LinearLayout>
 
-       <!-- <LinearLayout
+       <!-- <TextView
+            android:id="@+id/saldoPrevistoTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:background="@color/colorGray"
-            android:gravity="right"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:text="R$ 0,00"
+            android:textSize="18dp"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Ant "
-                android:textSize="12dp"/>
-
-            <TextView
-                android:id="@+id/saldoAnteriorTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="R$ 0,00"
-                android:textSize="16dp"/>
-
-            <android.support.v4.widget.Space
-                android:layout_width="5dp"
-                android:layout_height="wrap_content" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Prev "
-                android:textSize="12dp"/>
-
-            <TextView
-                android:id="@+id/saldoPrevistoTextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:text="R$ 0,00"
-                android:textSize="16dp"/>
-        </LinearLayout>-->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/balance"
+            android:textSize="10dp"/>-->
 
         <include
             layout="@layout/activity_movement_list_content"
@@ -156,9 +135,9 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/search_view"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start">
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:layout_gravity="end|bottom">
         <include
             layout="@layout/activity_movement_search_panel"
             android:layout_width="match_parent"

@@ -8,10 +8,13 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,6 +45,7 @@ public class MovementListActivity extends AbstractFormList<Movement> {
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
 
     private GestureDetector gestureDetector;
+    private LinearLayout resumeLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class MovementListActivity extends AbstractFormList<Movement> {
         receitasTextView = (TextView) findViewById(R.id.receitasTextView);
         despesasTextView = (TextView) findViewById(R.id.despesasTextView);
         saldoMesTextView = (TextView) findViewById(R.id.saldoMesTextView);
+        resumeLayout     = (LinearLayout) findViewById(R.id.resumeLayout);
         //saldoPrevistoTextView = (TextView) findViewById(R.id.saldoPrevistoTextView);
         //saldoAnteriorTextView = (TextView) findViewById(R.id.saldoAnteriorTextView);
 
@@ -69,10 +74,10 @@ public class MovementListActivity extends AbstractFormList<Movement> {
             @Override
             public void onClick(View view) {
                 DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-                if (drawer.isDrawerOpen(GravityCompat.START)) {
-                    drawer.closeDrawer(GravityCompat.START);
+                if (drawer.isDrawerOpen(Gravity.END)) {
+                    drawer.closeDrawer(Gravity.END);
                 }else{
-                    drawer.openDrawer(GravityCompat.START);
+                    drawer.openDrawer(Gravity.END);
                 }
             }
         });
@@ -206,6 +211,14 @@ public class MovementListActivity extends AbstractFormList<Movement> {
 
         @Override
         public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+
+            if(e1.getY() - e2.getY() > 120 && Math.abs(velocityY) > 120) {
+                Log.d(DEBUG_TAG, "Bottom to up swipe performed");
+                resumeLayout.setMinimumHeight((int) (e2.getY() - e1.getY()));
+            }  else if (e2.getY() - e1.getY() > 120 && Math.abs(velocityY) > 120) {
+                Log.d(DEBUG_TAG, "Top to bottom swipe performed");
+                resumeLayout.setMinimumHeight((int) (e2.getY() - e1.getY()));
+            }
 
             if (e1.getX() < e2.getX()) {
                 Log.d(DEBUG_TAG, "Left to Right swipe performed");
