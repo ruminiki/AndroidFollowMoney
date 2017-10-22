@@ -6,13 +6,13 @@ import br.com.followmoney.util.NumberFormatUtil;
  * Created by ruminiki on 21/10/2017.
  */
 
-public class FinalityPieEntry {
+public class ItemChartEntry {
 
     private float value;
     private float percent;
     private String label;
 
-    public FinalityPieEntry(float value, String label) {
+    public ItemChartEntry(float value, String label) {
         setLabel(label);
         setValue(value);
     }

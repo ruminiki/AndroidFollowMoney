@@ -8,10 +8,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.github.mikephil.charting.charts.PieChart;
-import com.github.mikephil.charting.data.PieData;
-import com.github.mikephil.charting.data.PieDataSet;
-import com.github.mikephil.charting.data.PieEntry;
+import com.github.mikephil.charting.charts.HorizontalBarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.google.gson.reflect.TypeToken;
@@ -19,30 +24,29 @@ import com.google.gson.reflect.TypeToken;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Type;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 import br.com.followmoney.R;
 import br.com.followmoney.dao.remote.GetEntitiesJson;
-import br.com.followmoney.domain.FinalityPieEntry;
+import br.com.followmoney.domain.ItemChartEntry;
 import br.com.followmoney.globals.GlobalParams;
 import br.com.followmoney.util.NumberFormatUtil;
 
 public class FinalitySpendingFragment extends Fragment{
 
-    Type type = new TypeToken<List<FinalityPieEntry>>(){}.getType();
-    List<PieEntry> yvalues = new ArrayList<PieEntry>();
-    PieChart pieChart;
-    PieData data = new PieData();
+    Type type = new TypeToken<List<ItemChartEntry>>(){}.getType();
+    List<BarEntry> entries = new ArrayList<BarEntry>();
+    List<String> labels = new ArrayList<String>();
+    HorizontalBarChart hBarChart;
+    BarData data = new BarData();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         final View view = inflater.inflate(R.layout.finality_spending_fragment, container, false);
-        pieChart = (PieChart) view.findViewById(R.id.piechart);
+        hBarChart = (HorizontalBarChart) view.findViewById(R.id.barchart);
 
         final GlobalParams globalParams = GlobalParams.getInstance();
         PropertyChangeListener listener = new PropertyChangeListener() {
@@ -72,45 +76,49 @@ public class FinalitySpendingFragment extends Fragment{
                 "/user/"+GlobalParams.getInstance().getUserOnLineID() +
                 "/period/"+GlobalParams.getInstance().getSelectedMonthReference();
 
-        new GetEntitiesJson<FinalityPieEntry>(new GetEntitiesJson.OnLoadListener<FinalityPieEntry>() {
+        new GetEntitiesJson<ItemChartEntry>(new GetEntitiesJson.OnLoadListener<ItemChartEntry>() {
             @Override
-            public void onLoaded(List<FinalityPieEntry> entries) {
-                yvalues.clear();
-
-                for ( FinalityPieEntry entry : entries ){
-                    yvalues.add(new PieEntry(entry.getPercent(), entry.getLabel()));
+            public void onLoaded(List<ItemChartEntry> entries) {
+                FinalitySpendingFragment.this.entries.clear();
+                FinalitySpendingFragment.this.labels.clear();
+                int index = 0;
+                for ( ItemChartEntry entry : entries ){
+                    FinalitySpendingFragment.this.entries.add(new BarEntry((float) index++, entry.getPercent()));
+                    FinalitySpendingFragment.this.labels.add(entry.getLabel());
                 }
 
-                PieDataSet dataSet = new PieDataSet(yvalues, null);
-                //dataSet.setXValuePosition(PieDataSet.ValuePosition.INSIDE_SLICE);
-                dataSet.setXValuePosition(PieDataSet.ValuePosition.OUTSIDE_SLICE);
-                dataSet.setValueLinePart1OffsetPercentage(80.f);
-                /*dataSet.setValueLinePart1Length(0.1f);
-                dataSet.setValueLinePart2Length(0.0f);*/
+                BarDataSet dataSet = new BarDataSet(FinalitySpendingFragment.this.entries, null);
                 dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
+                data.clearValues();
+                data.addDataSet(dataSet);
 
-                data.setDataSet(dataSet);
-
-                pieChart.setUsePercentValues(false);
-
-                data.setValueTextSize(9f);
+                data.setValueTextSize(10f);
                 data.setValueTextColor(Color.DKGRAY);
                 data.setValueFormatter(new PercentFormatter(NumberFormatUtil.decimalFormat));
 
-                pieChart.setEntryLabelColor(Color.DKGRAY);
-                pieChart.setEntryLabelTextSize(8f);
+                hBarChart.setDescription(null);
+                hBarChart.getLegend().setEnabled(false);
 
-                pieChart.setDrawHoleEnabled(true);
-                pieChart.setTransparentCircleRadius(30f);
-                pieChart.setHoleRadius(50f);
+                hBarChart.getAxisRight().setEnabled(false);
+                //hBarChart.getXAxis().setEnabled(false);
+                hBarChart.getXAxis().setAxisLineColor(Color.TRANSPARENT);
+                hBarChart.getAxisLeft().setEnabled(false);
+                hBarChart.getXAxis().disableGridDashedLine(); //remove horizontal grid lines
+                hBarChart.getXAxis().setDrawGridLines(false);
 
-                pieChart.setDescription(null);
-                pieChart.getLegend().setEnabled(false);
+                //labels
+                hBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+                hBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
+                hBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+                hBarChart.getXAxis().setTextSize(8f);
+                hBarChart.getXAxis().setLabelCount(labels.size());
+                hBarChart.getAxisLeft().setSpaceBottom(1);
 
-                pieChart.notifyDataSetChanged();
-                pieChart.invalidate();
+                hBarChart.notifyDataSetChanged();
+                hBarChart.invalidate();
 
-                pieChart.setData(data);
+                hBarChart.setData(data);
+
             }
 
             @Override
@@ -120,5 +128,6 @@ public class FinalitySpendingFragment extends Fragment{
         }, getContext()).execute(type, context);
 
     }
+
 
 }
