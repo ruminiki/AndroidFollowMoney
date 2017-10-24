@@ -7,7 +7,6 @@
     <color name="primaryColorDark">#46b174</color>
     <color name="accentColor">#66cc99</color>
     <color name="colorMainBackground">#FFFFFF</color>
-    <color name="colorBackground">#FFFFFF</color>
     <!-- Drawer -->
     <color name="mainDrawerBackground">#564639</color>
 

@@ -7,31 +7,55 @@
     android:layout_weight="1"
     android:orientation="vertical">
 
-  <fragment
-        android:name="br.com.followmoney.fragments.BalanceFragment"
-        android:id="@+id/balanceFragment"
-        android:layout_weight="0.2"
+   <!-- <android.support.design.widget.TabLayout
+        android:id="@+id/sliding_tabs"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="wrap_content"
+        app:tabMode="scrollable" />
 
-    <android.support.v4.widget.Space
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"/>
+    <android.support.v4.view.ViewPager
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="2dp"
-        android:background="#c0c0c0"/>
+        <android.support.v4.view.PagerTabStrip
+            android:id="@+id/pager_title_strip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:background="#33b5e5"
+            android:textColor="#fff"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp" />
 
-    <android.support.v4.widget.Space
-        android:layout_width="wrap_content"
-        android:layout_height="10dp"/>
+    </android.support.v4.view.ViewPager>-->
 
-    <fragment
-        android:name="br.com.followmoney.fragments.FinalitySpendingFragment"
-        android:id="@+id/finalitySpendingFragment"
-        android:layout_weight="1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+    <!--<fragment
+          android:name="br.com.followmoney.fragments.BalanceFragment"
+          android:id="@+id/balanceFragment"
+          android:layout_weight="0.2"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"/>
+
+      <android.support.v4.widget.Space
+          android:layout_width="wrap_content"
+          android:layout_height="10dp"/>
+
+      <View
+          android:layout_width="wrap_content"
+          android:layout_height="2dp"
+          android:background="#c0c0c0"/>
+
+      <android.support.v4.widget.Space
+          android:layout_width="wrap_content"
+          android:layout_height="10dp"/>
+
+      <fragment
+          android:name="br.com.followmoney.fragments.FinalitySpendingFragment"
+          android:id="@+id/finalitySpendingFragment"
+          android:layout_weight="1"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"/>-->
 
 </LinearLayout>

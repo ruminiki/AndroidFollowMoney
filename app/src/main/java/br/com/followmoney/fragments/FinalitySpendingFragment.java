@@ -41,6 +41,8 @@ public class FinalitySpendingFragment extends Fragment{
     HorizontalBarChart hBarChart;
     BarData data = new BarData();
 
+    String month = new String();
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -52,7 +54,10 @@ public class FinalitySpendingFragment extends Fragment{
         PropertyChangeListener listener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                loadChartEntries();
+                if ( !month.matches(event.getNewValue().toString()) ){
+                    loadChartEntries();
+                    month = event.getNewValue().toString();
+                }
             }
         };
         globalParams.changes.addPropertyChangeListener(listener);
@@ -83,7 +88,7 @@ public class FinalitySpendingFragment extends Fragment{
                 FinalitySpendingFragment.this.labels.clear();
                 int index = 0;
                 for ( ItemChartEntry entry : entries ){
-                    FinalitySpendingFragment.this.entries.add(new BarEntry((float) index++, entry.getPercent()));
+                    FinalitySpendingFragment.this.entries.add(new BarEntry((float) index++, entry.getPercent(), entry.getLabel()));
                     FinalitySpendingFragment.this.labels.add(entry.getLabel());
                 }
 
@@ -94,7 +99,9 @@ public class FinalitySpendingFragment extends Fragment{
 
                 data.setValueTextSize(10f);
                 data.setValueTextColor(Color.DKGRAY);
-                data.setValueFormatter(new PercentFormatter(NumberFormatUtil.decimalFormat));
+                //data.setValueFormatter(new PercentFormatter(NumberFormatUtil.percentFormat));
+
+                hBarChart.setData(data);
 
                 hBarChart.setDescription(null);
                 hBarChart.getLegend().setEnabled(false);
@@ -106,19 +113,32 @@ public class FinalitySpendingFragment extends Fragment{
                 hBarChart.getXAxis().disableGridDashedLine(); //remove horizontal grid lines
                 hBarChart.getXAxis().setDrawGridLines(false);
 
+                //scroll
+                //hBarChart.setVisibleXRangeMaximum(15);
+                //hBarChart.setVisibleXRange(15,15);
+
                 //labels
-                hBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
                 hBarChart.getXAxis().setPosition(XAxis.XAxisPosition.BOTTOM);
                 hBarChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
                 hBarChart.getXAxis().setTextSize(8f);
-                hBarChart.getXAxis().setLabelCount(labels.size());
                 hBarChart.getAxisLeft().setSpaceBottom(1);
+                hBarChart.getXAxis().setCenterAxisLabels(false);
+                hBarChart.getXAxis().setDrawLabels(true);
+                hBarChart.getXAxis().setLabelCount(labels.size());
+
+
+                //hBarChart.setVisibleXRange(0, 15);
+
+                //belCount((int)hBarChart.getVisibleXRange());
+               // hBarChart.moveViewToX(0);
+
+                //no zoom
+                hBarChart.setScaleEnabled(false);
+                //hBarChart.setMinimumHeight(350);
+                hBarChart.getLayoutParams().height = android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 
                 hBarChart.notifyDataSetChanged();
                 hBarChart.invalidate();
-
-                hBarChart.setData(data);
-
             }
 
             @Override

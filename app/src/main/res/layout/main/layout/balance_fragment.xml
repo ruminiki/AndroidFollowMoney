@@ -78,4 +78,15 @@
         </LinearLayout>
     </LinearLayout>
 
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="2dp"
+        android:background="#c0c0c0"/>
+
+    <com.github.mikephil.charting.charts.PieChart
+        android:id="@+id/piechart"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"/>
+
+
 </LinearLayout>
