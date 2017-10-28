@@ -4,8 +4,10 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.HorizontalBarChart;
@@ -28,6 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.followmoney.R;
+import br.com.followmoney.activities.finalities.FinalityListActivity;
 import br.com.followmoney.dao.remote.GetEntitiesJson;
 import br.com.followmoney.domain.ItemChartEntry;
 import br.com.followmoney.globals.GlobalParams;
@@ -40,8 +43,9 @@ public class FinalitySpendingFragment extends Fragment{
     List<String> labels = new ArrayList<String>();
     HorizontalBarChart hBarChart;
     BarData data = new BarData();
+    TextView mesTextView;
 
-    String month = new String();
+    private boolean active = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,14 +53,16 @@ public class FinalitySpendingFragment extends Fragment{
 
         final View view = inflater.inflate(R.layout.finality_spending_fragment, container, false);
         hBarChart = (HorizontalBarChart) view.findViewById(R.id.barchart);
+        mesTextView = (TextView) view.findViewById(R.id.mesTextView);
+        mesTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
 
         final GlobalParams globalParams = GlobalParams.getInstance();
         PropertyChangeListener listener = new PropertyChangeListener() {
             @Override
             public void propertyChange(PropertyChangeEvent event) {
-                if ( !month.matches(event.getNewValue().toString()) ){
+                if ( active && !GlobalParams.getInstance().getSelectedMonthReferenceFormated().equals(mesTextView.getText()) ){
                     loadChartEntries();
-                    month = event.getNewValue().toString();
+                    mesTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
                 }
             }
         };
@@ -71,7 +77,19 @@ public class FinalitySpendingFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
-        loadChartEntries();
+        active = true;
+
+        if ( !GlobalParams.getInstance().getSelectedMonthReferenceFormated().equals(mesTextView.getText()) ){
+            loadChartEntries();
+            mesTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        active = false;
     }
 
     protected void loadChartEntries() {

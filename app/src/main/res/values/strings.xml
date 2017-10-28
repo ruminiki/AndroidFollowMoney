@@ -19,7 +19,7 @@
 
     <!-- finality -->
     <string name="deleteFinalidade">Confirme a exclusão.</string>
-
+    <string name="title_chart_finality_fragment">Gastos por finalidade (%)</string>
 
     <!-- credit card-->
     <string name="limit">Limite</string>

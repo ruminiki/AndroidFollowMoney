@@ -14,7 +14,7 @@ public class GlobalParams {
 
     private static final GlobalParams instance = new GlobalParams();
 
-    public final static String REMOTE_URL = "http://followmoney.com.br";
+    public final static String REMOTE_URL = "https://followmoney.com.br";
     //public final static String REMOTE_URL = "http://192.168.1.12";
 
     private int    userOnLineID = 3;
@@ -25,7 +25,7 @@ public class GlobalParams {
     private static final SimpleDateFormat sdf2 = new SimpleDateFormat("yyyyMM");
     private static final SimpleDateFormat sdf3 = new SimpleDateFormat("MMM/yyyy");
 
-    public PropertyChangeSupport changes = new PropertyChangeSupport(this);
+    public final PropertyChangeSupport changes = new PropertyChangeSupport(this);
 
     private GlobalParams() { }
 

@@ -3,9 +3,7 @@ package br.com.followmoney.fragments;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -17,33 +15,39 @@ import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.formatter.IValueFormatter;
-import com.github.mikephil.charting.formatter.PercentFormatter;
 import com.github.mikephil.charting.utils.ColorTemplate;
 import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.reflect.TypeToken;
+import com.twinkle94.monthyearpicker.picker.YearMonthPickerDialog;
 
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 import br.com.followmoney.R;
-import br.com.followmoney.components.MyGestureListener;
 import br.com.followmoney.dao.remote.GetEntityJson;
 import br.com.followmoney.domain.Balance;
 import br.com.followmoney.globals.GlobalParams;
 import br.com.followmoney.util.NumberFormatUtil;
 
-public class BalanceFragment extends Fragment implements MyGestureListener.OnGestureListener{
+public class BalanceFragment extends Fragment {
 
     TextView saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView, mesReferenciaTextView;
     NumberFormat numberFormat = NumberFormat.getCurrencyInstance(new Locale("pt", "BR"));
-    GestureDetector gestureDetector;
+
+    YearMonthPickerDialog yearMonthPickerDialog;
 
     List<PieEntry> entries = new ArrayList<>();
     PieChart pieChart;
     PieData data = new PieData();
+
+    private boolean active = false;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -55,17 +59,36 @@ public class BalanceFragment extends Fragment implements MyGestureListener.OnGes
         saldoAnteriorTextView = (TextView) view.findViewById(R.id.saldoAnteriorTextView);
         mesReferenciaTextView = (TextView) view.findViewById(R.id.mesReferenciaTextView);
         mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-
-
-        View balanceView = view.findViewById(R.id.balanceLinearLayout);
-        gestureDetector = new GestureDetector(getContext(), new MyGestureListener(this));
-        balanceView.setOnTouchListener(new View.OnTouchListener() {
+        mesReferenciaTextView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onTouch(View v, final MotionEvent event) {
-                gestureDetector.onTouchEvent(event);
-                return true;
+            public void onClick(View view) {
+                yearMonthPickerDialog.show();
             }
         });
+
+        //SELECT MONTH
+        yearMonthPickerDialog = new YearMonthPickerDialog(getContext(), new YearMonthPickerDialog.OnDateSetListener() {
+            @Override
+            public void onYearMonthSet(int year, int month) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMM");
+                GlobalParams.getInstance().setSelectedMonthReference(dateFormat.format(calendar.getTime()));
+            }
+        }, R.style.MonthPickerTheme);
+
+        final GlobalParams globalParams = GlobalParams.getInstance();
+        PropertyChangeListener listener = new PropertyChangeListener() {
+            @Override
+            public void propertyChange(PropertyChangeEvent event) {
+                if ( active && !GlobalParams.getInstance().getSelectedMonthReferenceFormated().equals(mesReferenciaTextView.getText()) ){
+                    loadBalances();
+                    mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+                }
+            }
+        };
+        globalParams.changes.addPropertyChangeListener(listener);
 
         loadBalances();
 
@@ -76,7 +99,19 @@ public class BalanceFragment extends Fragment implements MyGestureListener.OnGes
     @Override
     public void onStart() {
         super.onStart();
-        loadBalances();
+        active = true;
+
+        if ( !GlobalParams.getInstance().getSelectedMonthReferenceFormated().equals(mesReferenciaTextView.getText()) ){
+            loadBalances();
+            mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+        }
+
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        active = false;
     }
 
     protected void loadBalances() {
@@ -108,11 +143,8 @@ public class BalanceFragment extends Fragment implements MyGestureListener.OnGes
         entries.add(new PieEntry(balance.getDebitosMes(), "Débitos"));
 
         PieDataSet dataSet = new PieDataSet(entries, null);
-        //dataSet.setXValuePosition(PieDataSet.ValuePosition.INSIDE_SLICE);
         dataSet.setXValuePosition(PieDataSet.ValuePosition.INSIDE_SLICE);
         dataSet.setValueLinePart1OffsetPercentage(80.f);
-                /*dataSet.setValueLinePart1Length(0.1f);
-                dataSet.setValueLinePart2Length(0.0f);*/
         dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
 
         data.setDataSet(dataSet);
@@ -132,26 +164,12 @@ public class BalanceFragment extends Fragment implements MyGestureListener.OnGes
 
         pieChart.setDescription(null);
         pieChart.getLegend().setEnabled(false);
+        pieChart.setRotationEnabled(false);
+
+        pieChart.setData(data);
 
         pieChart.notifyDataSetChanged();
         pieChart.invalidate();
-
-        pieChart.setData(data);
-    }
-
-
-    @Override
-    public void leftToRightGesture() {
-        GlobalParams.getInstance().setPreviousMonthReference();
-        mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-        loadBalances();
-    }
-
-    @Override
-    public void rightToLeftGesture() {
-        GlobalParams.getInstance().setNextMonthReference();
-        mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-        loadBalances();
     }
 
     public class MyValueFormatter implements IValueFormatter {

@@ -32,13 +32,13 @@ import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
 import br.com.followmoney.activities.CustomListAdapter;
 import br.com.followmoney.activities.MainActivity;
+import br.com.followmoney.components.MyGestureListener;
 import br.com.followmoney.dao.remote.StringValueRequest;
 import br.com.followmoney.domain.Movement;
 import br.com.followmoney.globals.GlobalParams;
 
-public class MovementListActivity extends AbstractFormList<Movement> {
+public class MovementListActivity extends AbstractFormList<Movement> implements MyGestureListener.OnGestureListener {
 
-    View status;
     YearMonthPickerDialog yearMonthPickerDialog;
     TextView mesReferenciaTextView, receitasTextView, despesasTextView, saldoMesTextView, saldoAnteriorTextView, saldoPrevistoTextView;
 
@@ -97,7 +97,7 @@ public class MovementListActivity extends AbstractFormList<Movement> {
         }, R.style.MonthPickerTheme);
 
         View balanceView = findViewById(R.id.balanceLinearLayout);
-        gestureDetector = new GestureDetector(this, new MyGestureListener());
+        gestureDetector = new GestureDetector(this, new MyGestureListener(MovementListActivity.this));
         balanceView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, final MotionEvent event) {
@@ -191,51 +191,18 @@ public class MovementListActivity extends AbstractFormList<Movement> {
         selectedEntityID = selectedEntity != null ? selectedEntity.getId() : 0;
     }
 
-    class MyGestureListener implements GestureDetector.OnGestureListener {
-        private static final String DEBUG_TAG = "Gestures";
+    @Override
+    public void leftToRightGesture() {
+        GlobalParams.getInstance().setPreviousMonthReference();
+        mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+        loadList();
+    }
 
-        @Override
-        public boolean onDown(MotionEvent event) { return true; }
-
-        @Override
-        public void onShowPress(MotionEvent e) { }
-
-        @Override
-        public boolean onSingleTapUp(MotionEvent e) { return false; }
-
-        @Override
-        public boolean onScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) { return false; }
-
-        @Override
-        public void onLongPress(MotionEvent e) {}
-
-        @Override
-        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-
-            if(e1.getY() - e2.getY() > 120 && Math.abs(velocityY) > 120) {
-                Log.d(DEBUG_TAG, "Bottom to up swipe performed");
-                resumeLayout.setMinimumHeight((int) (e2.getY() - e1.getY()));
-            }  else if (e2.getY() - e1.getY() > 120 && Math.abs(velocityY) > 120) {
-                Log.d(DEBUG_TAG, "Top to bottom swipe performed");
-                resumeLayout.setMinimumHeight((int) (e2.getY() - e1.getY()));
-            }
-
-            if (e1.getX() < e2.getX()) {
-                Log.d(DEBUG_TAG, "Left to Right swipe performed");
-                GlobalParams.getInstance().setPreviousMonthReference();
-                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-                loadList();
-            }
-
-            if (e1.getX() > e2.getX()) {
-                Log.d(DEBUG_TAG, "Right to Left swipe performed");
-                GlobalParams.getInstance().setNextMonthReference();
-                mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
-                loadList();
-            }
-
-            return true;
-        }
+    @Override
+    public void rightToLeftGesture() {
+        GlobalParams.getInstance().setNextMonthReference();
+        mesReferenciaTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
+        loadList();
     }
 
 }
