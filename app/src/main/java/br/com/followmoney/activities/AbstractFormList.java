@@ -42,8 +42,10 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
         super.onCreate(savedInstanceState);
 
         MODE = getIntent().getIntExtra(KEY_MODE, OPEN_TO_EDIT_MODE);
-        listView = (ListView) findViewById(R.id.listView);
-        listView.setOnItemClickListener(this);
+        if ( listView == null ){
+            listView = (ListView) findViewById(R.id.listView);
+            listView.setOnItemClickListener(this);
+        }
 
         ImageButton addButton = (ImageButton) findViewById(R.id.addButton);
         if ( addButton != null ) {
@@ -98,7 +100,9 @@ public abstract class AbstractFormList<T> extends AppCompatActivity implements S
             });
         }
 
-       this.loadList();
+        if ( listView.getAdapter() == null || listView.getAdapter().getCount() <= 0 ){
+            this.loadList();
+        }
 
     }
 

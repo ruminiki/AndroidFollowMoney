@@ -56,7 +56,13 @@ public class DateUtil {
         Calendar c = Calendar.getInstance();
         c.set(Calendar.DAY_OF_MONTH, diaFatura);
         if ( diaFechamento > diaFatura ){//fatura vence no mes seguinte
-            c.add(Calendar.MONTH, 1);
+            //se a data atual é maior que o fechamento indica que está no intervalo entre o fechamento e o vencimento
+            //da fatura. Nesse caso o vencimento será para dois meses a frente
+            if ( Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > diaFechamento ){
+                c.add(Calendar.MONTH, 2);
+            }else{
+                c.add(Calendar.MONTH, 1);
+            }
         }
         return c;
     }

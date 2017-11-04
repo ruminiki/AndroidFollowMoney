@@ -1,6 +1,8 @@
 package br.com.followmoney.dao.remote;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -24,10 +26,14 @@ import java.util.Map;
 
 import br.com.followmoney.globals.GlobalParams;
 
-public class GetEntitiesJson<T> {
+public class GetEntitiesJson<T> extends AsyncTask<String, Void, Boolean> {
 
     private OnLoadListener onLoadlistener;
     private Context        context;
+    private Type           target;
+    private String         restContext;
+
+    private ProgressDialog dialog;
 
     public GetEntitiesJson(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
@@ -35,13 +41,21 @@ public class GetEntitiesJson<T> {
     }
 
     public void execute(final Type target, String restContext, String... params) {
+        this.target = target;
+        this.restContext = restContext;
 
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading, please wait");
+        dialog.setTitle("Getting list from server...");
+        dialog.show();
+        dialog.setCancelable(false);
+
+        doInBackground();
+    }
+
+    @Override
+    protected Boolean doInBackground(String... params) {
         String URL = GlobalParams.REMOTE_URL + restContext;
-
-        //movements/user/:param1/period/:param2
-        for ( String param : params ){
-            URL = URL.replaceFirst(":param", param);
-        }
 
         final Gson gson = new Gson();
         //final Gson gson = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create();
@@ -54,6 +68,7 @@ public class GetEntitiesJson<T> {
                             VolleyLog.v("Response:%n %s", response.toString(4));
                             List<T> result = (List<T>) Arrays.asList(gson.fromJson(response.toString(4), target));
                             onLoadlistener.onLoaded(result != null && result.size() > 0 ? (List<T>) result.get(0) : null);
+                            dialog.cancel();
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -75,8 +90,10 @@ public class GetEntitiesJson<T> {
                         default:
                             onLoadlistener.onError(parsed);
                     }
+                }else{
+                    onLoadlistener.onError("Error on server get object.");
                 }
-                onLoadlistener.onError("Error on server get object.");
+                dialog.cancel();
             }
         }){//here before semicolon ; and use { }.
             @Override
@@ -90,6 +107,7 @@ public class GetEntitiesJson<T> {
         // add the request object to the queue to be executed
         ApplicationController.getInstance(context).addToRequestQueue(req);
 
+        return null;
     }
 
     public interface OnLoadListener<T> {

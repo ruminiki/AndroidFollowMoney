@@ -15,10 +15,14 @@ import br.com.followmoney.util.DateUtil;
 
 public class Movement{
 
-    public static final String CREDIT  = "CREDITO";
-    public static final String DEBIT   = "DEBITO";
+    public static final String CREDIT           = "CREDITO";
+    public static final String DEBIT            = "DEBITO";
+    public static final String CREDIT_INITIALS  = "C";
+    public static final String DEBIT_INITIALS   = "D";
+
     public static final String PAYD    = "PAGO";
     public static final String TO_PAY  = "A PAGAR";
+
     private Integer           id;
     private String            descricao;
     private String            vencimento;
@@ -181,6 +185,10 @@ public class Movement{
 
     public String getValorFormatado(){
         return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(valor);
+    }
+
+    public String getOperacaoResumida(){
+        return this.getOperacao().substring(0,1);
     }
 
     public String getFontePagadora(){

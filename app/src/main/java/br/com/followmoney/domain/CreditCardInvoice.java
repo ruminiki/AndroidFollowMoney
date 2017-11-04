@@ -11,6 +11,9 @@ import java.util.Locale;
 
 public class CreditCardInvoice {
 
+    public static final String OPEN  = "ABERTA";
+    public static final String CLOSE = "FECHADA";
+
     private Integer     id;
     private String      emissao;
     private String      vencimento;

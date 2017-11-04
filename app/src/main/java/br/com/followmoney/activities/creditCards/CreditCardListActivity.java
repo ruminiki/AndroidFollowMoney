@@ -14,7 +14,7 @@ import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
-import br.com.followmoney.activities.CustomListAdapter;
+import br.com.followmoney.components.adapters.CustomListAdapter;
 import br.com.followmoney.activities.creditCardInvoices.CreditCardInvoiceListActivity;
 import br.com.followmoney.domain.CreditCard;
 

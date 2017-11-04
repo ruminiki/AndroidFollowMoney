@@ -14,7 +14,7 @@ import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
-import br.com.followmoney.activities.CustomListAdapter;
+import br.com.followmoney.components.adapters.BankAccountListAdapter;
 import br.com.followmoney.domain.BankAccount;
 import br.com.followmoney.globals.GlobalParams;
 
@@ -64,7 +64,7 @@ public class BankAccountListActivity extends AbstractFormList<BankAccount>{
 
     @Override
     protected void entityListLoaded(List<BankAccount> bankAccounts) {
-        listView.setAdapter(new CustomListAdapter<BankAccount>(this, R.layout.bank_account_list_renderer, bankAccounts));
+        listView.setAdapter(new BankAccountListAdapter(this, R.layout.bank_account_list_renderer, bankAccounts));
     }
 
     @Override

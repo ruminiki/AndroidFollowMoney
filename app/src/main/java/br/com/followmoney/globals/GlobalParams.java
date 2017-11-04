@@ -18,7 +18,7 @@ public class GlobalParams {
     //public final static String REMOTE_URL = "http://192.168.1.12";
 
     private int    userOnLineID = 3;
-    private String accessToken = "7be2531ea6205505f6bd851d9c1f8199e83eafda";
+    private String accessToken = "1ED8B6E8BC436EC8E744FBF638793";
     private String selectedMonthReference;
 
     private static final SimpleDateFormat sdf1 = new SimpleDateFormat("yyyyMMdd");

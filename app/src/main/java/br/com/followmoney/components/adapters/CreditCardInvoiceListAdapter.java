@@ -1,6 +1,7 @@
-package br.com.followmoney.activities;
+package br.com.followmoney.components.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,14 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CustomListAdapter<T> extends ArrayAdapter<T> {
+import br.com.followmoney.domain.BankAccount;
+import br.com.followmoney.domain.CreditCardInvoice;
+
+public class CreditCardInvoiceListAdapter extends ArrayAdapter<CreditCardInvoice> {
 
     int layout;
 
-    public CustomListAdapter(Context context, int layout, List<T> entities) {
+    public CreditCardInvoiceListAdapter(Context context, int layout, List<CreditCardInvoice> entities) {
         super(context, layout, entities);
         this.layout = layout;
     }
@@ -23,7 +27,7 @@ public class CustomListAdapter<T> extends ArrayAdapter<T> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         // Get the data item for this position
-        T entity = getItem(position);
+        CreditCardInvoice entity = getItem(position);
 
         if (view == null) {
             LayoutInflater inflater = LayoutInflater.from(getContext());
@@ -41,6 +45,14 @@ public class CustomListAdapter<T> extends ArrayAdapter<T> {
                     Method method = entity.getClass().getMethod(getName);
                     Object response = method.invoke(entity);
                     childTextView.setText(response != null ? String.valueOf(method.invoke(entity)) : ""); // pass arg
+
+                    if ( fieldName.equals("status") ){
+                        if ( String.valueOf(method.invoke(entity)).equals(CreditCardInvoice.OPEN) ){
+                            childTextView.setTextColor(Color.rgb(133, 224, 133));
+                        }else{
+                            childTextView.setTextColor(Color.rgb(255, 133, 102));
+                        }
+                    }
 
                 }catch (Exception e){  }
             }

@@ -3,15 +3,12 @@ package br.com.followmoney.activities.movements;
 import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
-import android.support.v4.view.GestureDetectorCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
+import android.renderscript.RenderScript;
+import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -25,16 +22,17 @@ import java.lang.reflect.Type;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
-import br.com.followmoney.activities.CustomListAdapter;
-import br.com.followmoney.activities.MainActivity;
+import br.com.followmoney.components.adapters.MovementListAdapter;
 import br.com.followmoney.components.MyGestureListener;
 import br.com.followmoney.dao.remote.StringValueRequest;
 import br.com.followmoney.domain.Movement;
+import br.com.followmoney.fragments.SearchMovementFragment;
 import br.com.followmoney.globals.GlobalParams;
 
 public class MovementListActivity extends AbstractFormList<Movement> implements MyGestureListener.OnGestureListener {
@@ -73,12 +71,18 @@ public class MovementListActivity extends AbstractFormList<Movement> implements 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+               /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
                 if (drawer.isDrawerOpen(Gravity.END)) {
                     drawer.closeDrawer(Gravity.END);
                 }else{
                     drawer.openDrawer(Gravity.END);
-                }
+                }*/
+
+                FragmentManager fm = getSupportFragmentManager();
+                SearchMovementFragment fragment = new SearchMovementFragment();
+                fragment.setActivity(MovementListActivity.this);
+                fragment.show(fm, "Search Movement");
+
             }
         });
 
@@ -153,8 +157,7 @@ public class MovementListActivity extends AbstractFormList<Movement> implements 
         }
         //saldoAnteriorTextView.setText(numberFormat.format(saldoAnterior));
         //saldoPrevistoTextView.setText(numberFormat.format(saldoPrevisto));
-
-        listView.setAdapter(new CustomListAdapter<Movement>(MovementListActivity.this, R.layout.movement_list_renderer, movements));
+        listView.setAdapter(new MovementListAdapter(MovementListActivity.this, R.layout.movement_list_renderer, movements));
     }
 
     @Override
@@ -205,4 +208,7 @@ public class MovementListActivity extends AbstractFormList<Movement> implements 
         loadList();
     }
 
+    public void fillEntityListLoaded(List<Movement> entities) {
+        entityListLoaded(entities);
+    }
 }

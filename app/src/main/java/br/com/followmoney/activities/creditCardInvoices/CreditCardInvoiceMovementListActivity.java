@@ -13,7 +13,7 @@ import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
-import br.com.followmoney.activities.CustomListAdapter;
+import br.com.followmoney.components.adapters.MovementListAdapter;
 import br.com.followmoney.activities.movements.MovementDetailActivity;
 import br.com.followmoney.domain.Movement;
 
@@ -56,7 +56,7 @@ public class CreditCardInvoiceMovementListActivity extends AbstractFormList<Move
 
     @Override
     protected void entityListLoaded(List<Movement> movements) {
-        listView.setAdapter(new CustomListAdapter<Movement>(this, R.layout.invoice_movement_list_renderer, movements));
+        listView.setAdapter(new MovementListAdapter(this, R.layout.invoice_movement_list_renderer, movements));
     }
 
     @Override

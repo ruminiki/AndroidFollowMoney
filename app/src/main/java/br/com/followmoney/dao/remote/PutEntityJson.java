@@ -1,6 +1,8 @@
 package br.com.followmoney.dao.remote;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -22,10 +24,15 @@ import java.util.Map;
 
 import br.com.followmoney.globals.GlobalParams;
 
-public class PutEntityJson<T> {
+public class PutEntityJson<T> extends AsyncTask<String, Void, Boolean> {
 
     public OnLoadListener onLoadlistener;
     public Context        context;
+    private Type           target;
+    private String         restContext;
+    private T              entity;
+
+    private ProgressDialog dialog;
 
     public PutEntityJson(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
@@ -33,6 +40,21 @@ public class PutEntityJson<T> {
     }
 
     public void execute(T entity, String restContext, final Type target) {
+        this.entity = entity;
+        this.target = target;
+        this.restContext = restContext;
+
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading, please wait");
+        dialog.setTitle("Saving object...");
+        dialog.show();
+        dialog.setCancelable(false);
+
+        doInBackground();
+    }
+
+    @Override
+    protected Boolean doInBackground(String... params) {
 
         try {
             final Gson gson = new Gson();
@@ -48,6 +70,7 @@ public class PutEntityJson<T> {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
                                 onLoadlistener.onLoaded((T) gson.fromJson(response.toString(4), target));
+                                dialog.cancel();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -71,6 +94,7 @@ public class PutEntityJson<T> {
                                 onLoadlistener.onError(parsed);
                         }
                     }
+                    dialog.cancel();
                 }
             }){//here before semicolon ; and use { }.
                 @Override
@@ -88,6 +112,7 @@ public class PutEntityJson<T> {
             e.printStackTrace();
         }
 
+        return null;
     }
 
     public interface OnLoadListener<T> {

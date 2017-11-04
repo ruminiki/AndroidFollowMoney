@@ -17,7 +17,8 @@ import java.util.List;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.AbstractFormList;
-import br.com.followmoney.activities.CustomListAdapter;
+import br.com.followmoney.components.adapters.CreditCardInvoiceListAdapter;
+import br.com.followmoney.components.adapters.CustomListAdapter;
 import br.com.followmoney.dao.remote.PutEntityJson;
 import br.com.followmoney.domain.CreditCard;
 import br.com.followmoney.domain.CreditCardInvoice;
@@ -146,7 +147,7 @@ public class CreditCardInvoiceListActivity extends AbstractFormList<CreditCardIn
     }
         @Override
     protected void entityListLoaded(List<CreditCardInvoice> creditCardInvoices) {
-        listView.setAdapter(new CustomListAdapter<CreditCardInvoice>(this, R.layout.credit_card_invoice_list_renderer, creditCardInvoices));
+        listView.setAdapter(new CreditCardInvoiceListAdapter(this, R.layout.credit_card_invoice_list_renderer, creditCardInvoices));
     }
 
     @Override

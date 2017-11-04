@@ -1,6 +1,8 @@
 package br.com.followmoney.dao.remote;
 
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
@@ -22,10 +24,15 @@ import java.util.Map;
 
 import br.com.followmoney.globals.GlobalParams;
 
-public class PostEntityJson<T> {
+public class PostEntityJson<T> extends AsyncTask<String, Void, Boolean> {
 
     public  OnLoadListener onLoadlistener;
-    public  Context context;
+    public  Context        context;
+    private Type           target;
+    private String         restContext;
+    private T              entity;
+
+    private ProgressDialog dialog;
 
     public PostEntityJson(OnLoadListener onLoadlistener, Context context) {
         this.onLoadlistener = onLoadlistener;
@@ -33,6 +40,21 @@ public class PostEntityJson<T> {
     }
 
     public void execute(T entity, String restContext, final Type target) {
+        this.entity = entity;
+        this.target = target;
+        this.restContext = restContext;
+
+        dialog = new ProgressDialog(context);
+        dialog.setMessage("Loading, please wait");
+        dialog.setTitle("Saving object...");
+        dialog.show();
+        dialog.setCancelable(false);
+
+        doInBackground();
+    }
+
+    @Override
+    protected Boolean doInBackground(String... params) {
         try {
             final Gson gson = new Gson();
             String json = gson.toJson(entity);
@@ -47,6 +69,7 @@ public class PostEntityJson<T> {
                             try {
                                 VolleyLog.v("Response:%n %s", response.toString(4));
                                 onLoadlistener.onLoaded(gson.fromJson(response.toString(4), target));
+                                dialog.cancel();
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -69,6 +92,7 @@ public class PostEntityJson<T> {
                                 onLoadlistener.onError(parsed);
                         }
                     }
+                    dialog.cancel();
                 }
             }){//here before semicolon ; and use { }.
                 @Override
@@ -85,7 +109,7 @@ public class PostEntityJson<T> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        return null;
     }
 
     public interface OnLoadListener<T> {
