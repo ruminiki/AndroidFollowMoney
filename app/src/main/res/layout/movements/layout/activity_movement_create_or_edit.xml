@@ -66,7 +66,7 @@
 
                     <ToggleButton
                         android:id="@+id/toggleButtonCreditoDebito"
-                        android:background="@drawable/select_button"
+                        android:background="@drawable/select_button_operation"
                         android:layout_width="match_parent"
                         android:textColor="#FFFFFF"
                         android:layout_gravity="center"
@@ -95,7 +95,7 @@
                         android:layout_width="match_parent"
                         android:layout_gravity="center"
                         android:layout_height="40dp"
-                        android:background="@drawable/select_button"
+                        android:background="@drawable/select_button_status_movement"
                         android:textColor="#FFFFFF"
                         android:textOff="@string/status_to_pay"
                         android:textOn="@string/status_payd"

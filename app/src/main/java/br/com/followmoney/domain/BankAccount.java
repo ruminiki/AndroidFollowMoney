@@ -1,5 +1,8 @@
 package br.com.followmoney.domain;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 /**
  * Created by ruminiki on 08/09/2017.
  */
@@ -19,6 +22,7 @@ public class BankAccount {
     private String  situacao;
     private String  tipo;
     private Integer usuario;
+    private Float   balance;
 
     public BankAccount(int id) {
         setId(id);
@@ -97,6 +101,14 @@ public class BankAccount {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+
+    public String getFormatedBalance() {
+        return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(balance);
+    }
+
+    public void setBalance(Float balance) {
+        this.balance = balance;
     }
 
     @Override

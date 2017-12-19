@@ -17,6 +17,7 @@ public class CreditCard {
     private int     dataFatura;
     private int     dataFechamento;
     private Integer usuario;
+    private Float   currentInvoice;
 
     public CreditCard(int id) {
         setId(id);
@@ -77,6 +78,14 @@ public class CreditCard {
 
     public String getLimiteFormatado(){
         return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(limite);
+    }
+
+    public String getFormatedCurrentInvoice() {
+        return NumberFormat.getCurrencyInstance(new Locale("pt", "BR")).format(currentInvoice);
+    }
+
+    public void setCurrentInvoice(Float currentInvoice) {
+        this.currentInvoice = currentInvoice;
     }
 
     @Override
