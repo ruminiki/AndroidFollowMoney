@@ -1,10 +1,30 @@
 package br.com.followmoney.globals;
 
+import android.content.res.AssetManager;
+
 import java.beans.PropertyChangeSupport;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateException;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 
 /**
  * Created by ruminiki on 16/09/2017.
@@ -15,7 +35,7 @@ public class GlobalParams {
     private static final GlobalParams instance = new GlobalParams();
 
     public final static String REMOTE_URL = "https://followmoney.com.br";
-    //public final static String REMOTE_URL = "http://192.168.1.12";
+    //public final static String REMOTE_URL = "http://192.168.1.18";
 
     private int    userOnLineID = 3;
     private String accessToken = "1ED8B6E8BC436EC8E744FBF638793";
@@ -26,6 +46,8 @@ public class GlobalParams {
     private static final SimpleDateFormat sdf3 = new SimpleDateFormat("MMM/yyyy");
 
     public final PropertyChangeSupport changes = new PropertyChangeSupport(this);
+
+    public SSLSocketFactory sslSocketFactory;
 
     private GlobalParams() { }
 
@@ -120,5 +142,13 @@ public class GlobalParams {
 
     public String getAccessToken() {
         return accessToken;
+    }
+
+    public void setSSLSocketFactory(SSLSocketFactory sslSocketFactory){
+        this.sslSocketFactory = sslSocketFactory;
+    }
+
+    public SSLSocketFactory getSSLSocketFactory(){
+        return this.sslSocketFactory;
     }
 }

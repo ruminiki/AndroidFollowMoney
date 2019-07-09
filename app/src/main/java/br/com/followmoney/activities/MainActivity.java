@@ -17,12 +17,27 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.security.KeyStore;
+import java.security.cert.Certificate;
+import java.security.cert.CertificateFactory;
+import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManagerFactory;
 
 import br.com.followmoney.R;
 import br.com.followmoney.activities.bankAccounts.BankAccountListActivity;
@@ -32,6 +47,7 @@ import br.com.followmoney.activities.movements.MovementCreateOrEditActivity;
 import br.com.followmoney.activities.movements.MovementListActivity;
 import br.com.followmoney.fragments.BalanceFragment;
 import br.com.followmoney.fragments.FinalitySpendingFragment;
+import br.com.followmoney.globals.GlobalParams;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -84,6 +100,8 @@ public class MainActivity extends AppCompatActivity
         // Give the TabLayout the ViewPager
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
+
+        initSSLContext();
     }
 
     private void setupViewPager(ViewPager viewPager) {
@@ -184,5 +202,59 @@ public class MainActivity extends AppCompatActivity
             return mFragmentTitleList.get(position);
         }
     }
+
+    //ssl
+    public void initSSLContext() {
+
+        try{
+            // Load CAs from an InputStream
+            // (could be from a resource or ByteArrayInputStream or ...)
+
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            //InputStream caInput = new BufferedInputStream(new FileInputStream("followmoney.crt"));
+            InputStream caInput = getResources().openRawResource(R.raw.followmoney);
+            Certificate ca;
+            try {
+                ca = cf.generateCertificate(caInput);
+                System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
+            } finally {
+                caInput.close();
+            }
+
+            // Create a KeyStore containing our trusted CAs
+            String keyStoreType = KeyStore.getDefaultType();
+            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("ca", ca);
+
+            // Create a TrustManager that trusts the CAs in our KeyStore
+            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+            tmf.init(keyStore);
+
+            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    Log.e("CipherUsed", session.getCipherSuite());
+                    return hostname.compareTo("followmoney.com.br")==0; //The Hostname of your server
+                }
+            };
+
+            HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+            // Create an SSLContext that uses our TrustManager
+            javax.net.ssl.SSLContext context = javax.net.ssl.SSLContext.getInstance("TLS");
+            context.init(null, tmf.getTrustManagers(), null);
+            HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+
+            SSLSocketFactory sf = context.getSocketFactory();
+            GlobalParams.getInstance().setSSLSocketFactory(sf);
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+    }
+
+
 
  }

@@ -104,4 +104,6 @@ public class ApplicationController extends Application {
             mRequestQueue.cancelAll(tag);
         }
     }
+
+    public Context getContext(){return context;}
 }

@@ -7,11 +7,14 @@ import android.os.AsyncTask;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
@@ -106,7 +109,10 @@ public class PutEntityJson<T> extends AsyncTask<String, Void, Boolean> {
             };
 
             // add the request object to the queue to be executed
-            ApplicationController.getInstance(context).addToRequestQueue(req);
+            //ApplicationController.getInstance(context).addToRequestQueue(req);
+
+            RequestQueue rq = Volley.newRequestQueue(context, new HurlStack(null, GlobalParams.getInstance().sslSocketFactory));
+            rq.add(req);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -5,11 +5,14 @@ import android.content.Context;
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
@@ -71,7 +74,10 @@ public class DeleteEntityJson {
         };
 
         // add the request object to the queue to be executed
-        ApplicationController.getInstance(context).addToRequestQueue(req);
+        //ApplicationController.getInstance(context).addToRequestQueue(req);
+
+        RequestQueue rq = Volley.newRequestQueue(context, new HurlStack(null, GlobalParams.getInstance().sslSocketFactory));
+        rq.add(req);
 
     }
 

@@ -2,21 +2,27 @@ package br.com.followmoney.dao.remote;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.os.AsyncTask;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.HttpHeaderParser;
+import com.android.volley.toolbox.HurlStack;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -55,6 +61,7 @@ public class GetEntityJson<T> extends AsyncTask<String, Void, Boolean> {
     @Override
     protected Boolean doInBackground(String... params) {
         try {
+            //GlobalParams.initSSLContext();
 
             String URL = GlobalParams.REMOTE_URL + restContext;
             final Gson gson = new Gson();
@@ -105,7 +112,10 @@ public class GetEntityJson<T> extends AsyncTask<String, Void, Boolean> {
             };
 
             // add the request object to the queue to be executed
-            ApplicationController.getInstance(context).addToRequestQueue(req);
+            //ApplicationController.getInstance(context).addToRequestQueue(req);
+
+            RequestQueue rq = Volley.newRequestQueue(context, new HurlStack(null, GlobalParams.getInstance().sslSocketFactory));
+            rq.add(req);
 
 
         } catch (Exception e) {
