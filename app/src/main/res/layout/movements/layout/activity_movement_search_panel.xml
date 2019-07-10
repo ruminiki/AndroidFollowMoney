@@ -13,7 +13,7 @@
         android:layout_alignBottom="@+id/descricaoEditText"
         android:layout_alignParentLeft="true"
         android:layout_toRightOf="@+id/descricaoEditText"
-        android:text="@string/descricao" />
+        android:text="@string/description_finalitie" />
 
     <EditText
         android:id="@+id/descricaoEditText"

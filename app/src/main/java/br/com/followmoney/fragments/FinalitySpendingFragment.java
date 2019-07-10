@@ -1,5 +1,6 @@
 package br.com.followmoney.fragments;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,26 +18,36 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.PercentFormatter;
+import com.github.mikephil.charting.highlight.Highlight;
+import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.utils.ViewPortHandler;
 import com.google.gson.reflect.TypeToken;
 
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.lang.reflect.Type;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.followmoney.R;
+import br.com.followmoney.activities.KeyParams;
 import br.com.followmoney.activities.finalities.FinalityListActivity;
+import br.com.followmoney.activities.movements.MovementListActivity;
 import br.com.followmoney.dao.remote.GetEntitiesJson;
 import br.com.followmoney.domain.ItemChartEntry;
 import br.com.followmoney.globals.GlobalParams;
 import br.com.followmoney.util.NumberFormatUtil;
 
-public class FinalitySpendingFragment extends Fragment{
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_MOVEMENT_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_FILL_FINALITY_PARAM;
+
+public class FinalitySpendingFragment extends Fragment implements OnChartValueSelectedListener {
 
     Type type = new TypeToken<List<ItemChartEntry>>(){}.getType();
     List<BarEntry> entries = new ArrayList<BarEntry>();
@@ -53,6 +64,7 @@ public class FinalitySpendingFragment extends Fragment{
 
         final View view = inflater.inflate(R.layout.finality_spending_fragment, container, false);
         hBarChart = (HorizontalBarChart) view.findViewById(R.id.barchart);
+        hBarChart.setOnChartValueSelectedListener(this);
         mesTextView = (TextView) view.findViewById(R.id.mesTextView);
         mesTextView.setText(GlobalParams.getInstance().getSelectedMonthReferenceFormated());
 
@@ -114,7 +126,7 @@ public class FinalitySpendingFragment extends Fragment{
                 dataSet.setColors(ColorTemplate.VORDIPLOM_COLORS);
                 data.clearValues();
                 data.addDataSet(dataSet);
-
+                data.setValueFormatter(new ValueFormat(new DecimalFormat("###,###,###")));
                 data.setValueTextSize(10f);
                 data.setValueTextColor(Color.DKGRAY);
                 //data.setValueFormatter(new PercentFormatter(NumberFormatUtil.percentFormat));
@@ -167,5 +179,30 @@ public class FinalitySpendingFragment extends Fragment{
 
     }
 
+    @Override
+    public void onValueSelected(Entry e, Highlight h) {
+        String finalitie = ((String)e.getData()).substring(0,((String)e.getData()).lastIndexOf('('));
+        Intent intent = new Intent(this.getActivity(), MovementListActivity.class);
+        intent.putExtra(KEY_FILL_FINALITY_PARAM, finalitie);
+        startActivity(intent);
+    }
 
+    @Override
+    public void onNothingSelected() {
+
+    }
+
+    public class ValueFormat extends PercentFormatter {
+
+        protected DecimalFormat mFormat;
+
+        public ValueFormat(DecimalFormat format) {
+            this.mFormat = format;
+        }
+
+        @Override
+        public String getFormattedValue(float value, Entry entry, int dataSetIndex, ViewPortHandler viewPortHandler) {
+            return mFormat.format(value) + " %";
+        }
+    }
 }

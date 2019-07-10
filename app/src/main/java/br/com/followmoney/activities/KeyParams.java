@@ -49,6 +49,6 @@ public class KeyParams {
     public final static String KEY_EXTRA_MOVEMENT_VALUE           = "KEY_EXTRA_MOVEMENT_VALUE";
     public static final String KEY_EXTRA_BANK_ACCOUNT_ID          = "KEY_EXTRA_BANK_ACCOUNT_ID";
     public static final String KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION = "KEY_EXTRA_BANK_ACCOUNT_DESCRIPTION";
-
+    public static final String KEY_FILL_FINALITY_PARAM            = "KEY_FILL_FINALITY_PARAM";
 
 }

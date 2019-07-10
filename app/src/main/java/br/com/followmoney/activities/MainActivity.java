@@ -101,6 +101,7 @@ public class MainActivity extends AppCompatActivity
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(viewPager);
 
+        //config https
         initSSLContext();
     }
 
@@ -205,56 +206,13 @@ public class MainActivity extends AppCompatActivity
 
     //ssl
     public void initSSLContext() {
-
         try{
-            // Load CAs from an InputStream
-            // (could be from a resource or ByteArrayInputStream or ...)
-
-            CertificateFactory cf = CertificateFactory.getInstance("X.509");
-            //InputStream caInput = new BufferedInputStream(new FileInputStream("followmoney.crt"));
             InputStream caInput = getResources().openRawResource(R.raw.followmoney);
-            Certificate ca;
-            try {
-                ca = cf.generateCertificate(caInput);
-                System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
-            } finally {
-                caInput.close();
-            }
-
-            // Create a KeyStore containing our trusted CAs
-            String keyStoreType = KeyStore.getDefaultType();
-            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
-            keyStore.load(null, null);
-            keyStore.setCertificateEntry("ca", ca);
-
-            // Create a TrustManager that trusts the CAs in our KeyStore
-            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
-            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
-            tmf.init(keyStore);
-
-            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
-                @Override
-                public boolean verify(String hostname, SSLSession session) {
-                    Log.e("CipherUsed", session.getCipherSuite());
-                    return hostname.compareTo("followmoney.com.br")==0; //The Hostname of your server
-                }
-            };
-
-            HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
-            // Create an SSLContext that uses our TrustManager
-            javax.net.ssl.SSLContext context = javax.net.ssl.SSLContext.getInstance("TLS");
-            context.init(null, tmf.getTrustManagers(), null);
-            HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
-
-            SSLSocketFactory sf = context.getSocketFactory();
-            GlobalParams.getInstance().setSSLSocketFactory(sf);
-
+            GlobalParams.getInstance().initSSLContext(caInput);
         }catch (Exception e){
             e.printStackTrace();
         }
 
     }
-
-
 
  }

@@ -87,12 +87,15 @@ public class SearchMovementFragment extends DialogFragment {
 
     }
 
+    public void setText(String text){
+        this.text = text;
+    }
+
     public void setActivity(MovementListActivity activity){
         this.activity = activity;
     }
 
-
-    private void load(){
+    public void load(){
         new GetEntitiesJson<Movement>(new GetEntitiesJson.OnLoadListener<Movement>() {
             @Override
             public void onLoaded(List<Movement> entities) {
@@ -109,7 +112,7 @@ public class SearchMovementFragment extends DialogFragment {
     private String getSearchRestContext(){
         return "/movements/user/"+GlobalParams.getInstance().getUserOnLineID()+
                 "/period/"+GlobalParams.getInstance().getSelectedMonthReference()+
-                "/fill/"+descricaoEditText.getText();
+                "/fill/"+text;
     }
 
 }

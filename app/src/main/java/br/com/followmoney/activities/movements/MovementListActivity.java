@@ -35,6 +35,9 @@ import br.com.followmoney.domain.Movement;
 import br.com.followmoney.fragments.SearchMovementFragment;
 import br.com.followmoney.globals.GlobalParams;
 
+import static br.com.followmoney.activities.KeyParams.KEY_EXTRA_INVOICE_ID;
+import static br.com.followmoney.activities.KeyParams.KEY_FILL_FINALITY_PARAM;
+
 public class MovementListActivity extends AbstractFormList<Movement> implements MyGestureListener.OnGestureListener {
 
     YearMonthPickerDialog yearMonthPickerDialog;
@@ -44,10 +47,13 @@ public class MovementListActivity extends AbstractFormList<Movement> implements 
 
     private GestureDetector gestureDetector;
     private LinearLayout resumeLayout;
+    private String fillParam;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_movement_list);
+
+        fillParam = getIntent().getStringExtra(KEY_FILL_FINALITY_PARAM);
 
         //BIND COMPONENTS VIEW
         mesReferenciaTextView = (TextView) findViewById(R.id.mesReferenciaTextView);
@@ -162,6 +168,13 @@ public class MovementListActivity extends AbstractFormList<Movement> implements 
 
     @Override
     protected String getRestContextList() {
+        if ( this.fillParam != null ){
+            String restContext = "/movements/user/"+GlobalParams.getInstance().getUserOnLineID()+
+                    "/period/"+GlobalParams.getInstance().getSelectedMonthReference()+
+                    "/fill/"+fillParam;
+            fillParam = null;
+            return restContext;
+        }
         return "/movements/user/"+GlobalParams.getInstance().getUserOnLineID()+"/period/"+GlobalParams.getInstance().getSelectedMonthReference();
     }
 

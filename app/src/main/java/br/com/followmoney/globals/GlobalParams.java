@@ -1,6 +1,7 @@
 package br.com.followmoney.globals;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 
 import java.beans.PropertyChangeSupport;
 import java.io.BufferedInputStream;
@@ -22,9 +23,14 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.net.ssl.HostnameVerifier;
+import javax.net.ssl.HttpsURLConnection;
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSession;
 import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManagerFactory;
+
+import br.com.followmoney.R;
 
 /**
  * Created by ruminiki on 16/09/2017.
@@ -142,6 +148,49 @@ public class GlobalParams {
 
     public String getAccessToken() {
         return accessToken;
+    }
+
+    public void initSSLContext(InputStream caInput) {
+        try{
+            CertificateFactory cf = CertificateFactory.getInstance("X.509");
+            Certificate ca;
+            try {
+                ca = cf.generateCertificate(caInput);
+                System.out.println("ca=" + ((X509Certificate) ca).getSubjectDN());
+            } finally {
+                caInput.close();
+            }
+
+            // Create a KeyStore containing our trusted CAs
+            String keyStoreType = KeyStore.getDefaultType();
+            KeyStore keyStore = KeyStore.getInstance(keyStoreType);
+            keyStore.load(null, null);
+            keyStore.setCertificateEntry("ca", ca);
+
+            // Create a TrustManager that trusts the CAs in our KeyStore
+            String tmfAlgorithm = TrustManagerFactory.getDefaultAlgorithm();
+            TrustManagerFactory tmf = TrustManagerFactory.getInstance(tmfAlgorithm);
+            tmf.init(keyStore);
+
+            HostnameVerifier hostnameVerifier = new HostnameVerifier() {
+                @Override
+                public boolean verify(String hostname, SSLSession session) {
+                    Log.e("CipherUsed", session.getCipherSuite());
+                    return hostname.compareTo("followmoney.com.br")==0; //The Hostname of your server
+                }
+            };
+
+            HttpsURLConnection.setDefaultHostnameVerifier(hostnameVerifier);
+            // Create an SSLContext that uses our TrustManager
+            javax.net.ssl.SSLContext context = javax.net.ssl.SSLContext.getInstance("TLS");
+            context.init(null, tmf.getTrustManagers(), null);
+            HttpsURLConnection.setDefaultSSLSocketFactory(context.getSocketFactory());
+
+            this.sslSocketFactory = context.getSocketFactory();
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 
     public void setSSLSocketFactory(SSLSocketFactory sslSocketFactory){

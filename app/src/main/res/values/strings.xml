@@ -86,4 +86,8 @@
     <string name="bank_account_origin">Conta origem</string>
     <string name="bank_account_destiny">Conta destino</string>
 
+    <!-- search movement form -->
+    <string name="description_finalitie">Descrição/Finalidade</string>
+
+
 </resources>
